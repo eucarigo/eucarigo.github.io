@@ -3,320 +3,393 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Blog - Eucarigo</title>
-    <meta name="description" content="Blog de Eucarigo - Artículos sobre desarrollo web, Python y tecnología">
-    
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <!-- Custom styles -->
+    <title>Blog | eucarigo</title>
+    <link rel="icon" type="image/x-icon" href="e.ico">
+    <link rel="icon" type="image/png" href="e.png">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
-        
         * {
-            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
         
-        .gradient-text {
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #fff;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        header {
+            background: #fff;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            color: #333;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+        
+        .logo img {
+            width: 40px;
+            height: 40px;
+            margin-right: 10px;
+            border-radius: 8px;
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+        
+        .nav-links a {
+            text-decoration: none;
+            color: #666;
+            transition: color 0.3s;
+        }
+        
+        .nav-links a:hover {
+            color: #333;
+        }
+        
+        .page-header {
+            padding: 4rem 0;
+            text-align: center;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            color: white;
         }
         
-        .card-hover {
-            transition: all 0.3s ease;
+        .page-header h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
         }
         
-        .card-hover:hover {
+        .page-header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+        
+        .blog-section {
+            padding: 4rem 0;
+        }
+        
+        .blog-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+        
+        .blog-card {
+            background: #f8f9fa;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+        
+        .blog-card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+        
+        .blog-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            color: #666;
+            font-size: 0.9rem;
+        }
+        
+        .blog-date {
+            font-weight: 600;
+        }
+        
+        .blog-category {
+            background: #667eea;
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 15px;
+            font-size: 0.8rem;
+        }
+        
+        .blog-card h3 {
+            color: #333;
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+        
+        .blog-card h3 a {
+            color: #333;
+            text-decoration: none;
+        }
+        
+        .blog-card h3 a:hover {
+            color: #667eea;
+        }
+        
+        .blog-card p {
+            color: #666;
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+        
+        .read-more {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: gap 0.3s;
+        }
+        
+        .read-more:hover {
+            gap: 1rem;
+            text-decoration: underline;
+        }
+        
+        .pagination {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 3rem;
+        }
+        
+        .pagination a {
+            padding: 0.5rem 1rem;
+            background: #f8f9fa;
+            color: #666;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background 0.3s, color 0.3s;
+        }
+        
+        .pagination a:hover {
+            background: #667eea;
+            color: white;
+        }
+        
+        .pagination a.active {
+            background: #667eea;
+            color: white;
+        }
+        
+        footer {
+            background: #333;
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+        }
+        
+        .footer-content {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 1rem;
+        }
+        
+        .footer-content img {
+            width: 30px;
+            height: 30px;
+            border-radius: 5px;
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 1rem;
+        }
+        
+        .footer-links a {
+            color: #ccc;
+            text-decoration: none;
+        }
+        
+        .footer-links a:hover {
+            color: white;
+        }
+        
+        @media (max-width: 768px) {
+            .nav-links {
+                gap: 1rem;
+            }
+            
+            .page-header h1 {
+                font-size: 2rem;
+            }
+            
+            .blog-grid {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
-<body class="bg-gray-50 text-gray-800">
-    <!-- Navigation -->
-    <nav class="fixed top-0 w-full bg-white shadow-md z-50">
-        <div class="container mx-auto px-6 py-4">
-            <div class="flex justify-between items-center">
-                <div class="text-2xl font-bold gradient-text">
-                    <a href="/">eucarigo</a>
+<body>
+    <header>
+        <nav class="container">
+            <a href="index.html" class="logo">
+                <img src="e.png" alt="Eucarigo Logo">
+                Eucarigo
+            </a>
+            <ul class="nav-links">
+                <li><a href="index.html">Inicio</a></li>
+                <li><a href="projects.html">Proyectos</a></li>
+                <li><a href="blog.html">Blog</a></li>
+                <li><a href="contact.html">Contacto</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="page-header">
+            <div class="container">
+                <h1>Blog</h1>
+                <p>Artículos, tutoriales y reflexiones sobre desarrollo de software y tecnología</p>
+            </div>
+        </section>
+
+        <section class="blog-section">
+            <div class="container">
+                <div class="blog-grid">
+                    <article class="blog-card">
+                        <div class="blog-meta">
+                            <span class="blog-date">15 de abril de 2026</span>
+                            <span class="blog-category">Web Dev</span>
+                        </div>
+                        <h3><a href="blog/post-1.html">Cómo construí mi portfolio con GitHub Pages</a></h3>
+                        <p>En este artículo explico el proceso completo de creación de mi sitio web personal utilizando GitHub Pages, desde el diseño inicial hasta el despliegue final. Aprende a crear tu propio portfolio gratuito.</p>
+                        <a href="blog/post-1.html" class="read-more">Leer más</a>
+                    </article>
+
+                    <article class="blog-card">
+                        <div class="blog-meta">
+                            <span class="blog-date">10 de abril de 2026</span>
+                            <span class="blog-category">Herramientas</span>
+                        </div>
+                        <h3><a href="blog/post-2.html">5 herramientas que uso como desarrollador independiente</a></h3>
+                        <p>Comparto las herramientas esenciales que me ayudan a mantenerme productivo y organizado como desarrollador freelance. Desde IDE hasta herramientas de gestión de proyectos.</p>
+                        <a href="blog/post-2.html" class="read-more">Leer más</a>
+                    </article>
+
+                    <article class="blog-card">
+                        <div class="blog-meta">
+                            <span class="blog-date">5 de abril de 2026</span>
+                            <span class="blog-category">Python</span>
+                        </div>
+                        <h3><a href="blog/post-3.html">Automatización de tareas con Python scripts</a></h3>
+                        <p>Descubre cómo automatizar tareas repetitivas en tu día a día utilizando Python. Ejemplos prácticos de scripts que puedes implementar inmediatamente en tu flujo de trabajo.</p>
+                        <a href="blog/post-3.html" class="read-more">Leer más</a>
+                    </article>
+
+                    <article class="blog-card">
+                        <div class="blog-meta">
+                            <span class="blog-date">28 de marzo de 2026</span>
+                            <span class="blog-category">Git</span>
+                        </div>
+                        <h3><a href="blog/post-4.html">Buenas prácticas con Git que todo desarrollador debería conocer</a></h3>
+                        <p>Git es una herramienta fundamental, pero muchos desarrolladores no aprovechan todo su potencial. Aprende las mejores prácticas para mantener tus repositorios limpios y organizados.</p>
+                        <a href="blog/post-4.html" class="read-more">Leer más</a>
+                    </article>
+
+                    <article class="blog-card">
+                        <div class="blog-meta">
+                            <span class="blog-date">20 de marzo de 2026</span>
+                            <span class="blog-category">API</span>
+                        </div>
+                        <h3><a href="blog/post-5.html">Creando APIs REST con Python y Flask</a></h3>
+                        <p>Guía completa para crear APIs RESTful utilizando Python y Flask. Desde la configuración básica hasta la autenticación y despliegue en producción.</p>
+                        <a href="blog/post-5.html" class="read-more">Leer más</a>
+                    </article>
+
+                    <article class="blog-card">
+                        <div class="blog-meta">
+                            <span class="blog-date">15 de marzo de 2026</span>
+                            <span class="blog-category">Productividad</span>
+                        </div>
+                        <h3><a href="blog/post-6.html">Gestión del tiempo para desarrolladores freelancers</a></h3>
+                        <p>Consejos prácticos para gestionar tu tiempo de manera eficiente cuando trabajas como desarrollador independiente. Técnicas que me han ayudado a mantenerme productivo.</p>
+                        <a href="blog/post-6.html" class="read-more">Leer más</a>
+                    </article>
+
+                    <article class="blog-card">
+                        <div class="blog-meta">
+                            <span class="blog-date">10 de marzo de 2026</span>
+                            <span class="blog-category">Testing</span>
+                        </div>
+                        <h3><a href="blog/post-7.html">Importancia del testing en el desarrollo de software</a></h3>
+                        <p>Por qué el testing automatizado es crucial para el desarrollo de software de calidad. Diferentes tipos de tests y cómo implementarlos en tus proyectos.</p>
+                        <a href="blog/post-7.html" class="read-more">Leer más</a>
+                    </article>
+
+                    <article class="blog-card">
+                        <div class="blog-meta">
+                            <span class="blog-date">5 de marzo de 2026</span>
+                            <span class="blog-category">CSS</span>
+                        </div>
+                        <h3><a href="blog/post-8.html">CSS Grid vs Flexbox: Cuándo usar cada uno</a></h3>
+                        <p>Análisis comparativo entre CSS Grid y Flexbox, con ejemplos prácticos para entender cuándo es mejor usar cada técnica de layout en tus proyectos web.</p>
+                        <a href="blog/post-8.html" class="read-more">Leer más</a>
+                    </article>
+
+                    <article class="blog-card">
+                        <div class="blog-meta">
+                            <span class="blog-date">28 de febrero de 2026</span>
+                            <span class="blog-category">Python</span>
+                        </div>
+                        <h3><a href="blog/post-9.html">Decoradores en Python: Más allá de lo básico</a></h3>
+                        <p>Explora el poder de los decoradores en Python con ejemplos avanzados. Aprende a crear decoradores personalizados y aplicar patrones de diseño elegantes.</p>
+                        <a href="blog/post-9.html" class="read-more">Leer más</a>
+                    </article>
                 </div>
-                <div class="hidden md:flex space-x-8">
-                    <a href="/" class="text-gray-600 hover:text-purple-600 transition">Inicio</a>
-                    <a href="/#projects" class="text-gray-600 hover:text-purple-600 transition">Proyectos</a>
-                    <a href="/blog/" class="text-purple-600 font-medium">Blog</a>
-                    <a href="/#contact" class="text-gray-600 hover:text-purple-600 transition">Contacto</a>
-                </div>
-                <button id="mobile-menu-btn" class="md:hidden text-gray-600">
-                    <i class="fas fa-bars text-2xl"></i>
-                </button>
-            </div>
-        </div>
-        <!-- Mobile menu -->
-        <div id="mobile-menu" class="hidden md:hidden bg-white border-t">
-            <div class="px-6 py-4 space-y-3">
-                <a href="/" class="block text-gray-600 hover:text-purple-600 transition">Inicio</a>
-                <a href="/#projects" class="block text-gray-600 hover:text-purple-600 transition">Proyectos</a>
-                <a href="/blog/" class="block text-purple-600 font-medium">Blog</a>
-                <a href="/#contact" class="block text-gray-600 hover:text-purple-600 transition">Contacto</a>
-            </div>
-        </div>
-    </nav>
 
-    <!-- Main Content -->
-    <main class="pt-24 pb-16">
-        <div class="container mx-auto px-6">
-            <!-- Header -->
-            <div class="text-center mb-16">
-                <h1 class="text-4xl md:text-5xl font-bold mb-4 gradient-text">Blog</h1>
-                <p class="text-xl text-gray-600 max-w-3xl mx-auto">
-                    Artículos sobre desarrollo web, Python, tecnología y mis experiencias como desarrollador independiente.
-                </p>
-            </div>
-
-            <!-- Search and Filter -->
-            <div class="mb-12">
-                <div class="max-w-2xl mx-auto">
-                    <div class="relative">
-                        <input 
-                            type="text" 
-                            id="search-input" 
-                            placeholder="Buscar artículos..." 
-                            class="w-full px-6 py-4 pr-12 border border-gray-300 rounded-full focus:outline-none focus:border-purple-500 text-lg"
-                        >
-                        <i class="fas fa-search absolute right-6 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
-                    </div>
-                    
-                    <!-- Category filters -->
-                    <div class="flex flex-wrap justify-center gap-3 mt-6">
-                        <button class="category-btn px-4 py-2 rounded-full bg-purple-600 text-white" data-category="all">
-                            Todos
-                        </button>
-                        <button class="category-btn px-4 py-2 rounded-full bg-gray-200 text-gray-700 hover:bg-gray-300" data-category="python">
-                            Python
-                        </button>
-                        <button class="category-btn px-4 py-2 rounded-full bg-gray-200 text-gray-700 hover:bg-gray-300" data-category="web">
-                            Web
-                        </button>
-                        <button class="category-btn px-4 py-2 rounded-full bg-gray-200 text-gray-700 hover:bg-gray-300" data-category="tools">
-                            Herramientas
-                        </button>
-                    </div>
+                <div class="pagination">
+                    <a href="#" class="active">1</a>
+                    <a href="#">2</a>
+                    <a href="#">3</a>
+                    <a href="#">Siguiente</a>
                 </div>
             </div>
-
-            <!-- Blog Posts Grid -->
-            <div id="blog-posts" class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <!-- Blog posts will be dynamically loaded here -->
-            </div>
-
-            <!-- Load More Button -->
-            <div class="text-center mt-12">
-                <button id="load-more" class="inline-block border-2 border-purple-600 text-purple-600 px-8 py-3 rounded-full font-semibold hover:bg-purple-600 hover:text-white transition">
-                    Cargar más artículos <i class="fas fa-arrow-down ml-2"></i>
-                </button>
-            </div>
-        </div>
+        </section>
     </main>
 
-    <!-- Footer -->
-    <footer class="bg-gray-900 text-white py-8">
-        <div class="container mx-auto px-6">
-            <div class="flex flex-col md:flex-row justify-between items-center">
-                <div class="mb-4 md:mb-0">
-                    <p>&copy; 2026 eucarigo. Todos los derechos reservados.</p>
-                    <p class="text-gray-400 text-sm mt-1">Impulsado por GitHub Pages</p>
-                </div>
-                <div class="flex space-x-6">
-                    <a href="mailto:contact@eucarigo.com" class="hover:text-purple-400 transition"><i class="fas fa-envelope"></i></a>
-                    <a href="https://github.com/eucarigo" target="_blank" class="hover:text-purple-400 transition"><i class="fab fa-github"></i></a>
-                    <a href="https://eucarigo.com" target="_blank" class="hover:text-purple-400 transition"><i class="fas fa-globe"></i></a>
-                </div>
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <img src="e.png" alt="Eucarigo Logo">
+                <span>© 2026 eucarigo. Todos los derechos reservados.</span>
             </div>
+            <div class="footer-links">
+                <a href="index.html">Inicio</a>
+                <a href="projects.html">Proyectos</a>
+                <a href="blog.html">Blog</a>
+                <a href="contact.html">Contacto</a>
+            </div>
+            <p>Impulsado por GitHub Pages</p>
         </div>
     </footer>
-
-    <!-- JavaScript -->
-    <script>
-        // Blog posts data (this would normally come from a JSON file or API)
-        const blogPosts = [
-            {
-                id: 1,
-                title: "Cómo construí mi portfolio con GitHub Pages",
-                excerpt: "Aprende a crear un portfolio profesional gratuito usando GitHub Pages y cómo automatizar el despliegue de tu sitio web personal.",
-                date: "2026-04-15",
-                category: "web",
-                image: "https://images.unsplash.com/photo-1467232004584-a241de8bcf5d?w=800&h=400&fit=crop",
-                readTime: "5 min",
-                slug: "post-1"
-            },
-            {
-                id: 2,
-                title: "5 herramientas que uso como desarrollador independiente",
-                excerpt: "Descubre las herramientas esenciales que me ayudan a ser más productivo y eficiente en mi trabajo diario como desarrollador freelance.",
-                date: "2026-04-10",
-                category: "tools",
-                image: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=800&h=400&fit=crop",
-                readTime: "7 min",
-                slug: "post-2"
-            },
-            {
-                id: 3,
-                title: "Python async/await: Guía completa",
-                excerpt: "Todo lo que necesitas saber sobre programación asíncrona en Python, desde los conceptos básicos hasta casos de uso avanzados.",
-                date: "2026-04-05",
-                category: "python",
-                image: "https://images.unsplash.com/photo-1526379095098-d400fd0bf935?w=800&h=400&fit=crop",
-                readTime: "10 min",
-                slug: "post-3"
-            },
-            {
-                id: 4,
-                title: "Optimización de rendimiento en aplicaciones web",
-                excerpt: "Técnicas y estrategias para mejorar la velocidad y rendimiento de tus aplicaciones web modernas.",
-                date: "2026-03-28",
-                category: "web",
-                image: "https://images.unsplash.com/photo-1558494949-ef010cbcc31c?w=800&h=400&fit=crop",
-                readTime: "8 min",
-                slug: "post-4"
-            }
-        ];
-
-        let currentCategory = 'all';
-        let searchTerm = '';
-        let postsToShow = 6;
-
-        // Initialize blog
-        function initBlog() {
-            renderBlogPosts();
-            setupEventListeners();
-        }
-
-        // Render blog posts
-        function renderBlogPosts() {
-            const container = document.getElementById('blog-posts');
-            const filteredPosts = filterPosts();
-            const postsToRender = filteredPosts.slice(0, postsToShow);
-            
-            container.innerHTML = postsToRender.map(post => `
-                <article class="card-hover bg-white rounded-xl overflow-hidden shadow-lg">
-                    <div class="relative h-48 bg-gradient-to-br from-purple-500 to-pink-500">
-                        <img src="${post.image}" alt="${post.title}" class="w-full h-full object-cover">
-                        <div class="absolute top-4 left-4">
-                            <span class="bg-white/90 backdrop-blur px-3 py-1 rounded-full text-sm font-medium text-purple-600">
-                                ${getCategoryName(post.category)}
-                            </span>
-                        </div>
-                    </div>
-                    <div class="p-6">
-                        <div class="flex items-center text-sm text-gray-500 mb-3">
-                            <i class="far fa-calendar mr-2"></i>
-                            <span>${formatDate(post.date)}</span>
-                            <span class="mx-2">·</span>
-                            <i class="far fa-clock mr-1"></i>
-                            <span>${post.readTime}</span>
-                        </div>
-                        <h3 class="text-xl font-semibold mb-3">
-                            <a href="/blog/${post.slug}.html" class="text-gray-800 hover:text-purple-600 transition">
-                                ${post.title}
-                            </a>
-                        </h3>
-                        <p class="text-gray-600 mb-4">
-                            ${post.excerpt}
-                        </p>
-                        <a href="/blog/${post.slug}.html" class="text-purple-600 hover:text-purple-700 font-medium">
-                            Leer más <i class="fas fa-arrow-right ml-1"></i>
-                        </a>
-                    </div>
-                </article>
-            `).join('');
-
-            // Show/hide load more button
-            const loadMoreBtn = document.getElementById('load-more');
-            if (filteredPosts.length <= postsToShow) {
-                loadMoreBtn.style.display = 'none';
-            } else {
-                loadMoreBtn.style.display = 'inline-block';
-            }
-        }
-
-        // Filter posts
-        function filterPosts() {
-            return blogPosts.filter(post => {
-                const matchesCategory = currentCategory === 'all' || post.category === currentCategory;
-                const matchesSearch = searchTerm === '' || 
-                    post.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                    post.excerpt.toLowerCase().includes(searchTerm.toLowerCase());
-                return matchesCategory && matchesSearch;
-            });
-        }
-
-        // Setup event listeners
-        function setupEventListeners() {
-            // Mobile menu
-            const mobileMenuBtn = document.getElementById('mobile-menu-btn');
-            const mobileMenu = document.getElementById('mobile-menu');
-            
-            mobileMenuBtn.addEventListener('click', () => {
-                mobileMenu.classList.toggle('hidden');
-            });
-
-            // Search
-            const searchInput = document.getElementById('search-input');
-            searchInput.addEventListener('input', (e) => {
-                searchTerm = e.target.value;
-                postsToShow = 6;
-                renderBlogPosts();
-            });
-
-            // Category filters
-            const categoryBtns = document.querySelectorAll('.category-btn');
-            categoryBtns.forEach(btn => {
-                btn.addEventListener('click', () => {
-                    // Update active state
-                    categoryBtns.forEach(b => {
-                        b.classList.remove('bg-purple-600', 'text-white');
-                        b.classList.add('bg-gray-200', 'text-gray-700');
-                    });
-                    btn.classList.remove('bg-gray-200', 'text-gray-700');
-                    btn.classList.add('bg-purple-600', 'text-white');
-                    
-                    // Filter posts
-                    currentCategory = btn.dataset.category;
-                    postsToShow = 6;
-                    renderBlogPosts();
-                });
-            });
-
-            // Load more
-            document.getElementById('load-more').addEventListener('click', () => {
-                postsToShow += 3;
-                renderBlogPosts();
-            });
-        }
-
-        // Helper functions
-        function getCategoryName(category) {
-            const categories = {
-                'python': 'Python',
-                'web': 'Web',
-                'tools': 'Herramientas'
-            };
-            return categories[category] || category;
-        }
-
-        function formatDate(dateString) {
-            const date = new Date(dateString);
-            const options = { year: 'numeric', month: 'long', day: 'numeric' };
-            return date.toLocaleDateString('es-ES', options);
-        }
-
-        // Initialize when DOM is loaded
-        document.addEventListener('DOMContentLoaded', initBlog);
-    </script>
 </body>
 </html>
