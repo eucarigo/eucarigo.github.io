@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>proyectos | eucarigo</title>
+    <link rel="icon" type="image/x-icon" href="e.ico">
+    <link rel="icon" type="image/png" href="e.png">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #fff;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        header {
+            background: #fff;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            color: #333;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+        
+        .logo img {
+            width: 40px;
+            height: 40px;
+            margin-right: 10px;
+            border-radius: 8px;
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+        
+        .nav-links a {
+            text-decoration: none;
+            color: #666;
+            transition: color 0.3s;
+        }
+        
+        .nav-links a:hover {
+            color: #333;
+        }
+        
+        .page-header {
+            padding: 4rem 0;
+            text-align: center;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        
+        .page-header h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+        
+        .page-header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+        
+        .projects-section {
+            padding: 4rem 0;
+        }
+        
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+        
+        .project-card {
+            background: #f8f9fa;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+        
+        .project-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .project-card h3 {
+            color: #333;
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+        
+        .project-card p {
+            color: #666;
+            margin-bottom: 1.5rem;
+        }
+        
+        .project-tech {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .tech-tag {
+            background: #667eea;
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 15px;
+            font-size: 0.85rem;
+        }
+        
+        .project-links {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .project-links a {
+            padding: 8px 16px;
+            background: #667eea;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 0.9rem;
+            transition: background 0.3s;
+        }
+        
+        .project-links a:hover {
+            background: #5a67d8;
+        }
+        
+        .project-links a.secondary {
+            background: #6c757d;
+        }
+        
+        .project-links a.secondary:hover {
+            background: #5a6268;
+        }
+        
+        footer {
+            background: #333;
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+        }
+        
+        .footer-content {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 1rem;
+        }
+        
+        .footer-content img {
+            width: 30px;
+            height: 30px;
+            border-radius: 5px;
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 1rem;
+        }
+        
+        .footer-links a {
+            color: #ccc;
+            text-decoration: none;
+        }
+        
+        .footer-links a:hover {
+            color: white;
+        }
+        
+        @media (max-width: 768px) {
+            .nav-links {
+                gap: 1rem;
+            }
+            
+            .page-header h1 {
+                font-size: 2rem;
+            }
+            
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="container">
+            <a href="index.html" class="logo">
+                <img src="e.png" alt="Eucarigo Logo">
+                Eucarigo
+            </a>
+            <ul class="nav-links">
+                <li><a href="index.html">Inicio</a></li>
+                <li><a href="projects.html">Proyectos</a></li>
+                <li><a href="blog.html">Blog</a></li>
+                <li><a href="contact.html">Contacto</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="page-header">
+            <div class="container">
+                <h1>Mis Proyectos</h1>
+                <p>Explora mis trabajos y contribuciones al mundo del desarrollo de software</p>
+            </div>
+        </section>
+
+        <section class="projects-section">
+            <div class="container">
+                <div class="projects-grid">
+                    <div class="project-card">
+                        <h3>PreCita</h3>
+                        <p>Aplicación de escritorio en Python para gestionar citas y contactos, con sincronización automática de Google Calendar y recordatorios por correo electrónico.</p>
+                        <div class="project-tech">
+                            <span class="tech-tag">Python</span>
+                            <span class="tech-tag">Tkinter</span>
+                            <span class="tech-tag">Google API</span>
+                            <span class="tech-tag">SQLite</span>
+                        </div>
+                        <div class="project-links">
+                            <a href="precita.html">Ver más</a>
+                            <a href="https://github.com/eucarigo/precita">Código</a>
+                        </div>
+                    </div>
+
+                    <div class="project-card">
+                        <h3>pwd_gen.py</h3>
+                        <p>Generador de contraseñas aleatorias seguro y personalizable con diferentes opciones de configuración. Incluye validación de fortaleza y opciones de exportación.</p>
+                        <div class="project-tech">
+                            <span class="tech-tag">Python</span>
+                            <span class="tech-tag">Cryptography</span>
+                            <span class="tech-tag">CLI</span>
+                        </div>
+                        <div class="project-links">
+                            <a href="https://github.com/eucarigo/pwd_gen">Código fuente</a>
+                            <a href="#" class="secondary">Demo</a>
+                        </div>
+                    </div>
+
+                    <div class="project-card">
+                        <h3>SPS</h3>
+                        <p>Silenciador de Publicidad de Spotify. Herramienta que detecta y silencia automáticamente los anuncios en Spotify para una experiencia de música ininterrumpida.</p>
+                        <div class="project-tech">
+                            <span class="tech-tag">Python</span>
+                            <span class="tech-tag">Audio Processing</span>
+                            <span class="tech-tag">System Hooks</span>
+                        </div>
+                        <div class="project-links">
+                            <a href="https://github.com/eucarigo/">Código fuente</a>
+                            <a href="#" class="secondary">Descargar</a>
+                        </div>
+                    </div>
+
+                    <div class="project-card">
+                        <h3>Portfolio Web</h3>
+                        <p>Sitio web personal desarrollado con HTML, CSS y JavaScript, desplegado en GitHub Pages. Incluye blog, proyectos y sección de contacto.</p>
+                        <div class="project-tech">
+                            <span class="tech-tag">HTML5</span>
+                            <span class="tech-tag">CSS3</span>
+                            <span class="tech-tag">JavaScript</span>
+                            <span class="tech-tag">GitHub Pages</span>
+                        </div>
+                        <div class="project-links">
+                            <a href="https://eucarigo.com">Ver sitio</a>
+                            <a href="https://github.com/eucarigo/eucarigo.github.io">Código</a>
+                        </div>
+                    </div>
+
+                    <div class="project-card">
+                        <h3>API REST Manager</h3>
+                        <p>Herramienta de línea de comandos para gestionar y probar APIs REST. Permite guardar configuraciones, ejecutar pruebas automatizadas y generar reportes.</p>
+                        <div class="project-tech">
+                            <span class="tech-tag">Python</span>
+                            <span class="tech-tag">Flask</span>
+                            <span class="tech-tag">REST</span>
+                            <span class="tech-tag">JSON</span>
+                        </div>
+                        <div class="project-links">
+                            <a href="https://github.com/eucarigo/api-manager">Código fuente</a>
+                            <a href="#" class="secondary">Documentación</a>
+                        </div>
+                    </div>
+
+                    <div class="project-card">
+                        <h3>Data Analyzer</h3>
+                        <p>Script para análisis de datos con visualizaciones interactivas. Procesa archivos CSV y genera gráficos estadísticos con Pandas y Matplotlib.</p>
+                        <div class="project-tech">
+                            <span class="tech-tag">Python</span>
+                            <span class="tech-tag">Pandas</span>
+                            <span class="tech-tag">Matplotlib</span>
+                            <span class="tech-tag">NumPy</span>
+                        </div>
+                        <div class="project-links">
+                            <a href="https://github.com/eucarigo/data-analyzer">Código fuente</a>
+                            <a href="#" class="secondary">Ejemplos</a>
+                        </div>
+                    </div>
+
+                    <div class="project-card">
+                        <h3>ChatBot Assistant</h3>
+                        <p>Asistente virtual con procesamiento de lenguaje natural para atención al cliente básica. Integración con múltiples plataformas de mensajería.</p>
+                        <div class="project-tech">
+                            <span class="tech-tag">Python</span>
+                            <span class="tech-tag">NLP</span>
+                            <span class="tech-tag">Telegram API</span>
+                            <span class="tech-tag">Machine Learning</span>
+                        </div>
+                        <div class="project-links">
+                            <a href="https://github.com/eucarigo/chatbot">Código fuente</a>
+                            <a href="#" class="secondary">Probar</a>
+                        </div>
+                    </div>
+
+                    <div class="project-card">
+                        <h3>File Organizer</h3>
+                        <p>Herramienta automática para organizar archivos en carpetas según su tipo, fecha y contenido. Incluye reglas personalizables y programación de tareas.</p>
+                        <div class="project-tech">
+                            <span class="tech-tag">Python</span>
+                            <span class="tech-tag">File System</span>
+                            <span class="tech-tag">Scheduler</span>
+                            <span class="tech-tag">Regex</span>
+                        </div>
+                        <div class="project-links">
+                            <a href="https://github.com/eucarigo/file-organizer">Código fuente</a>
+                            <a href="#" class="secondary">Guía</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <img src="e.png" alt="Eucarigo Logo">
+                <span>© 2026 eucarigo. Todos los derechos reservados.</span>
+            </div>
+            <div class="footer-links">
+                <a href="index.html">Inicio</a>
+                <a href="projects.html">Proyectos</a>
+                <a href="blog.html">Blog</a>
+                <a href="contact.html">Contacto</a>
+            </div>
+            <p>Impulsado por GitHub Pages</p>
+        </div>
+    </footer>
+</body>
+</html>
