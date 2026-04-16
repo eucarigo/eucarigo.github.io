@@ -4,538 +4,597 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PreCita - Gestor de Citas y Contactos | Eucarigo</title>
-    <meta name="description" content="PreCita es una aplicación de escritorio en Python para gestionar citas y contactos, con sincronización de Google Calendar y recordatorios por email.">
-    <meta name="keywords" content="precita, citas, contactos, python, google calendar, gmail, recordatorios">
-    
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <!-- Custom styles -->
+    <link rel="icon" type="image/x-icon" href="e.ico">
+    <link rel="icon" type="image/png" href="e.png">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
-        
         * {
-            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
         
-        .gradient-text {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #fff;
         }
         
-        .hero-gradient {
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        header {
+            background: #fff;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            color: #333;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+        
+        .logo img {
+            width: 40px;
+            height: 40px;
+            margin-right: 10px;
+            border-radius: 8px;
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+        
+        .nav-links a {
+            text-decoration: none;
+            color: #666;
+            transition: color 0.3s;
+        }
+        
+        .nav-links a:hover {
+            color: #333;
+        }
+        
+        .project-hero {
+            padding: 4rem 0;
+            text-align: center;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        
+        .project-logo {
+            width: 80px;
+            height: 80px;
+            margin-bottom: 1rem;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+        
+        .project-hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+        
+        .project-hero p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 12px 24px;
+            background: #fff;
+            color: #667eea;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: 600;
+            transition: transform 0.3s, box-shadow 0.3s;
+            margin: 0 10px;
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        
+        .features {
+            padding: 4rem 0;
+        }
+        
+        .features h2 {
+            text-align: center;
+            margin-bottom: 3rem;
+            font-size: 2.5rem;
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
         }
         
         .feature-card {
-            transition: all 0.3s ease;
+            background: #f8f9fa;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
         }
         
         .feature-card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+        
+        .feature-card h3 {
+            color: #333;
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+        
+        .feature-card p {
+            color: #666;
+        }
+        
+        .installation {
+            padding: 4rem 0;
+            background: #f8f9fa;
+        }
+        
+        .installation h2 {
+            text-align: center;
+            margin-bottom: 3rem;
+            font-size: 2.5rem;
+        }
+        
+        .install-section {
+            margin-bottom: 3rem;
+        }
+        
+        .install-section h3 {
+            color: #333;
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+        }
+        
+        .requirements-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .req-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .req-card h4 {
+            color: #667eea;
+            margin-bottom: 1rem;
+        }
+        
+        .req-card ul {
+            list-style: none;
+            padding-left: 0;
+        }
+        
+        .req-card li {
+            padding: 0.5rem 0;
+            color: #666;
         }
         
         .code-block {
-            background: #1e293b;
+            background: #2d3748;
             color: #e2e8f0;
+            padding: 1.5rem;
             border-radius: 8px;
-            padding: 1rem;
+            margin: 1rem 0;
+            font-family: 'Courier New', monospace;
             overflow-x: auto;
         }
         
-        .fade-in {
-            animation: fadeIn 0.6s ease-in;
+        .step-list {
+            counter-reset: step-counter;
+            list-style: none;
+            padding-left: 0;
         }
         
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
+        .step-list li {
+            counter-increment: step-counter;
+            margin-bottom: 2rem;
+            position: relative;
+            padding-left: 50px;
+        }
+        
+        .step-list li::before {
+            content: counter(step-counter);
+            position: absolute;
+            left: 0;
+            top: 0;
+            background: #667eea;
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+        
+        .usage {
+            padding: 4rem 0;
+        }
+        
+        .usage h2 {
+            text-align: center;
+            margin-bottom: 3rem;
+            font-size: 2.5rem;
+        }
+        
+        .usage-section {
+            margin-bottom: 3rem;
+        }
+        
+        .usage-section h3 {
+            color: #333;
+            margin-bottom: 1.5rem;
+            font-size: 1.3rem;
+        }
+        
+        .faq {
+            padding: 4rem 0;
+            background: #f8f9fa;
+        }
+        
+        .faq h2 {
+            text-align: center;
+            margin-bottom: 3rem;
+            font-size: 2.5rem;
+        }
+        
+        .faq-item {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .faq-item h3 {
+            color: #667eea;
+            margin-bottom: 1rem;
+        }
+        
+        .faq-item p {
+            color: #666;
+        }
+        
+        .cta {
+            padding: 4rem 0;
+            text-align: center;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        
+        .cta h2 {
+            margin-bottom: 1rem;
+            font-size: 2rem;
+        }
+        
+        .cta p {
+            margin-bottom: 2rem;
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+        
+        .cta .btn {
+            background: white;
+            color: #667eea;
+        }
+        
+        .cta .btn:hover {
+            background: #f8f9fa;
+        }
+        
+        footer {
+            background: #333;
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+        }
+        
+        .footer-content {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 1rem;
+        }
+        
+        .footer-content img {
+            width: 30px;
+            height: 30px;
+            border-radius: 5px;
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 1rem;
+        }
+        
+        .footer-links a {
+            color: #ccc;
+            text-decoration: none;
+        }
+        
+        .footer-links a:hover {
+            color: white;
+        }
+        
+        @media (max-width: 768px) {
+            .nav-links {
+                gap: 1rem;
+            }
+            
+            .project-hero h1 {
+                font-size: 2rem;
+            }
+            
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .requirements-grid {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
-<body class="bg-gray-50 text-gray-800">
-    <!-- Navigation -->
-    <nav class="fixed top-0 w-full bg-white shadow-md z-50">
-        <div class="container mx-auto px-6 py-4">
-            <div class="flex justify-between items-center">
-                <div class="text-2xl font-bold gradient-text">
-                    <a href="/">eucarigo</a>
-                </div>
-                <div class="hidden md:flex space-x-8">
-                    <a href="/" class="text-gray-600 hover:text-purple-600 transition">Inicio</a>
-                    <a href="/#projects" class="text-purple-600 font-medium">Proyectos</a>
-                    <a href="/blog/" class="text-gray-600 hover:text-purple-600 transition">Blog</a>
-                    <a href="/#contact" class="text-gray-600 hover:text-purple-600 transition">Contacto</a>
-                </div>
-                <button id="mobile-menu-btn" class="md:hidden text-gray-600">
-                    <i class="fas fa-bars text-2xl"></i>
-                </button>
+<body>
+    <header>
+        <nav class="container">
+            <a href="index.html" class="logo">
+                <img src="e.png" alt="Eucarigo Logo">
+                Eucarigo
+            </a>
+            <ul class="nav-links">
+                <li><a href="index.html">Inicio</a></li>
+                <li><a href="projects.html">Proyectos</a></li>
+                <li><a href="blog.html">Blog</a></li>
+                <li><a href="contact.html">Contacto</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="project-hero">
+            <div class="container">
+                <img src="precita.png" alt="PreCita Logo" class="project-logo">
+                <h1>PreCita</h1>
+                <p>Gestor de Citas y Contactos Inteligente</p>
+                <p>Aplicación de escritorio en Python para gestionar tus citas y contactos, con sincronización automática de Google Calendar y recordatorios por correo electrónico.</p>
+                <a href="https://github.com/eucarigo/precita" class="btn">Ver en GitHub</a>
+                <a href="#" class="btn">Descargar</a>
             </div>
-        </div>
-        <!-- Mobile menu -->
-        <div id="mobile-menu" class="hidden md:hidden bg-white border-t">
-            <div class="px-6 py-4 space-y-3">
-                <a href="/" class="block text-gray-600 hover:text-purple-600 transition">Inicio</a>
-                <a href="/#projects" class="block text-purple-600 font-medium">Proyectos</a>
-                <a href="/blog/" class="block text-gray-600 hover:text-purple-600 transition">Blog</a>
-                <a href="/#contact" class="block text-gray-600 hover:text-purple-600 transition">Contacto</a>
-            </div>
-        </div>
-    </nav>
+        </section>
 
-    <!-- Hero Section -->
-    <section class="pt-24 pb-16 hero-gradient text-white">
-        <div class="container mx-auto px-6">
-            <div class="max-w-4xl mx-auto text-center fade-in">
-                <div class="mb-8">
-                    <div class="inline-flex items-center justify-center w-20 h-20 bg-white/20 backdrop-blur rounded-2xl mb-6">
-                        <i class="fas fa-calendar-alt text-4xl"></i>
+        <section class="features">
+            <div class="container">
+                <h2>Características Principales</h2>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <h3>Sincronización con Google Calendar</h3>
+                        <p>Sincroniza automáticamente tus citas con tu Google Calendar para tener todo organizado en un solo lugar.</p>
                     </div>
-                </div>
-                <h1 class="text-4xl md:text-6xl font-bold mb-6">PreCita</h1>
-                <p class="text-xl md:text-2xl mb-8 opacity-90">
-                    Gestor de Citas y Contactos Inteligente
-                </p>
-                <p class="text-lg mb-12 max-w-2xl mx-auto opacity-80">
-                    Aplicación de escritorio en Python para gestionar tus citas y contactos, 
-                    con sincronización automática de Google Calendar y recordatorios por correo electrónico.
-                </p>
-                <div class="flex flex-col sm:flex-row justify-center gap-4">
-                    <a href="https://github.com/eucarigo/precita" target="_blank" 
-                       class="bg-white text-purple-600 px-8 py-4 rounded-full font-semibold hover:bg-gray-100 transition transform hover:scale-105">
-                        <i class="fab fa-github mr-2"></i> Ver en GitHub
-                    </a>
-                    <a href="#installation" 
-                       class="border-2 border-white text-white px-8 py-4 rounded-full font-semibold hover:bg-white hover:text-purple-600 transition transform hover:scale-105">
-                        <i class="fas fa-download mr-2"></i> Descargar
-                    </a>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Features Section -->
-    <section class="py-20 bg-white">
-        <div class="container mx-auto px-6">
-            <h2 class="text-4xl font-bold text-center mb-16 gradient-text">Características Principales</h2>
-            
-            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <div class="feature-card bg-gray-50 rounded-xl p-6">
-                    <div class="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center mb-4">
-                        <i class="fas fa-sync text-purple-600 text-xl"></i>
+                    <div class="feature-card">
+                        <h3>Recordatorios por Email</h3>
+                        <p>Recibe recordatorios automáticos por correo electrónico antes de tus citas importantes.</p>
                     </div>
-                    <h3 class="text-xl font-semibold mb-3">Sincronización con Google Calendar</h3>
-                    <p class="text-gray-600">
-                        Sincroniza automáticamente tus citas con tu Google Calendar para tener todo organizado en un solo lugar.
-                    </p>
-                </div>
-
-                <div class="feature-card bg-gray-50 rounded-xl p-6">
-                    <div class="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center mb-4">
-                        <i class="fas fa-envelope text-purple-600 text-xl"></i>
+                    <div class="feature-card">
+                        <h3>Gestión de Contactos</h3>
+                        <p>Almacena y organiza información detallada de tus contactos para un acceso rápido.</p>
                     </div>
-                    <h3 class="text-xl font-semibold mb-3">Recordatorios por Email</h3>
-                    <p class="text-gray-600">
-                        Recibe recordatorios automáticos por correo electrónico antes de tus citas importantes.
-                    </p>
-                </div>
-
-                <div class="feature-card bg-gray-50 rounded-xl p-6">
-                    <div class="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center mb-4">
-                        <i class="fas fa-users text-purple-600 text-xl"></i>
+                    <div class="feature-card">
+                        <h3>Notificaciones Inteligentes</h3>
+                        <p>Sistema de notificaciones configurable para nunca olvidar una cita importante.</p>
                     </div>
-                    <h3 class="text-xl font-semibold mb-3">Gestión de Contactos</h3>
-                    <p class="text-gray-600">
-                        Almacena y organiza información detallada de tus contactos para un acceso rápido.
-                    </p>
-                </div>
-
-                <div class="feature-card bg-gray-50 rounded-xl p-6">
-                    <div class="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center mb-4">
-                        <i class="fas fa-bell text-purple-600 text-xl"></i>
+                    <div class="feature-card">
+                        <h3>Estadísticas y Reportes</h3>
+                        <p>Visualiza estadísticas sobre tus citas y genera reportes para un mejor seguimiento.</p>
                     </div>
-                    <h3 class="text-xl font-semibold mb-3">Notificaciones Inteligentes</h3>
-                    <p class="text-gray-600">
-                        Sistema de notificaciones configurable para nunca olvidar una cita importante.
-                    </p>
-                </div>
-
-                <div class="feature-card bg-gray-50 rounded-xl p-6">
-                    <div class="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center mb-4">
-                        <i class="fas fa-chart-bar text-purple-600 text-xl"></i>
+                    <div class="feature-card">
+                        <h3>Base de Datos Local</h3>
+                        <p>Almacenamiento seguro de tus datos localmente con opción de backup automático.</p>
                     </div>
-                    <h3 class="text-xl font-semibold mb-3">Estadísticas y Reportes</h3>
-                    <p class="text-gray-600">
-                        Visualiza estadísticas sobre tus citas y genera reportes para un mejor seguimiento.
-                    </p>
-                </div>
-
-                <div class="feature-card bg-gray-50 rounded-xl p-6">
-                    <div class="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center mb-4">
-                        <i class="fas fa-database text-purple-600 text-xl"></i>
-                    </div>
-                    <h3 class="text-xl font-semibold mb-3">Base de Datos Local</h3>
-                    <p class="text-gray-600">
-                        Almacenamiento seguro de tus datos localmente con opción de backup automático.
-                    </p>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- Installation Section -->
-    <section id="installation" class="py-20 bg-gray-50">
-        <div class="container mx-auto px-6">
-            <h2 class="text-4xl font-bold text-center mb-16 gradient-text">Instalación</h2>
-            
-            <div class="max-w-4xl mx-auto">
-                <div class="bg-white rounded-xl shadow-lg p-8">
-                    <h3 class="text-2xl font-semibold mb-6">Requisitos del Sistema</h3>
-                    <div class="grid md:grid-cols-2 gap-6 mb-8">
-                        <div>
-                            <h4 class="font-medium mb-3">Mínimos:</h4>
-                            <ul class="space-y-2 text-gray-600">
-                                <li><i class="fas fa-check text-green-500 mr-2"></i> Python 3.8 o superior</li>
-                                <li><i class="fas fa-check text-green-500 mr-2"></i> 4 GB de RAM</li>
-                                <li><i class="fas fa-check text-green-500 mr-2"></i> 500 MB de espacio en disco</li>
-                                <li><i class="fas fa-check text-green-500 mr-2"></i> Conexión a internet para sincronización</li>
+        <section class="installation">
+            <div class="container">
+                <h2>Instalación</h2>
+                
+                <div class="install-section">
+                    <h3>Requisitos del Sistema</h3>
+                    <div class="requirements-grid">
+                        <div class="req-card">
+                            <h4>Mínimos:</h4>
+                            <ul>
+                                <li>Python 3.8 o superior</li>
+                                <li>4 GB de RAM</li>
+                                <li>500 MB de espacio en disco</li>
+                                <li>Conexión a internet para sincronización</li>
                             </ul>
                         </div>
-                        <div>
-                            <h4 class="font-medium mb-3">Recomendados:</h4>
-                            <ul class="space-y-2 text-gray-600">
-                                <li><i class="fas fa-check text-green-500 mr-2"></i> Python 3.12</li>
-                                <li><i class="fas fa-check text-green-500 mr-2"></i> 8 GB de RAM</li>
-                                <li><i class="fas fa-check text-green-500 mr-2"></i> 1 GB de espacio en disco</li>
-                                <li><i class="fas fa-check text-green-500 mr-2"></i> Conexión estable a internet</li>
+                        <div class="req-card">
+                            <h4>Recomendados:</h4>
+                            <ul>
+                                <li>Python 3.12</li>
+                                <li>8 GB de RAM</li>
+                                <li>1 GB de espacio en disco</li>
+                                <li>Conexión estable a internet</li>
                             </ul>
                         </div>
                     </div>
+                </div>
 
-                    <h3 class="text-2xl font-semibold mb-6">Pasos de Instalación</h3>
-                    <div class="space-y-6">
-                        <div class="flex items-start">
-                            <div class="flex-shrink-0 w-8 h-8 bg-purple-600 text-white rounded-full flex items-center justify-center font-semibold mr-4">
-                                1
-                            </div>
-                            <div>
-                                <h4 class="font-medium mb-2">Clonar el repositorio</h4>
-                                <div class="code-block text-sm">
-                                    <code>git clone https://github.com/eucarigo/precita.git<br>cd precita</code>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="flex items-start">
-                            <div class="flex-shrink-0 w-8 h-8 bg-purple-600 text-white rounded-full flex items-center justify-center font-semibold mr-4">
-                                2
-                            </div>
-                            <div>
-                                <h4 class="font-medium mb-2">Crear entorno virtual</h4>
-                                <div class="code-block text-sm">
-                                    <code>python -m venv venv<br>source venv/bin/activate  # Linux/Mac<br>venv\Scripts\activate  # Windows</code>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="flex items-start">
-                            <div class="flex-shrink-0 w-8 h-8 bg-purple-600 text-white rounded-full flex items-center justify-center font-semibold mr-4">
-                                3
-                            </div>
-                            <div>
-                                <h4 class="font-medium mb-2">Instalar dependencias</h4>
-                                <div class="code-block text-sm">
-                                    <code>pip install -r requirements.txt</code>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="flex items-start">
-                            <div class="flex-shrink-0 w-8 h-8 bg-purple-600 text-white rounded-full flex items-center justify-center font-semibold mr-4">
-                                4
-                            </div>
-                            <div>
-                                <h4 class="font-medium mb-2">Configurar credenciales</h4>
-                                <p class="text-gray-600 mb-2">
-                                    Crea un archivo <code>.env</code> con tus credenciales de Google:
-                                </p>
-                                <div class="code-block text-sm">
-                                    <code>GOOGLE_CALENDAR_ID=tu_calendar_id@gmail.com<br>GMAIL_USER=tu_email@gmail.com<br>GMAIL_PASSWORD=tu_password_app</code>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="flex items-start">
-                            <div class="flex-shrink-0 w-8 h-8 bg-purple-600 text-white rounded-full flex items-center justify-center font-semibold mr-4">
-                                5
-                            </div>
-                            <div>
-                                <h4 class="font-medium mb-2">Ejecutar la aplicación</h4>
-                                <div class="code-block text-sm">
-                                    <code>python main.py</code>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                <div class="install-section">
+                    <h3>Pasos de Instalación</h3>
+                    <ol class="step-list">
+                        <li>
+                            <h4>Clonar el repositorio</h4>
+                            <div class="code-block">git clone https://github.com/eucarigo/precita.git<br>cd precita</div>
+                        </li>
+                        <li>
+                            <h4>Crear entorno virtual</h4>
+                            <div class="code-block">python -m venv venv<br>source venv/bin/activate # Linux/Mac<br>venv\Scripts\activate # Windows</div>
+                        </li>
+                        <li>
+                            <h4>Instalar dependencias</h4>
+                            <div class="code-block">pip install -r requirements.txt</div>
+                        </li>
+                        <li>
+                            <h4>Configurar credenciales</h4>
+                            <p>Crea un archivo .env con tus credenciales de Google:</p>
+                            <div class="code-block">.env</div>
+                            <div class="code-block">GOOGLE_CALENDAR_ID=tu_calendar_id@gmail.com<br>GMAIL_USER=tu_email@gmail.com<br>GMAIL_PASSWORD=tu_password_app</div>
+                        </li>
+                        <li>
+                            <h4>Ejecutar la aplicación</h4>
+                            <div class="code-block">python main.py</div>
+                        </li>
+                    </ol>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- Usage Section -->
-    <section class="py-20 bg-white">
-        <div class="container mx-auto px-6">
-            <h2 class="text-4xl font-bold text-center mb-16 gradient-text">Guía de Uso</h2>
-            
-            <div class="max-w-4xl mx-auto">
-                <div class="grid md:grid-cols-2 gap-8">
-                    <div class="bg-gray-50 rounded-xl p-6">
-                        <div class="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center mb-4">
-                            <i class="fas fa-plus text-purple-600 text-xl"></i>
-                        </div>
-                        <h3 class="text-xl font-semibold mb-3">Crear una Cita</h3>
-                        <ol class="space-y-2 text-gray-600">
-                            <li>1. Haz clic en "Nueva Cita"</li>
-                            <li>2. Completa los detalles (título, fecha, hora)</li>
-                            <li>3. Selecciona los contactos involucrados</li>
-                            <li>4. Configura recordatorios si es necesario</li>
-                            <li>5. Guarda y sincroniza con Google Calendar</li>
-                        </ol>
-                    </div>
+        <section class="usage">
+            <div class="container">
+                <h2>Guía de Uso</h2>
+                
+                <div class="usage-section">
+                    <h3>Crear una Cita</h3>
+                    <ol class="step-list">
+                        <li>Haz clic en "Nueva Cita"</li>
+                        <li>Completa los detalles (título, fecha, hora)</li>
+                        <li>Selecciona los contactos involucrados</li>
+                        <li>Configura recordatorios si es necesario</li>
+                        <li>Guarda y sincroniza con Google Calendar</li>
+                    </ol>
+                </div>
 
-                    <div class="bg-gray-50 rounded-xl p-6">
-                        <div class="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center mb-4">
-                            <i class="fas fa-user-plus text-purple-600 text-xl"></i>
-                        </div>
-                        <h3 class="text-xl font-semibold mb-3">Gestionar Contactos</h3>
-                        <ol class="space-y-2 text-gray-600">
-                            <li>1. Ve a la sección "Contactos"</li>
-                            <li>2. Haz clic en "Agregar Contacto"</li>
-                            <li>3. Ingresa información personal y de contacto</li>
-                            <li>4. Asocia etiquetas para mejor organización</li>
-                            <li>5. Guarda para usar en futuras citas</li>
-                        </ol>
-                    </div>
+                <div class="usage-section">
+                    <h3>Gestionar Contactos</h3>
+                    <ol class="step-list">
+                        <li>Ve a la sección "Contactos"</li>
+                        <li>Haz clic en "Agregar Contacto"</li>
+                        <li>Ingresa información personal y de contacto</li>
+                        <li>Asocia etiquetas para mejor organización</li>
+                        <li>Guarda para usar en futuras citas</li>
+                    </ol>
+                </div>
 
-                    <div class="bg-gray-50 rounded-xl p-6">
-                        <div class="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center mb-4">
-                            <i class="fas fa-sync-alt text-purple-600 text-xl"></i>
-                        </div>
-                        <h3 class="text-xl font-semibold mb-3">Sincronización</h3>
-                        <ol class="space-y-2 text-gray-600">
-                            <li>1. Configura tu cuenta de Google</li>
-                            <li>2. Autoriza el acceso a Calendar y Gmail</li>
-                            <li>3. Selecciona el calendario a sincronizar</li>
-                            <li>4. Activa la sincronización automática</li>
-                            <li>5. Revisa el estado de sincronización</li>
-                        </ol>
-                    </div>
+                <div class="usage-section">
+                    <h3>Sincronización</h3>
+                    <ol class="step-list">
+                        <li>Configura tu cuenta de Google</li>
+                        <li>Autoriza el acceso a Calendar y Gmail</li>
+                        <li>Selecciona el calendario a sincronizar</li>
+                        <li>Activa la sincronización automática</li>
+                        <li>Revisa el estado de sincronización</li>
+                    </ol>
+                </div>
 
-                    <div class="bg-gray-50 rounded-xl p-6">
-                        <div class="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center mb-4">
-                            <i class="fas fa-bell text-purple-600 text-xl"></i>
-                        </div>
-                        <h3 class="text-xl font-semibold mb-3">Configurar Recordatorios</h3>
-                        <ol class="space-y-2 text-gray-600">
-                            <li>1. Accede a "Configuración"</li>
-                            <li>2. Ve a "Recordatorios"</li>
-                            <li>3. Configura tiempos por defecto</li>
-                            <li>4. Personaliza mensajes de email</li>
-                            <li>5. Activa notificaciones del sistema</li>
-                        </ol>
-                    </div>
+                <div class="usage-section">
+                    <h3>Configurar Recordatorios</h3>
+                    <ol class="step-list">
+                        <li>Accede a "Configuración"</li>
+                        <li>Ve a "Recordatorios"</li>
+                        <li>Configura tiempos por defecto</li>
+                        <li>Personaliza mensajes de email</li>
+                        <li>Activa notificaciones del sistema</li>
+                    </ol>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- FAQ Section -->
-    <section class="py-20 bg-gray-50">
-        <div class="container mx-auto px-6">
-            <h2 class="text-4xl font-bold text-center mb-16 gradient-text">Preguntas Frecuentes</h2>
-            
-            <div class="max-w-3xl mx-auto">
-                <div class="space-y-6">
-                    <div class="bg-white rounded-xl shadow-md overflow-hidden">
-                        <button class="faq-toggle w-full px-6 py-4 text-left flex justify-between items-center hover:bg-gray-50">
-                            <span class="font-medium">¿PreCita es gratuito?</span>
-                            <i class="fas fa-chevron-down text-purple-600 transition-transform"></i>
-                        </button>
-                        <div class="faq-content hidden px-6 pb-4">
-                            <p class="text-gray-600">
-                                Sí, PreCita es completamente gratuito y de código abierto. Puedes usarlo sin coste alguno 
-                                y el código está disponible en GitHub para que puedas revisarlo y contribuir.
-                            </p>
-                        </div>
-                    </div>
-
-                    <div class="bg-white rounded-xl shadow-md overflow-hidden">
-                        <button class="faq-toggle w-full px-6 py-4 text-left flex justify-between items-center hover:bg-gray-50">
-                            <span class="font-medium">¿Necesito una cuenta de Google?</span>
-                            <i class="fas fa-chevron-down text-purple-600 transition-transform"></i>
-                        </button>
-                        <div class="faq-content hidden px-6 pb-4">
-                            <p class="text-gray-600">
-                                Para las funciones de sincronización con Google Calendar y envío de recordatorios por Gmail, 
-                                sí necesitas una cuenta de Google. Sin embargo, puedes usar PreCita sin estas funciones 
-                                si solo necesitas gestión local de citas y contactos.
-                            </p>
-                        </div>
-                    </div>
-
-                    <div class="bg-white rounded-xl shadow-md overflow-hidden">
-                        <button class="faq-toggle w-full px-6 py-4 text-left flex justify-between items-center hover:bg-gray-50">
-                            <span class="font-medium">¿Mis datos están seguros?</span>
-                            <i class="fas fa-chevron-down text-purple-600 transition-transform"></i>
-                        </button>
-                        <div class="faq-content hidden px-6 pb-4">
-                            <p class="text-gray-600">
-                                Sí, tus datos se almacenan localmente en tu computadora y no se comparten con terceros. 
-                                La sincronización con Google solo ocurre cuando tú lo autorizas y necesitas tus propias 
-                                credenciales de Google para ello.
-                            </p>
-                        </div>
-                    </div>
-
-                    <div class="bg-white rounded-xl shadow-md overflow-hidden">
-                        <button class="faq-toggle w-full px-6 py-4 text-left flex justify-between items-center hover:bg-gray-50">
-                            <span class="font-medium">¿Puedo exportar mis datos?</span>
-                            <i class="fas fa-chevron-down text-purple-600 transition-transform"></i>
-                        </button>
-                        <div class="faq-content hidden px-6 pb-4">
-                            <p class="text-gray-600">
-                                Sí, PreCita permite exportar tus citas y contactos en formatos como CSV, JSON y iCalendar. 
-                                También puedes hacer backup de toda la base de datos con un solo clic.
-                            </p>
-                        </div>
-                    </div>
-
-                    <div class="bg-white rounded-xl shadow-md overflow-hidden">
-                        <button class="faq-toggle w-full px-6 py-4 text-left flex justify-between items-center hover:bg-gray-50">
-                            <span class="font-medium">¿Hay soporte técnico disponible?</span>
-                            <i class="fas fa-chevron-down text-purple-600 transition-transform"></i>
-                        </button>
-                        <div class="faq-content hidden px-6 pb-4">
-                            <p class="text-gray-600">
-                                Puedes obtener soporte a través de los issues en GitHub, donde reportar bugs y solicitar 
-                                nuevas funcionalidades. También puedes contactarme directamente por email para 
-                                consultas más específicas.
-                            </p>
-                        </div>
-                    </div>
+        <section class="faq">
+            <div class="container">
+                <h2>Preguntas Frecuentes</h2>
+                <div class="faq-item">
+                    <h3>¿PreCita es gratuito?</h3>
+                    <p>Sí, PreCita es completamente gratuito y de código abierto. Puedes usarlo sin coste alguno y el código está disponible en GitHub para que puedas revisarlo y contribuir.</p>
+                </div>
+                <div class="faq-item">
+                    <h3>¿Necesito una cuenta de Google?</h3>
+                    <p>Para las funciones de sincronización con Google Calendar y envío de recordatorios por Gmail, sí necesitas una cuenta de Google. Sin embargo, puedes usar PreCita sin estas funciones si solo necesitas gestión local de citas y contactos.</p>
+                </div>
+                <div class="faq-item">
+                    <h3>¿Son seguros mis datos?</h3>
+                    <p>Sí, tus datos se almacenan localmente en tu computadora y no se comparten con terceros. La sincronización con Google solo ocurre cuando tú lo autorizas y necesitas tus propias credenciales de Google para ello.</p>
+                </div>
+                <div class="faq-item">
+                    <h3>¿Puedo exportar mis datos?</h3>
+                    <p>Sí, PreCita permite exportar tus citas y contactos en formatos como CSV, JSON y iCalendar. También puedes hacer backup de toda la base de datos con un solo clic.</p>
+                </div>
+                <div class="faq-item">
+                    <h3>¿Dónde puedo obtener soporte?</h3>
+                    <p>Puedes obtener soporte a través de los issues en GitHub, donde reportar bugs y solicitar nuevas funcionalidades. También puedes contactarme directamente por email para consultas más específicas.</p>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- CTA Section -->
-    <section class="py-20 bg-white">
-        <div class="container mx-auto px-6 text-center">
-            <h2 class="text-4xl font-bold mb-6 gradient-text">¿Listo para organizar tus citas?</h2>
-            <p class="text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
-                Descarga PreCita hoy mismo y empieza a gestionar tus citas y contactos de manera inteligente.
-            </p>
-            <div class="flex flex-col sm:flex-row justify-center gap-4">
-                <a href="https://github.com/eucarigo/precita" target="_blank" 
-                   class="bg-purple-600 text-white px-8 py-4 rounded-full font-semibold hover:bg-purple-700 transition transform hover:scale-105">
-                    <i class="fab fa-github mr-2"></i> Ver en GitHub
-                </a>
-                <a href="mailto:contact@eucarigo.com?subject=Soporte PreCita" 
-                   class="border-2 border-purple-600 text-purple-600 px-8 py-4 rounded-full font-semibold hover:bg-purple-600 hover:text-white transition transform hover:scale-105">
-                    <i class="fas fa-envelope mr-2"></i> Contactar Soporte
-                </a>
+        <section class="cta">
+            <div class="container">
+                <h2>¿Listo para organizar tus citas?</h2>
+                <p>Descarga PreCita hoy mismo y empieza a gestionar tus citas y contactos de manera inteligente.</p>
+                <a href="https://github.com/eucarigo/precita" class="btn">Ver en GitHub</a>
+                <a href="mailto:contact@eucarigo.com?subject=Soporte PreCita" class="btn">Contactar Soporte</a>
             </div>
-        </div>
-    </section>
+        </section>
+    </main>
 
-    <!-- Footer -->
-    <footer class="bg-gray-900 text-white py-8">
-        <div class="container mx-auto px-6">
-            <div class="flex flex-col md:flex-row justify-between items-center">
-                <div class="mb-4 md:mb-0">
-                    <p>&copy; 2026 eucarigo. Todos los derechos reservados.</p>
-                    <p class="text-gray-400 text-sm mt-1">PreCita - Gestor de Citas y Contactos</p>
-                </div>
-                <div class="flex space-x-6">
-                    <a href="mailto:contact@eucarigo.com" class="hover:text-purple-400 transition"><i class="fas fa-envelope"></i></a>
-                    <a href="https://github.com/eucarigo/precita" target="_blank" class="hover:text-purple-400 transition"><i class="fab fa-github"></i></a>
-                    <a href="/" class="hover:text-purple-400 transition"><i class="fas fa-home"></i></a>
-                </div>
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <img src="e.png" alt="Eucarigo Logo">
+                <span>© 2026 eucarigo. Todos los derechos reservados.</span>
             </div>
+            <div class="footer-links">
+                <a href="index.html">Inicio</a>
+                <a href="projects.html">Proyectos</a>
+                <a href="blog.html">Blog</a>
+                <a href="contact.html">Contacto</a>
+            </div>
+            <p>PreCita - Gestor de Citas y Contactos</p>
         </div>
     </footer>
-
-    <!-- JavaScript -->
-    <script>
-        // Mobile menu toggle
-        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
-        const mobileMenu = document.getElementById('mobile-menu');
-        
-        mobileMenuBtn.addEventListener('click', () => {
-            mobileMenu.classList.toggle('hidden');
-        });
-
-        // FAQ toggles
-        document.querySelectorAll('.faq-toggle').forEach(button => {
-            button.addEventListener('click', () => {
-                const content = button.nextElementSibling;
-                const icon = button.querySelector('i');
-                
-                content.classList.toggle('hidden');
-                icon.classList.toggle('rotate-180');
-            });
-        });
-
-        // Smooth scrolling for anchor links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
-                    // Close mobile menu if open
-                    mobileMenu.classList.add('hidden');
-                }
-            });
-        });
-
-        // Add scroll effect to navigation
-        window.addEventListener('scroll', () => {
-            const nav = document.querySelector('nav');
-            if (window.scrollY > 50) {
-                nav.classList.add('shadow-lg');
-            } else {
-                nav.classList.remove('shadow-lg');
-            }
-        });
-
-        // Intersection Observer for fade-in animations
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
-        };
-
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('fade-in');
-                }
-            });
-        }, observerOptions);
-
-        // Observe all sections
-        document.querySelectorAll('section').forEach(section => {
-            observer.observe(section);
-        });
-    </script>
 </body>
 </html>
