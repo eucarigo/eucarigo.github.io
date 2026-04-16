@@ -16,12 +16,18 @@ Portfolio personal de desarrollador web full stack construido con HTML, CSS y Ja
 ```
 /
   index.html              # Página principal
+  projects.html           # Portfolio de proyectos
+  blog.html               # Blog principal
+  contact.html            # Formulario de contacto
   blog/
     index.html            # Listado de posts del blog
     post-1.html           # Ejemplo de post individual
   precita/                # Documentación del proyecto PreCita
     index.html
-  blog-generator.html     # Herramienta para crear posts
+  e.png                   # Logo principal
+  e.ico                   # Favicon principal
+  precita.png             # Logo del proyecto PreCita
+  precita.ico             # Favicon de PreCita
   README.md               # Este archivo
 ```
 
@@ -64,37 +70,6 @@ Portfolio personal de desarrollador web full stack construido con HTML, CSS y Ja
    ```
    http://localhost:8000
    ```
-
-## Gestión del Blog
-
-### Usando el Generador de Posts
-
-El proyecto incluye una herramienta (`blog-generator.html`) para crear nuevos posts fácilmente:
-
-1. **Abre `blog-generator.html` en tu navegador**
-2. **Completa el formulario** con la información del post
-3. **Usa el botón "Generar HTML"** para obtener el código
-4. **Copia el HTML generado** y crea un nuevo archivo en `blog/[slug].html`
-5. **Actualiza el array `blogPosts`** en `blog/index.html`
-6. **Sube los cambios** a GitHub
-
-### Estructura de un Post
-
-Cada post necesita:
-- Título
-- Extracto (descripción corta)
-- Categoría
-- Contenido en formato Markdown
-- Fecha de publicación
-- Tiempo de lectura estimado
-
-### Categorías Disponibles
-
-- `python` - Artículos sobre Python
-- `web` - Desarrollo web
-- `tools` - Herramientas y utilidades
-- `tutorial` - Tutoriales y guías
-- `opinion` - Artículos de opinión
 
 ## Personalización
 
@@ -257,8 +232,3 @@ Este proyecto está bajo la Licencia MIT.
 2. **Commit con mensaje descriptivo**
 3. **Push a GitHub**
 4. **Verifica despliegue automático**
-
----
-
-**Construido con passion por Eucarigo**  
-*Desarrollador Web Full Stack*
