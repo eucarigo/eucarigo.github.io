@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog - Eucarigo</title>
+    <meta name="description" content="Blog de Eucarigo - Artículos sobre desarrollo web, Python y tecnología">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Custom styles -->
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        
+        * {
+            font-family: 'Inter', sans-serif;
+        }
+        
+        .gradient-text {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+        
+        .card-hover:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800">
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full bg-white shadow-md z-50">
+        <div class="container mx-auto px-6 py-4">
+            <div class="flex justify-between items-center">
+                <div class="text-2xl font-bold gradient-text">
+                    <a href="/">eucarigo</a>
+                </div>
+                <div class="hidden md:flex space-x-8">
+                    <a href="/" class="text-gray-600 hover:text-purple-600 transition">Inicio</a>
+                    <a href="/#projects" class="text-gray-600 hover:text-purple-600 transition">Proyectos</a>
+                    <a href="/blog/" class="text-purple-600 font-medium">Blog</a>
+                    <a href="/#contact" class="text-gray-600 hover:text-purple-600 transition">Contacto</a>
+                </div>
+                <button id="mobile-menu-btn" class="md:hidden text-gray-600">
+                    <i class="fas fa-bars text-2xl"></i>
+                </button>
+            </div>
+        </div>
+        <!-- Mobile menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white border-t">
+            <div class="px-6 py-4 space-y-3">
+                <a href="/" class="block text-gray-600 hover:text-purple-600 transition">Inicio</a>
+                <a href="/#projects" class="block text-gray-600 hover:text-purple-600 transition">Proyectos</a>
+                <a href="/blog/" class="block text-purple-600 font-medium">Blog</a>
+                <a href="/#contact" class="block text-gray-600 hover:text-purple-600 transition">Contacto</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="pt-24 pb-16">
+        <div class="container mx-auto px-6">
+            <!-- Header -->
+            <div class="text-center mb-16">
+                <h1 class="text-4xl md:text-5xl font-bold mb-4 gradient-text">Blog</h1>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+                    Artículos sobre desarrollo web, Python, tecnología y mis experiencias como desarrollador independiente.
+                </p>
+            </div>
+
+            <!-- Search and Filter -->
+            <div class="mb-12">
+                <div class="max-w-2xl mx-auto">
+                    <div class="relative">
+                        <input 
+                            type="text" 
+                            id="search-input" 
+                            placeholder="Buscar artículos..." 
+                            class="w-full px-6 py-4 pr-12 border border-gray-300 rounded-full focus:outline-none focus:border-purple-500 text-lg"
+                        >
+                        <i class="fas fa-search absolute right-6 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                    </div>
+                    
+                    <!-- Category filters -->
+                    <div class="flex flex-wrap justify-center gap-3 mt-6">
+                        <button class="category-btn px-4 py-2 rounded-full bg-purple-600 text-white" data-category="all">
+                            Todos
+                        </button>
+                        <button class="category-btn px-4 py-2 rounded-full bg-gray-200 text-gray-700 hover:bg-gray-300" data-category="python">
+                            Python
+                        </button>
+                        <button class="category-btn px-4 py-2 rounded-full bg-gray-200 text-gray-700 hover:bg-gray-300" data-category="web">
+                            Web
+                        </button>
+                        <button class="category-btn px-4 py-2 rounded-full bg-gray-200 text-gray-700 hover:bg-gray-300" data-category="tools">
+                            Herramientas
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Blog Posts Grid -->
+            <div id="blog-posts" class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Blog posts will be dynamically loaded here -->
+            </div>
+
+            <!-- Load More Button -->
+            <div class="text-center mt-12">
+                <button id="load-more" class="inline-block border-2 border-purple-600 text-purple-600 px-8 py-3 rounded-full font-semibold hover:bg-purple-600 hover:text-white transition">
+                    Cargar más artículos <i class="fas fa-arrow-down ml-2"></i>
+                </button>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-8">
+        <div class="container mx-auto px-6">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="mb-4 md:mb-0">
+                    <p>&copy; 2026 eucarigo. Todos los derechos reservados.</p>
+                    <p class="text-gray-400 text-sm mt-1">Impulsado por GitHub Pages</p>
+                </div>
+                <div class="flex space-x-6">
+                    <a href="mailto:info@eucarigo.com" class="hover:text-purple-400 transition"><i class="fas fa-envelope"></i></a>
+                    <a href="https://github.com/eucarigo" target="_blank" class="hover:text-purple-400 transition"><i class="fab fa-github"></i></a>
+                    <a href="https://eucarigo.com" target="_blank" class="hover:text-purple-400 transition"><i class="fas fa-globe"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script>
+        // Blog posts data (this would normally come from a JSON file or API)
+        const blogPosts = [
+            {
+                id: 1,
+                title: "Cómo construí mi portfolio con GitHub Pages",
+                excerpt: "Aprende a crear un portfolio profesional gratuito usando GitHub Pages y cómo automatizar el despliegue de tu sitio web personal.",
+                date: "2026-04-15",
+                category: "web",
+                image: "https://images.unsplash.com/photo-1467232004584-a241de8bcf5d?w=800&h=400&fit=crop",
+                readTime: "5 min",
+                slug: "post-1"
+            },
+            {
+                id: 2,
+                title: "5 herramientas que uso como desarrollador independiente",
+                excerpt: "Descubre las herramientas esenciales que me ayudan a ser más productivo y eficiente en mi trabajo diario como desarrollador freelance.",
+                date: "2026-04-10",
+                category: "tools",
+                image: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=800&h=400&fit=crop",
+                readTime: "7 min",
+                slug: "post-2"
+            },
+            {
+                id: 3,
+                title: "Python async/await: Guía completa",
+                excerpt: "Todo lo que necesitas saber sobre programación asíncrona en Python, desde los conceptos básicos hasta casos de uso avanzados.",
+                date: "2026-04-05",
+                category: "python",
+                image: "https://images.unsplash.com/photo-1526379095098-d400fd0bf935?w=800&h=400&fit=crop",
+                readTime: "10 min",
+                slug: "post-3"
+            },
+            {
+                id: 4,
+                title: "Optimización de rendimiento en aplicaciones web",
+                excerpt: "Técnicas y estrategias para mejorar la velocidad y rendimiento de tus aplicaciones web modernas.",
+                date: "2026-03-28",
+                category: "web",
+                image: "https://images.unsplash.com/photo-1558494949-ef010cbcc31c?w=800&h=400&fit=crop",
+                readTime: "8 min",
+                slug: "post-4"
+            }
+        ];
+
+        let currentCategory = 'all';
+        let searchTerm = '';
+        let postsToShow = 6;
+
+        // Initialize blog
+        function initBlog() {
+            renderBlogPosts();
+            setupEventListeners();
+        }
+
+        // Render blog posts
+        function renderBlogPosts() {
+            const container = document.getElementById('blog-posts');
+            const filteredPosts = filterPosts();
+            const postsToRender = filteredPosts.slice(0, postsToShow);
+            
+            container.innerHTML = postsToRender.map(post => `
+                <article class="card-hover bg-white rounded-xl overflow-hidden shadow-lg">
+                    <div class="relative h-48 bg-gradient-to-br from-purple-500 to-pink-500">
+                        <img src="${post.image}" alt="${post.title}" class="w-full h-full object-cover">
+                        <div class="absolute top-4 left-4">
+                            <span class="bg-white/90 backdrop-blur px-3 py-1 rounded-full text-sm font-medium text-purple-600">
+                                ${getCategoryName(post.category)}
+                            </span>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex items-center text-sm text-gray-500 mb-3">
+                            <i class="far fa-calendar mr-2"></i>
+                            <span>${formatDate(post.date)}</span>
+                            <span class="mx-2">·</span>
+                            <i class="far fa-clock mr-1"></i>
+                            <span>${post.readTime}</span>
+                        </div>
+                        <h3 class="text-xl font-semibold mb-3">
+                            <a href="/blog/${post.slug}.html" class="text-gray-800 hover:text-purple-600 transition">
+                                ${post.title}
+                            </a>
+                        </h3>
+                        <p class="text-gray-600 mb-4">
+                            ${post.excerpt}
+                        </p>
+                        <a href="/blog/${post.slug}.html" class="text-purple-600 hover:text-purple-700 font-medium">
+                            Leer más <i class="fas fa-arrow-right ml-1"></i>
+                        </a>
+                    </div>
+                </article>
+            `).join('');
+
+            // Show/hide load more button
+            const loadMoreBtn = document.getElementById('load-more');
+            if (filteredPosts.length <= postsToShow) {
+                loadMoreBtn.style.display = 'none';
+            } else {
+                loadMoreBtn.style.display = 'inline-block';
+            }
+        }
+
+        // Filter posts
+        function filterPosts() {
+            return blogPosts.filter(post => {
+                const matchesCategory = currentCategory === 'all' || post.category === currentCategory;
+                const matchesSearch = searchTerm === '' || 
+                    post.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                    post.excerpt.toLowerCase().includes(searchTerm.toLowerCase());
+                return matchesCategory && matchesSearch;
+            });
+        }
+
+        // Setup event listeners
+        function setupEventListeners() {
+            // Mobile menu
+            const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+            const mobileMenu = document.getElementById('mobile-menu');
+            
+            mobileMenuBtn.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+
+            // Search
+            const searchInput = document.getElementById('search-input');
+            searchInput.addEventListener('input', (e) => {
+                searchTerm = e.target.value;
+                postsToShow = 6;
+                renderBlogPosts();
+            });
+
+            // Category filters
+            const categoryBtns = document.querySelectorAll('.category-btn');
+            categoryBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    // Update active state
+                    categoryBtns.forEach(b => {
+                        b.classList.remove('bg-purple-600', 'text-white');
+                        b.classList.add('bg-gray-200', 'text-gray-700');
+                    });
+                    btn.classList.remove('bg-gray-200', 'text-gray-700');
+                    btn.classList.add('bg-purple-600', 'text-white');
+                    
+                    // Filter posts
+                    currentCategory = btn.dataset.category;
+                    postsToShow = 6;
+                    renderBlogPosts();
+                });
+            });
+
+            // Load more
+            document.getElementById('load-more').addEventListener('click', () => {
+                postsToShow += 3;
+                renderBlogPosts();
+            });
+        }
+
+        // Helper functions
+        function getCategoryName(category) {
+            const categories = {
+                'python': 'Python',
+                'web': 'Web',
+                'tools': 'Herramientas'
+            };
+            return categories[category] || category;
+        }
+
+        function formatDate(dateString) {
+            const date = new Date(dateString);
+            const options = { year: 'numeric', month: 'long', day: 'numeric' };
+            return date.toLocaleDateString('es-ES', options);
+        }
+
+        // Initialize when DOM is loaded
+        document.addEventListener('DOMContentLoaded', initBlog);
+    </script>
+</body>
+</html>
