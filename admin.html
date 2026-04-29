@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>admin · eucarigo</title>
+    <link rel="icon" type="image/png" sizes="2048x2048" href="i/favicon-2048x2048.png">
+    <style>
+        body {
+            max-width: 650px;
+            margin: 40px auto;
+            padding: 0 20px;
+            font: 18px/1.6 Georgia, serif;
+            color: #333;
+            background: #fff;
+        }
+        h1 {
+            font-size: 2em;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 0.2em;
+        }
+        h2 {
+            font-size: 1.5em;
+            margin-top: 1.5em;
+            border-bottom: 1px solid #eee;
+        }
+        label {
+            font-weight: bold;
+            display: block;
+            margin-top: 1.2em;
+            margin-bottom: 0.3em;
+        }
+        input, textarea, button {
+            font-family: inherit;
+            font-size: 0.95rem;
+            padding: 0.5rem;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            background: #fff;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        textarea {
+            font-family: 'Courier New', monospace;
+            height: 300px;
+        }
+        .preview {
+            border: 1px solid #ddd;
+            background: #fafafa;
+            padding: 0 1rem;
+            margin-top: 0.5rem;
+            border-radius: 4px;
+            max-height: 400px;
+            overflow: auto;
+        }
+        button {
+            background: #0066cc;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-weight: bold;
+            margin-top: 1.5rem;
+            width: auto;
+            padding: 0.6rem 1.8rem;
+        }
+        button:hover { background: #004499; }
+        .status {
+            margin-top: 1rem;
+            padding: 0.8rem;
+            border-radius: 4px;
+            background: #f0f0f0;
+            font-family: monospace;
+            white-space: pre-wrap;
+        }
+        .error { background: #ffe0e0; color: #a00; border-left: 4px solid #a00; }
+        .success { background: #e0ffe0; color: #060; border-left: 4px solid #060; }
+        .token-section {
+            background: #f8f8f8;
+            padding: 1rem;
+            margin-bottom: 2rem;
+            border-radius: 4px;
+        }
+        .token-section input { width: auto; flex: 1; }
+        .token-flex { display: flex; gap: 1rem; align-items: center; flex-wrap: wrap; }
+        hr { margin: 2rem 0; }
+
+        @media (prefers-color-scheme: dark) {
+            body { background: #1a1a1a; color: #e0e0e0; }
+            input, textarea, .preview, .status { background: #2a2a2a; border-color: #444; color: #e0e0e0; }
+            .token-section { background: #2a2a2a; }
+            .error { background: #3a1a1a; color: #ffa0a0; }
+            .success { background: #1a3a1a; color: #a0ffa0; }
+            button { background: #2c6eaf; }
+        }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+</head>
+<body>
+    <h1>📝 panel de administración</h1>
+    <p>Publica artículos directamente en el blog. Los cambios se suben a GitHub.</p>
+
+    <div class="token-section">
+        <label>🔐 Token de acceso personal (GitHub)</label>
+        <div class="token-flex">
+            <input type="password" id="githubToken" placeholder="ghp_xxxxxxxxxxxx">
+            <button id="saveTokenBtn">Guardar token</button>
+        </div>
+        <p style="font-size:0.8rem; margin-top:0.5rem;">Necesita alcance <code>repo</code>. Se guarda solo en tu navegador.</p>
+    </div>
+
+    <hr>
+
+    <div id="editorArea" style="display: none;">
+        <label>Título del artículo</label>
+        <input type="text" id="postTitle" placeholder="Ej: Adiós a las dependencias innecesarias">
+
+        <label>Slug (URL amigable) — déjalo vacío para autogenerar</label>
+        <input type="text" id="postSlug" placeholder="ej: adios-dependencias">
+
+        <label>Contenido (Markdown)</label>
+        <textarea id="postContent" placeholder="Escribe aquí en Markdown..."></textarea>
+
+        <button id="previewBtn">👁️ Previsualizar</button>
+        <div id="previewArea" class="preview" style="display:none;"></div>
+
+        <button id="publishBtn">🚀 Publicar artículo</button>
+        <div id="publishStatus" class="status"></div>
+    </div>
+
+    <script>
+        // ---------- Configuración ----------
+        const REPO_OWNER = 'eucarigo';
+        const REPO_NAME = 'eucarigo.github.io';
+        const BRANCH = 'main';
+
+        let githubToken = localStorage.getItem('github_token');
+
+        // Elementos DOM
+        const tokenInput = document.getElementById('githubToken');
+        const saveTokenBtn = document.getElementById('saveTokenBtn');
+        const editorArea = document.getElementById('editorArea');
+        const publishBtn = document.getElementById('publishBtn');
+        const previewBtn = document.getElementById('previewBtn');
+        const previewArea = document.getElementById('previewArea');
+        const statusDiv = document.getElementById('publishStatus');
+
+        // ---------- Funciones auxiliares ----------
+        function setToken(token) {
+            githubToken = token;
+            if (token) {
+                localStorage.setItem('github_token', token);
+                editorArea.style.display = 'block';
+                document.querySelector('.token-section').style.opacity = '0.7';
+            } else {
+                localStorage.removeItem('github_token');
+                editorArea.style.display = 'none';
+                document.querySelector('.token-section').style.opacity = '1';
+            }
+        }
+
+        // Base64 UTF-8 correcto
+        function utf8ToBase64(str) {
+            const bytes = new TextEncoder().encode(str);
+            const binString = Array.from(bytes, (byte) => String.fromCodePoint(byte)).join('');
+            return btoa(binString);
+        }
+
+        async function getFileSha(path) {
+            const url = `https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/${path}`;
+            const res = await fetch(url, {
+                headers: { 'Authorization': `token ${githubToken}` }
+            });
+            if (res.status === 404) return null;
+            if (!res.ok) throw new Error(`Error al obtener ${path}: ${res.status}`);
+            const data = await res.json();
+            return data.sha;
+        }
+
+        async function uploadFile(path, content, commitMessage) {
+            const sha = await getFileSha(path);
+            const payload = {
+                message: commitMessage,
+                content: utf8ToBase64(content),
+                branch: BRANCH
+            };
+            if (sha) payload.sha = sha;
+
+            const url = `https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/${path}`;
+            const res = await fetch(url, {
+                method: 'PUT',
+                headers: {
+                    'Authorization': `token ${githubToken}`,
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(payload)
+            });
+            if (!res.ok) {
+                const err = await res.json();
+                throw new Error(err.message || 'Error al subir archivo');
+            }
+            return await res.json();
+        }
+
+        async function getPostsJson() {
+            const url = `https://raw.githubusercontent.com/${REPO_OWNER}/${REPO_NAME}/${BRANCH}/posts.json`;
+            try {
+                const res = await fetch(url);
+                if (res.status === 404) return [];
+                if (!res.ok) throw new Error('No se pudo leer posts.json');
+                return await res.json();
+            } catch(e) {
+                return [];
+            }
+        }
+
+        function slugify(title) {
+            return title
+                .toLowerCase()
+                .normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+                .replace(/[^a-z0-9]+/g, '-')
+                .replace(/^-|-$/g, '');
+        }
+
+        function extractSummary(markdown) {
+            let text = markdown.replace(/[#*`>\[\]()!]/g, '');
+            text = text.substring(0, 350);
+            if (text.length < 350 && markdown.length > 350) text += '…';
+            return text.trim();
+        }
+
+        function buildArticleHtml(title, date, markdownContent) {
+            const htmlContent = marked.parse(markdownContent);
+            return `<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>${escapeHtml(title)} · eucarigo</title>
+    <style>
+        body {
+            max-width: 650px;
+            margin: 40px auto;
+            padding: 0 20px;
+            font: 18px/1.6 Georgia, serif;
+            color: #333;
+            background: #fff;
+        }
+        h1, h2, h3 { line-height: 1.2; }
+        h1 { font-size: 2em; border-bottom: 1px solid #ddd; padding-bottom: 0.2em; }
+        h2 { border-bottom: 1px solid #eee; }
+        a { color: #0066cc; text-decoration: none; }
+        a:hover { text-decoration: underline; }
+        code { background: #f4f4f4; padding: 2px 6px; font-family: monospace; }
+        .meta { color: #666; font-size: 0.9rem; margin-bottom: 2rem; }
+        footer { margin-top: 3rem; border-top: 1px solid #ddd; padding-top: 1rem; font-size: 0.8rem; color: #666; }
+        @media (prefers-color-scheme: dark) {
+            body { background: #1a1a1a; color: #e0e0e0; }
+            h1, h2 { border-bottom-color: #444; }
+            a { color: #4d9fff; }
+            code { background: #2a2a2a; }
+            footer { border-top-color: #444; }
+            .meta { color: #999; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>${escapeHtml(title)}</h1>
+        <div class="meta">${formatDateStatic(date)} · <a href="/">← volver al inicio</a></div>
+    </header>
+    <main>${htmlContent}</main>
+    <footer><p>eucarigo · <a href="/">Inicio</a></p></footer>
+</body>
+</html>`;
+        }
+
+        function escapeHtml(str) {
+            if (!str) return '';
+            return str.replace(/[&<>]/g, function(m) {
+                if (m === '&') return '&amp;';
+                if (m === '<') return '&lt;';
+                if (m === '>') return '&gt;';
+                return m;
+            });
+        }
+
+        function formatDateStatic(dateStr) {
+            const d = new Date(dateStr);
+            return d.toLocaleDateString('es-ES', { year: 'numeric', month: 'long', day: 'numeric' });
+        }
+
+        // ---------- Eventos ----------
+        if (githubToken) {
+            tokenInput.value = githubToken;
+            setToken(githubToken);
+        } else {
+            editorArea.style.display = 'none';
+        }
+
+        saveTokenBtn.addEventListener('click', () => {
+            const newToken = tokenInput.value.trim();
+            if (!newToken) return;
+            setToken(newToken);
+            statusDiv.innerHTML = '<span class="success">✅ Token guardado (solo en este navegador).</span>';
+            setTimeout(() => statusDiv.innerHTML = '', 2000);
+        });
+
+        publishBtn.addEventListener('click', async () => {
+            statusDiv.innerHTML = '⏳ Publicando...';
+            statusDiv.className = 'status';
+
+            const title = document.getElementById('postTitle').value.trim();
+            let slug = document.getElementById('postSlug').value.trim();
+            const markdown = document.getElementById('postContent').value;
+
+            if (!title || !markdown) {
+                statusDiv.innerHTML = '<span class="error">❌ Título y contenido son obligatorios.</span>';
+                return;
+            }
+            if (!githubToken) {
+                statusDiv.innerHTML = '<span class="error">❌ Configura tu token de GitHub primero.</span>';
+                return;
+            }
+
+            if (!slug) slug = slugify(title);
+            if (!slug) slug = 'post-' + Date.now();
+
+            const today = new Date().toISOString().split('T')[0];
+            const summary = extractSummary(markdown);
+            const articleHtml = buildArticleHtml(title, today, markdown);
+
+            try {
+                await uploadFile(`posts/${slug}.html`, articleHtml, `Blog: nuevo artículo "${title}"`);
+                let posts = await getPostsJson();
+                const existingIndex = posts.findIndex(p => p.slug === slug);
+                const newPost = { slug, title, date: today, summary };
+                if (existingIndex >= 0) posts[existingIndex] = newPost;
+                else posts.push(newPost);
+                posts.sort((a,b) => new Date(b.date) - new Date(a.date));
+                await uploadFile('posts.json', JSON.stringify(posts, null, 2), `Actualizar índice del blog: "${title}"`);
+
+                statusDiv.innerHTML = `<span class="success">✅ Artículo publicado correctamente.<br>
+                🔗 Ver: <a href="/posts/${slug}.html" target="_blank">https://eucarigo.com/posts/${slug}.html</a><br>
+                📄 El blog principal ya muestra la nueva entrada.</span>`;
+
+                previewArea.style.display = 'none';
+                document.getElementById('postTitle').value = '';
+                document.getElementById('postSlug').value = '';
+                document.getElementById('postContent').value = '';
+            } catch (err) {
+                console.error(err);
+                statusDiv.innerHTML = `<span class="error">❌ Error: ${err.message}</span>`;
+            }
+        });
+
+        previewBtn.addEventListener('click', () => {
+            const md = document.getElementById('postContent').value;
+            previewArea.innerHTML = md ? marked.parse(md) : '<em>Escribe algo para previsualizar.</em>';
+            previewArea.style.display = 'block';
+        });
+    </script>
+</body>
+</html>
