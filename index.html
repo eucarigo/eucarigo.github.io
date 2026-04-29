@@ -4,418 +4,362 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>eucarigo</title>
-    <link rel="icon" type="image/x-icon" href="e.ico">
-    <link rel="icon" type="image/png" href="e.png">
+    <link rel="icon" type="image/png" sizes="2048x2048" href="i/favicon-2048x2048.png">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-            line-height: 1.6;
-            color: #333;
-            background-color: #fff;
-        }
-        
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
+            max-width: 650px;
+            margin: 40px auto;
             padding: 0 20px;
-        }
-        
-        header {
-            background: #fff;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-            position: sticky;
-            top: 0;
-            z-index: 100;
-        }
-        
-        nav {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 1rem 0;
-        }
-        
-        .logo {
-            display: flex;
-            align-items: center;
-            text-decoration: none;
+            font: 18px/1.6 Georgia, serif;
             color: #333;
-            font-size: 1.5rem;
-            font-weight: bold;
+            background: #fff;
         }
         
-        .logo img {
-            width: 40px;
-            height: 40px;
-            margin-right: 10px;
+        h1 {
+            font-size: 2em;
+            margin-bottom: 0.2em;
+            line-height: 1.2;
+        }
+        
+        h2 {
+            font-size: 1.5em;
+            margin-top: 2em;
+            margin-bottom: 0.5em;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 0.3em;
+        }
+        
+        h3 {
+            font-size: 1.2em;
+            margin-top: 1.5em;
+            margin-bottom: 0.3em;
+        }
+        
+        a {
+            color: #0066cc;
+            text-decoration: none;
+        }
+        
+        a:hover {
+            text-decoration: underline;
+        }
+        
+        code {
+            background: #f4f4f4;
+            padding: 2px 6px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+        }
+        
+        .project {
+            margin-bottom: 2em;
+        }
+        
+        .meta {
+            color: #666;
+            font-size: 0.9em;
+            font-style: italic;
+        }
+        
+        .download {
+            display: inline-block;
+            padding: .25em .6em;
+            border: 2px solid #333;
+            background: #333;
+            font-family: monospace;
+            font-size: .9em;
+            font-weight: bold;
+            text-decoration: none;
+            color: #fff;
+            margin-right: 12px;
             border-radius: 8px;
         }
-        
-        .nav-links {
-            display: flex;
-            list-style: none;
-            gap: 2rem;
-        }
-        
-        .nav-links a {
-            text-decoration: none;
-            color: #666;
-            transition: color 0.3s;
-        }
-        
-        .nav-links a:hover {
-            color: #333;
-        }
-        
-        .hero {
-            padding: 4rem 0;
-            text-align: center;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-        }
-        
-        .hero h1 {
-            font-size: 3rem;
-            margin-bottom: 1rem;
-        }
-        
-        .hero p {
-            font-size: 1.2rem;
-            margin-bottom: 2rem;
-            opacity: 0.9;
-        }
-        
-        .btn {
-            display: inline-block;
-            padding: 12px 24px;
-            background: #fff;
-            color: #667eea;
-            text-decoration: none;
-            border-radius: 5px;
-            font-weight: 600;
-            transition: transform 0.3s, box-shadow 0.3s;
-        }
-        
-        .btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-        }
-        
-        .projects {
-            padding: 4rem 0;
-        }
-        
-        .projects h2 {
-            text-align: center;
-            margin-bottom: 3rem;
-            font-size: 2.5rem;
-        }
-        
-        .project-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 2rem;
-            margin-bottom: 3rem;
-        }
-        
-        .project-card {
-            background: #f8f9fa;
-            padding: 2rem;
-            border-radius: 10px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            transition: transform 0.3s;
-        }
-        
-        .project-card:hover {
-            transform: translateY(-5px);
-        }
-        
-        .project-card h3 {
-            color: #333;
-            margin-bottom: 1rem;
-        }
-        
-        .project-card p {
-            color: #666;
-            margin-bottom: 1.5rem;
-        }
-        
-        .project-links {
-            display: flex;
-            gap: 1rem;
-        }
-        
-        .project-links a {
-            padding: 8px 16px;
-            background: #667eea;
-            color: white;
-            text-decoration: none;
-            border-radius: 5px;
-            font-size: 0.9rem;
-            transition: background 0.3s;
-        }
-        
-        .project-links a:hover {
-            background: #5a67d8;
-        }
-        
-        .blog {
-            padding: 4rem 0;
-            background: #f8f9fa;
-        }
-        
-        .blog h2 {
-            text-align: center;
-            margin-bottom: 3rem;
-            font-size: 2.5rem;
-        }
-        
-        .blog-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-        }
-        
-        .blog-card {
-            background: white;
-            padding: 2rem;
-            border-radius: 10px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-        }
-        
-        .blog-card h3 {
-            margin-bottom: 1rem;
-        }
-        
-        .blog-card h3 a {
-            color: #333;
-            text-decoration: none;
-        }
-        
-        .blog-card h3 a:hover {
-            color: #667eea;
-        }
-        
-        .blog-card p {
-            color: #666;
-            margin-bottom: 1rem;
-        }
-        
-        .blog-card a {
-            color: #667eea;
-            text-decoration: none;
-            font-weight: 600;
-        }
-        
-        .blog-card a:hover {
-            text-decoration: underline;
-        }
-        
-        .contact {
-            padding: 4rem 0;
-            text-align: center;
-        }
-        
-        .contact h2 {
-            margin-bottom: 2rem;
-            font-size: 2.5rem;
-        }
-        
-        .contact p {
-            margin-bottom: 2rem;
-            font-size: 1.1rem;
-            color: #666;
-        }
-        
-        .contact-info {
-            display: flex;
-            justify-content: center;
-            gap: 2rem;
-            margin-bottom: 2rem;
-        }
-        
-        .contact-info a {
-            color: #667eea;
-            text-decoration: none;
-            font-weight: 600;
-        }
-        
-        .contact-info a:hover {
-            text-decoration: underline;
-        }
-        
-        footer {
+
+        .download:hover {
             background: #333;
-            color: white;
-            padding: 2rem 0;
-            text-align: center;
+            color: #fff;
         }
         
-        .footer-content {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 10px;
-            margin-bottom: 1rem;
+        .brand{
+            display:flex;
+            align-items:center;
+            gap:12px;
+        }
+
+        .links{
+            display:flex;
+            flex-wrap:wrap;
+            gap:18px;
+            margin-top:1rem;
+            font-family: monospace;
+            font-size:.95rem;
+        }
+
+        .links a{
+            display:inline-flex;
+            align-items:center;
+            gap:6px;
+            text-decoration:none;
+        }
+
+        .links a:hover{
+            text-decoration:underline;
+        }
+
+        footer {
+            margin-top: 4em;
+            padding-top: 2em;
+            border-top: 1px solid #ddd;
+            font-size: 0.9em;
+            color: #666;
         }
         
-        .footer-content img {
-            width: 30px;
-            height: 30px;
-            border-radius: 5px;
+        ul {
+            margin: 0.5em 0;
         }
         
-        .footer-links {
-            display: flex;
-            justify-content: center;
-            gap: 2rem;
-            margin-bottom: 1rem;
-        }
-        
-        .footer-links a {
-            color: #ccc;
-            text-decoration: none;
-        }
-        
-        .footer-links a:hover {
-            color: white;
-        }
-        
-        @media (max-width: 768px) {
-            .nav-links {
-                gap: 1rem;
+        @media (prefers-color-scheme: dark) {
+            body {
+                background: #1a1a1a;
+                color: #e0e0e0;
             }
             
-            .hero h1 {
-                font-size: 2rem;
+            h2 {
+                border-bottom-color: #444;
             }
             
-            .project-grid {
-                grid-template-columns: 1fr;
+            a {
+                color: #4d9fff;
             }
             
-            .contact-info {
-                flex-direction: column;
-                gap: 1rem;
+            code {
+                background: #2a2a2a;
+            }
+            
+            .download {
+                background: #2a2a2a;
+                border-color: #444;
+            }
+            
+            .download:hover {
+                background: #333;
+            }
+            
+            footer {
+                border-top-color: #444;
+            }
+            
+            .meta {
+                color: #999;
             }
         }
     </style>
 </head>
 <body>
     <header>
-        <nav class="container">
-            <a href="index.html" class="logo">
-                <img src="e.png" alt="Eucarigo Logo">
-                Eucarigo
+        <h1 class="brand">
+            <img src="i/favicon-2048x2048.png" alt="Logo" width="48" height="48">
+            eucarigo
+        </h1>
+
+        <p class="meta">desarrollador</p>
+
+        <p>
+            Programo lo que quiero. Especializado en Python y perder el tiempo.
+        </p>
+
+        <nav class="links">
+            <a href="mailto:contact@eucarigo.com" aria-label="Email">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 512 512">
+                    <path d="M67 148.7c11 5.8 163.8 89.1 169.5 92.1 5.7 3 11.5 4.4 20.5 4.4s14.8-1.4 
+                    20.5-4.4c5.7-3 158.5-86.3 169.5-92.1 4.1-2.1 11-5.9 12.5-10.2 2.6-7.6-.2-10.5-11.3-10.5H65.8c-11.1 
+                    0-13.9 3-11.3 10.5 1.5 4.4 8.4 8.1 12.5 10.2z"/>
+                    <path d="M455.7 153.2c-8.2 4.2-81.8 56.6-130.5 88.1l82.2 92.5c2 2 2.9 4.4 1.8 
+                    5.6-1.2 1.1-3.8.5-5.9-1.4l-98.6-83.2c-14.9 9.6-25.4 16.2-27.2 17.2-7.7 3.9-13.1 
+                    4.4-20.5 4.4s-12.8-.5-20.5-4.4c-1.9-1-12.3-7.6-27.2-17.2L110.7 338c-2 2-4.7 2.6-5.9 
+                    1.4-1.2-1.1-.3-3.6 1.7-5.6l82.1-92.5c-48.7-31.5-123.1-83.9-131.3-88.1-8.8-4.5-9.3.8-9.3 
+                    4.9v205c0 9.3 13.7 20.9 23.5 20.9h371c9.8 0 21.5-11.7 21.5-20.9v-205c0-4.2.6-9.4-8.3-4.9z"/>
+                </svg>
+                email
             </a>
-            <ul class="nav-links">
-                <li><a href="index.html">Inicio</a></li>
-                <li><a href="projects.html">Proyectos</a></li>
-                <li><a href="blog.html">Blog</a></li>
-                <li><a href="contact.html">Contacto</a></li>
-            </ul>
+
+            <a href="https://github.com/eucarigo" aria-label="GitHub">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                    <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 
+                    0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 
+                    1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 
+                    0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 
+                    2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 
+                    3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8"/>
+                </svg>
+                GitHub
+            </a>
+
+            <a href="https://x.com/eucarigoproject">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                    <path d="M12.6.75h2.454l-5.36 6.142L16 15.25h-4.937l-3.867-5.07-4.425 
+                    5.07H.316l5.733-6.57L0 .75h5.063l3.495 4.633L12.601.75Zm-.86 
+                    13.028h1.36L4.323 2.145H2.865z"/>
+                </svg>
+                X/Twitter
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                    <path d="M5.026 15c6.038 0 9.341-5.003 9.341-9.334q.002-.211-.006-.422A6.7 6.7 
+                    0 0 0 16 3.542a6.7 6.7 0 0 1-1.889.518 3.3 3.3 0 0 0 1.447-1.817 6.5 6.5 
+                    0 0 1-2.087.793A3.286 3.286 0 0 0 7.875 6.03a9.32 9.32 0 0 1-6.767-3.429 3.29 
+                    3.29 0 0 0 1.018 4.382A3.3 3.3 0 0 1 .64 6.575v.045a3.29 3.29 0 0 0 2.632 3.218 
+                    3.2 3.2 0 0 1-.865.115 3 3 0 0 1-.614-.057 3.28 3.28 0 0 0 3.067 2.277A6.6 6.6 
+                    0 0 1 .78 13.58a6 6 0 0 1-.78-.045A9.34 9.34 0 0 0 5.026 15"/>
+                </svg>
+            </a>
         </nav>
     </header>
 
     <main>
-        <section class="hero">
-            <div class="container">
-                <h1>Hola, soy Eucarigo</h1>
-                <p>Desarrollador independiente | Full Stack</p>
-                <p>Programo lo que quiero. Especializado en Python y desarrollo web moderno. Creo soluciones digitales con pasión y atención al detalle.</p>
-                <a href="https://github.com/eucarigo" class="btn">GitHub</a>
-                <a href="projects.html" class="btn">Ver Proyectos</a>
-            </div>
-        </section>
+        <h2>Proyectos</h2>
 
-        <section class="projects">
-            <div class="container">
-                <h2>Proyectos Destacados</h2>
-                <div class="project-grid">
-                    <div class="project-card">
-                        <h3>PreCita</h3>
-                        <p>Aplicación de escritorio en Python para gestionar citas y contactos, sincronizar eventos de Google Calendar y enviar recordatorios por correo mediante Gmail.</p>
-                        <div class="project-links">
-                            <a href="precita/index.html">Ver más</a>
-                            <a href="https://github.com/eucarigo/precita">Código</a>
-                        </div>
-                    </div>
-                    <div class="project-card">
-                        <h3>pwd_gen.py</h3>
-                        <p>Generador de contraseñas aleatorias seguro y personalizable con diferentes opciones de configuración.</p>
-                        <div class="project-links">
-                            <a href="https://github.com/eucarigo/pwd_gen">Código fuente</a>
-                        </div>
-                    </div>
-                    <div class="project-card">
-                        <h3>SPS</h3>
-                        <p>Silenciador de Publicidad de Spotify. Disfruta tu música sin interrupciones.</p>
-                        <div class="project-links">
-                            <a href="https://github.com/eucarigo/">Código fuente</a>
-                        </div>
-                    </div>
-                </div>
-                <div style="text-align: center;">
-                    <a href="projects.html" class="btn">Ver todos los proyectos</a>
-                </div>
-            </div>
-        </section>
+        <div class="project">
+            <h3 style="display:flex; align-items:center; gap:4px">
+                <img src="i/precita.png" alt="Logo" width="36" height="36">
+                <a href="precita/index.html">PreCita</a>
+            </h3>
+            <p class="meta">2026 · Python, SQLite</p>
+            <p>
+                Aplicación de escritorio para Windows, desarrollada en Python, que permite gestionar citas y contactos, 
+                sincronizar eventos con Google Calendar y enviar recordatorios por correo electrónico a través de Gmail. 
+            </p>
+            <p>
+                Está pensada para profesionales que trabajan con citas programadas (clientes o pacientes), como psicólogos, 
+                médicos, fisioterapeutas, esteticistas, masajistas, entrenadores personales, así como cualquier otro profesional 
+                con una agenda ocupada que requiera automatizar el envío de recordatorios.
+            </p>
+            <a href="/d/precita-latest.zip" class="download">descargar (v0.36.8)</a>
+            <a href="https://github.com/eucarigo/precita">código fuente</a>
+            <p>
+                Algunas de sus característas principales:
+            </p>
+            <ul>
+                <li>Sincronización directa con Google Calendar</li>
+                <li>Recordatorios automatizados y personalizables por email</li>
+                <li>Completamente local y privado, sin telemetrías</li>
+                <li>Software libre (distribuido bajo GNU GPL v3)</li>
+            </ul>
+            <p>
+                <a href="precita/index.html">Saber más de este proyecto</a>
+            </p>
+        </div>
 
-        <section class="blog">
-            <div class="container">
-                <h2>Últimas Entradas</h2>
-                <div class="blog-grid">
-                    <div class="blog-card">
-                        <h3><a href="blog/post-1.html">Cómo construí mi portfolio con GitHub Pages</a></h3>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua...</p>
-                        <a href="blog/post-1.html">Leer más</a>
-                    </div>
-                    <div class="blog-card">
-                        <h3><a href="blog/post-2.html">5 herramientas que uso como desarrollador independiente</a></h3>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua...</p>
-                        <a href="blog/post-2.html">Leer más</a>
-                    </div>
-                </div>
-                <div style="text-align: center; margin-top: 2rem;">
-                    <a href="blog.html" class="btn">Ver todas las entradas</a>
-                </div>
-            </div>
-        </section>
+        <!-- para añadir más proyectos, simplemente copiar estrucutra de PreCita y modificar -->
 
-        <section class="contact">
-            <div class="container">
-                <h2>Contacto</h2>
-                <h3>Hablemos de tu proyecto</h3>
-                <p>¿Tienes una idea en mente? ¿Necesitas ayuda con tu proyecto? Estoy aquí para ayudarte a llevarlo al siguiente nivel.</p>
-                <div class="contact-info">
-                    <a href="mailto:contact@eucarigo.com">contact@eucarigo.com</a>
-                    <a href="https://github.com/eucarigo">github.com/eucarigo</a>
-                    <a href="https://eucarigo.com">eucarigo.com</a>
-                </div>
-            </div>
-        </section>
+        <h2>Artículos destacados</h2>
+        
+        <div id="blog-list"></div>
+
+        <div class="project">
+            <h3><a href="posts/index.html">Todos los artículos</a></h3>
+            <p>
+                Lorem ipsum dolor sit amet, etc.
+            </p>
+        </div>
+
+        <!-- para añadir más artículos, simplemente copiar estrucutra de Primera Entrada y modificar -->
+
+        <h2>Sobre mí</h2>
+        <p>
+            ¿Te pensabas que iba a redactar algo aquí? Grave error. 
+            No voy a facilitar el OSINT contra mi intimidad. 
+        </p>
+        <p>
+            Sin embargo, tengo que decir que me encanta escribir texto de más
+            para rellenar visualmente la página y hacer creer a tu cerebro que hay
+            información relevante en el apartado "Sobre mí". Es más: almendras. 
+        </p>
+        <p>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod 
+            tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, 
+            quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat 
+            etc.
+        </p>
+        <p>
+            ¿Sigues leyendo? ¡Vete de aquí!
+        </p>
+
+        <h2>Contacto</h2>
+        <p>
+            Correo electrónico: 
+            <a href="mailto:contact@eucarigo.com">contact@eucarigo.com</a>
+        </p>
+        <p>
+            Perfil de GitHub: 
+            <a href="https://github.com/eucarigo">https://github.com/eucarigo</a>
+        </p>
+        <p>
+            Patreon: 
+            <a href="https://patreon.com/eucarigo">https://patreon.com/eucarigo</a>
+        </p>
     </main>
 
     <footer>
-        <div class="container">
-            <div class="footer-content">
-                <img src="e.png" alt="Eucarigo Logo">
-                <span>© 2026 eucarigo. Todos los derechos reservados.</span>
-            </div>
-            <div class="footer-links">
-                <a href="index.html">Inicio</a>
-                <a href="projects.html">Proyectos</a>
-                <a href="blog.html">Blog</a>
-                <a href="contact.html">Contacto</a>
-            </div>
-            <p>Impulsado por GitHub Pages</p>
-        </div>
+        <p>
+            Esta página no usa cookies, ni analytics. Es únicamente impulsada 
+            por GitHub Pages con HTML, haciendo que la página esté perfectamente 
+            equilibrada, como debería estar todo.
+        </p>
+        <p>© 2026 eucarigo. Todos los derechos reservados.</p>
     </footer>
+
+    <script>
+        // Cargar posts.json y mostrar enlace a cada artículo
+        async function loadBlog() {
+            const container = document.getElementById('blog-list');
+            try {
+                const res = await fetch('posts.json');
+                if (!res.ok) {
+                    if (res.status === 404) {
+                        container.innerHTML = '<p>No hay artículos aún. Pronto escribiré algo.</p>';
+                        return;
+                    }
+                    throw new Error('Error al cargar el blog');
+                }
+                const posts = await res.json();
+                if (!posts.length) {
+                    container.innerHTML = '<p>No hay artículos aún. Pronto escribiré algo.</p>';
+                    return;
+                }
+                // Ordenar por fecha descendente (más nuevo primero)
+                posts.sort((a,b) => new Date(b.date) - new Date(a.date));
+                let html = '';
+                for (const post of posts) {
+                    html += `
+                        <div class="project">
+                            <h3><a href="posts/${post.slug}.html">${escapeHtml(post.title)}</a></h3>
+                            <p class="meta">${formatDate(post.date)}</p>
+                            <p>${escapeHtml(post.summary)}</p>
+                        </div>
+                    `;
+                }
+                container.innerHTML = html;
+            } catch(e) {
+                console.error(e);
+                container.innerHTML = '<p>No se pudieron cargar los artículos.</p>';
+            }
+        }
+
+        function escapeHtml(str) {
+            if (!str) return '';
+            return str.replace(/[&<>]/g, function(m) {
+                if (m === '&') return '&amp;';
+                if (m === '<') return '&lt;';
+                if (m === '>') return '&gt;';
+                return m;
+            });
+        }
+
+        function formatDate(dateStr) {
+            const date = new Date(dateStr);
+            return date.toLocaleDateString('es-ES', { year: 'numeric', month: 'long', day: 'numeric' });
+        }
+
+        loadBlog();
+    </script>
 </body>
 </html>
