@@ -14,118 +14,278 @@
             color: #333;
             background: #fff;
         }
+        
         h1 {
             font-size: 2em;
-            border-bottom: 1px solid #ddd;
-            padding-bottom: 0.2em;
+            margin-bottom: 0.2em;
+            line-height: 1.2;
         }
+        
         h2 {
             font-size: 1.5em;
-            margin-top: 1.5em;
-            border-bottom: 1px solid #eee;
+            margin-top: 2em;
+            margin-bottom: 0.5em;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 0.3em;
         }
+        
+        a {
+            color: #0066cc;
+            text-decoration: none;
+        }
+        
+        a:hover {
+            text-decoration: underline;
+        }
+        
+        code {
+            background: #f4f4f4;
+            padding: 2px 6px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+        }
+        
+        .meta {
+            color: #666;
+            font-size: 0.9em;
+            font-style: italic;
+        }
+        
         label {
             font-weight: bold;
             display: block;
             margin-top: 1.2em;
             margin-bottom: 0.3em;
         }
-        input, textarea, button {
+        
+        input, textarea {
             font-family: inherit;
-            font-size: 0.95rem;
+            font-size: 1rem;
             padding: 0.5rem;
-            border: 1px solid #ccc;
-            border-radius: 4px;
+            border: 1px solid #ddd;
             background: #fff;
             width: 100%;
             box-sizing: border-box;
         }
+        
+        input:focus, textarea:focus {
+            outline: 2px solid #0066cc;
+            outline-offset: 2px;
+        }
+        
         textarea {
             font-family: 'Courier New', monospace;
             height: 300px;
+            resize: vertical;
         }
+        
         .preview {
             border: 1px solid #ddd;
             background: #fafafa;
-            padding: 0 1rem;
-            margin-top: 0.5rem;
-            border-radius: 4px;
+            padding: 1rem;
+            margin-top: 1rem;
             max-height: 400px;
             overflow: auto;
         }
+        
         button {
-            background: #0066cc;
-            color: white;
-            border: none;
-            cursor: pointer;
-            font-weight: bold;
-            margin-top: 1.5rem;
-            width: auto;
-            padding: 0.6rem 1.8rem;
-        }
-        button:hover { background: #004499; }
-        .status {
-            margin-top: 1rem;
-            padding: 0.8rem;
-            border-radius: 4px;
-            background: #f0f0f0;
+            display: inline-block;
+            padding: 0.5em 1.2em;
+            border: 2px solid #333;
+            background: #333;
             font-family: monospace;
+            font-size: 0.9em;
+            font-weight: bold;
+            text-decoration: none;
+            color: #fff;
+            margin-top: 1rem;
+            margin-right: 0.5rem;
+            cursor: pointer;
+        }
+        
+        button:hover {
+            background: #000;
+            border-color: #000;
+        }
+        
+        .status {
+            margin-top: 1.5rem;
+            padding: 1rem;
+            background: #f4f4f4;
+            font-family: monospace;
+            font-size: 0.9em;
             white-space: pre-wrap;
         }
-        .error { background: #ffe0e0; color: #a00; border-left: 4px solid #a00; }
-        .success { background: #e0ffe0; color: #060; border-left: 4px solid #060; }
-        .token-section {
-            background: #f8f8f8;
-            padding: 1rem;
-            margin-bottom: 2rem;
-            border-radius: 4px;
+        
+        .error {
+            background: #ffe0e0;
+            color: #c00;
+            border-left: 4px solid #c00;
         }
-        .token-section input { width: auto; flex: 1; }
-        .token-flex { display: flex; gap: 1rem; align-items: center; flex-wrap: wrap; }
-        hr { margin: 2rem 0; }
-
+        
+        .success {
+            background: #e0ffe0;
+            color: #060;
+            border-left: 4px solid #060;
+        }
+        
+        .token-section {
+            background: #fafafa;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            border: 1px solid #ddd;
+        }
+        
+        .token-flex {
+            display: flex;
+            gap: 0.5rem;
+            align-items: flex-start;
+            flex-wrap: wrap;
+        }
+        
+        .token-flex input {
+            flex: 1;
+            min-width: 200px;
+        }
+        
+        .token-flex button {
+            margin-top: 0;
+        }
+        
+        hr {
+            margin: 2.5rem 0;
+            border: none;
+            border-top: 1px solid #ddd;
+        }
+        
+        footer {
+            margin-top: 4em;
+            padding-top: 2em;
+            border-top: 1px solid #ddd;
+            font-size: 0.9em;
+            color: #666;
+        }
+        
         @media (prefers-color-scheme: dark) {
-            body { background: #1a1a1a; color: #e0e0e0; }
-            input, textarea, .preview, .status { background: #2a2a2a; border-color: #444; color: #e0e0e0; }
-            .token-section { background: #2a2a2a; }
-            .error { background: #3a1a1a; color: #ffa0a0; }
-            .success { background: #1a3a1a; color: #a0ffa0; }
-            button { background: #2c6eaf; }
+            body {
+                background: #1a1a1a;
+                color: #e0e0e0;
+            }
+            
+            h2 {
+                border-bottom-color: #444;
+            }
+            
+            a {
+                color: #4d9fff;
+            }
+            
+            code {
+                background: #2a2a2a;
+            }
+            
+            input, textarea {
+                background: #2a2a2a;
+                border-color: #444;
+                color: #e0e0e0;
+            }
+            
+            .preview {
+                background: #2a2a2a;
+                border-color: #444;
+            }
+            
+            .status {
+                background: #2a2a2a;
+            }
+            
+            .error {
+                background: #3a1a1a;
+                color: #ffa0a0;
+            }
+            
+            .success {
+                background: #1a3a1a;
+                color: #a0ffa0;
+            }
+            
+            .token-section {
+                background: #2a2a2a;
+                border-color: #444;
+            }
+            
+            button {
+                background: #2a2a2a;
+                border-color: #444;
+            }
+            
+            button:hover {
+                background: #333;
+            }
+            
+            footer {
+                border-top-color: #444;
+            }
+            
+            .meta {
+                color: #999;
+            }
+            
+            hr {
+                border-top-color: #444;
+            }
         }
     </style>
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 </head>
 <body>
-    <h1>📝 panel de administración</h1>
-    <p>Publica artículos directamente en el blog. Los cambios se suben a GitHub.</p>
+    <header>
+        <h1>📝 panel de administración</h1>
+        <p class="meta">eucarigo</p>
+    </header>
 
-    <div class="token-section">
-        <label>🔐 Token de acceso personal (GitHub)</label>
-        <div class="token-flex">
-            <input type="password" id="githubToken" placeholder="ghp_xxxxxxxxxxxx">
-            <button id="saveTokenBtn">Guardar token</button>
+    <main>
+        <div class="token-section">
+            <label>🔐 Token de acceso personal (GitHub)</label>
+            <div class="token-flex">
+                <input type="password" id="githubToken" placeholder="ghp_xxxxxxxxxxxx">
+                <button id="saveTokenBtn">Guardar token</button>
+            </div>
+            <p style="font-size:0.85em; margin-top:0.8rem; margin-bottom:0;">
+                Necesita alcance <code>repo</code>. Se guarda solo en tu navegador.
+            </p>
         </div>
-        <p style="font-size:0.8rem; margin-top:0.5rem;">Necesita alcance <code>repo</code>. Se guarda solo en tu navegador.</p>
-    </div>
 
-    <hr>
+        <hr>
 
-    <div id="editorArea" style="display: none;">
-        <label>Título del artículo</label>
-        <input type="text" id="postTitle" placeholder="Ej: Adiós a las dependencias innecesarias">
+        <div id="editorArea" style="display: none;">
+            <h2>Nuevo artículo</h2>
+            
+            <label>Título del artículo</label>
+            <input type="text" id="postTitle" placeholder="Ej: Adiós a las dependencias innecesarias">
 
-        <label>Slug (URL amigable) — déjalo vacío para autogenerar</label>
-        <input type="text" id="postSlug" placeholder="ej: adios-dependencias">
+            <label>Slug (URL amigable) — déjalo vacío para autogenerar</label>
+            <input type="text" id="postSlug" placeholder="ej: adios-dependencias">
 
-        <label>Contenido (Markdown)</label>
-        <textarea id="postContent" placeholder="Escribe aquí en Markdown..."></textarea>
+            <label>Contenido (Markdown)</label>
+            <textarea id="postContent" placeholder="Escribe aquí en Markdown..."></textarea>
 
-        <button id="previewBtn">👁️ Previsualizar</button>
-        <div id="previewArea" class="preview" style="display:none;"></div>
+            <button id="previewBtn">👁️ Previsualizar</button>
+            <div id="previewArea" class="preview" style="display:none;"></div>
 
-        <button id="publishBtn">🚀 Publicar artículo</button>
-        <div id="publishStatus" class="status"></div>
-    </div>
+            <button id="publishBtn">🚀 Publicar artículo</button>
+            <div id="publishStatus" class="status" style="display:none;"></div>
+        </div>
+    </main>
+
+    <footer>
+        <p>
+            Esta página no usa cookies, ni analytics. Es únicamente impulsada 
+            por GitHub Pages con HTML, haciendo que la página esté perfectamente 
+            equilibrada, como debería estar todo.
+        </p>
+        <p>© 2026 eucarigo. Todos los derechos reservados.</p>
+    </footer>
 
     <script>
         // ---------- Configuración ----------
@@ -302,12 +462,17 @@
             if (!newToken) return;
             setToken(newToken);
             statusDiv.innerHTML = '<span class="success">✅ Token guardado (solo en este navegador).</span>';
-            setTimeout(() => statusDiv.innerHTML = '', 2000);
+            statusDiv.style.display = 'block';
+            setTimeout(() => {
+                statusDiv.innerHTML = '';
+                statusDiv.style.display = 'none';
+            }, 3000);
         });
 
         publishBtn.addEventListener('click', async () => {
             statusDiv.innerHTML = '⏳ Publicando...';
             statusDiv.className = 'status';
+            statusDiv.style.display = 'block';
 
             const title = document.getElementById('postTitle').value.trim();
             let slug = document.getElementById('postSlug').value.trim();
@@ -315,10 +480,12 @@
 
             if (!title || !markdown) {
                 statusDiv.innerHTML = '<span class="error">❌ Título y contenido son obligatorios.</span>';
+                statusDiv.className = 'status error';
                 return;
             }
             if (!githubToken) {
                 statusDiv.innerHTML = '<span class="error">❌ Configura tu token de GitHub primero.</span>';
+                statusDiv.className = 'status error';
                 return;
             }
 
@@ -339,9 +506,8 @@
                 posts.sort((a,b) => new Date(b.date) - new Date(a.date));
                 await uploadFile('posts.json', JSON.stringify(posts, null, 2), `Actualizar índice del blog: "${title}"`);
 
-                statusDiv.innerHTML = `<span class="success">✅ Artículo publicado correctamente.<br>
-                🔗 Ver: <a href="/posts/${slug}.html" target="_blank">https://eucarigo.com/posts/${slug}.html</a><br>
-                📄 El blog principal ya muestra la nueva entrada.</span>`;
+                statusDiv.innerHTML = `✅ Artículo publicado correctamente.\n🔗 Ver: https://eucarigo.com/posts/${slug}.html\n📄 El blog principal ya muestra la nueva entrada.`;
+                statusDiv.className = 'status success';
 
                 previewArea.style.display = 'none';
                 document.getElementById('postTitle').value = '';
@@ -349,7 +515,8 @@
                 document.getElementById('postContent').value = '';
             } catch (err) {
                 console.error(err);
-                statusDiv.innerHTML = `<span class="error">❌ Error: ${err.message}</span>`;
+                statusDiv.innerHTML = `❌ Error: ${err.message}`;
+                statusDiv.className = 'status error';
             }
         });
 
