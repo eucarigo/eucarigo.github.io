@@ -3,603 +3,425 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PreCita | eucarigo</title>
-    <link rel="icon" type="image/x-icon" href="e.ico">
-    <link rel="icon" type="image/png" href="e.png">
+    <title>PreCita · eucarigo</title>
+    <link rel="icon" type="image/png" sizes="2048x2048" href="file:///D:/web/i/precita.png">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-            line-height: 1.6;
-            color: #333;
-            background-color: #fff;
-        }
-        
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
+            max-width: 650px;
+            margin: 40px auto;
             padding: 0 20px;
-        }
-        
-        header {
+            font: 18px/1.6 Georgia, serif;
+            color: #333;
             background: #fff;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-            position: sticky;
-            top: 0;
-            z-index: 100;
         }
         
-        nav {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 1rem 0;
+        h1 {
+            font-size: 2em;
+            margin-bottom: 0.2em;
+            line-height: 1.2;
         }
         
-        .logo {
-            display: flex;
-            align-items: center;
+        h2 {
+            font-size: 1.5em;
+            margin-top: 2em;
+            margin-bottom: 0.5em;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 0.3em;
+        }
+        
+        h3 {
+            font-size: 1.2em;
+            margin-top: 1.5em;
+            margin-bottom: 0.3em;
+        }
+        
+        a {
+            color: #0066cc;
             text-decoration: none;
-            color: #333;
-            font-size: 1.5rem;
-            font-weight: bold;
         }
         
-        .logo img {
-            width: 40px;
-            height: 40px;
-            margin-right: 10px;
-            border-radius: 8px;
+        a:hover {
+            text-decoration: underline;
         }
         
-        .nav-links {
-            display: flex;
-            list-style: none;
-            gap: 2rem;
-        }
-        
-        .nav-links a {
-            text-decoration: none;
-            color: #666;
-            transition: color 0.3s;
-        }
-        
-        .nav-links a:hover {
-            color: #333;
-        }
-        
-        .project-hero {
-            padding: 4rem 0;
-            text-align: center;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-        }
-        
-        .project-logo {
-            width: 80px;
-            height: 80px;
-            margin-bottom: 1rem;
-            border-radius: 15px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-        }
-        
-        .project-hero h1 {
-            font-size: 3rem;
-            margin-bottom: 1rem;
-        }
-        
-        .project-hero p {
-            font-size: 1.2rem;
-            margin-bottom: 2rem;
-            opacity: 0.9;
-            max-width: 800px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-        
-        .btn {
-            display: inline-block;
-            padding: 12px 24px;
-            background: #fff;
-            color: #667eea;
-            text-decoration: none;
-            border-radius: 5px;
-            font-weight: 600;
-            transition: transform 0.3s, box-shadow 0.3s;
-            margin: 0 10px;
-        }
-        
-        .btn-primary {
-            background: #333 !important;
-            color: #fff !important;
-        }
-        
-        .btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-        }
-        
-        .features {
-            padding: 4rem 0;
-        }
-        
-        .features h2 {
-            text-align: center;
-            margin-bottom: 3rem;
-            font-size: 2.5rem;
-        }
-        
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-        }
-        
-        .feature-card {
-            background: #f8f9fa;
-            padding: 2rem;
-            border-radius: 10px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            transition: transform 0.3s;
-        }
-        
-        .feature-card:hover {
-            transform: translateY(-5px);
-        }
-        
-        .feature-card h3 {
-            color: #333;
-            margin-bottom: 1rem;
-            font-size: 1.3rem;
-        }
-        
-        .feature-card p {
-            color: #666;
-        }
-        
-        .installation {
-            padding: 4rem 0;
-            background: #f8f9fa;
-        }
-        
-        .installation h2 {
-            text-align: center;
-            margin-bottom: 3rem;
-            font-size: 2.5rem;
-        }
-        
-        .install-section {
-            margin-bottom: 3rem;
-        }
-        
-        .install-section h3 {
-            color: #333;
-            margin-bottom: 1.5rem;
-            font-size: 1.5rem;
-        }
-        
-        .requirements-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-            margin-bottom: 2rem;
-        }
-        
-        .req-card {
-            background: white;
-            padding: 1.5rem;
-            border-radius: 8px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-        }
-        
-        .req-card h4 {
-            color: #667eea;
-            margin-bottom: 1rem;
-        }
-        
-        .req-card ul {
-            list-style: none;
-            padding-left: 0;
-        }
-        
-        .req-card li {
-            padding: 0.5rem 0;
-            color: #666;
-        }
-        
-        .code-block {
-            background: #2d3748;
-            color: #e2e8f0;
-            padding: 1.5rem;
-            border-radius: 8px;
-            margin: 1rem 0;
+        code {
+            background: #f4f4f4;
+            padding: 2px 6px;
             font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+        }
+        
+        pre {
+            background: #f4f4f4;
+            padding: 1em;
             overflow-x: auto;
+            border-radius: 4px;
         }
         
-        .step-list {
-            counter-reset: step-counter;
-            list-style: none;
-            padding-left: 0;
+        pre code {
+            background: none;
+            padding: 0;
         }
         
-        .step-list li {
-            counter-increment: step-counter;
-            margin-bottom: 2rem;
-            position: relative;
-            padding-left: 50px;
+        .meta {
+            color: #666;
+            font-size: 0.9em;
+            font-style: italic;
         }
         
-        .step-list li::before {
-            content: counter(step-counter);
-            position: absolute;
-            left: 0;
-            top: 0;
-            background: #667eea;
-            color: white;
-            width: 30px;
-            height: 30px;
-            border-radius: 50%;
+        .download {
+            display: inline-block;
+            padding: .25em .6em;
+            border: 2px solid #333;
+            background: #333;
+            font-family: monospace;
+            font-size: .9em;
+            font-weight: bold;
+            text-decoration: none;
+            color: #fff;
+            margin-right: 12px;
+            border-radius: 8px;
+        }
+
+        .download:hover {
+            background: #333;
+            color: #fff;
+        }
+        
+        .brand {
             display: flex;
             align-items: center;
-            justify-content: center;
-            font-weight: bold;
+            gap: 12px;
         }
-        
-        .usage {
-            padding: 4rem 0;
+
+        .back-link {
+            margin-bottom: 2em;
+            font-family: monospace;
+            font-size: 0.9em;
         }
-        
-        .usage h2 {
-            text-align: center;
-            margin-bottom: 3rem;
-            font-size: 2.5rem;
+
+        .version-badge {
+            display: inline-block;
+            background: #f4f4f4;
+            padding: 0.16em 0.4em;
+            border-radius: 6px;
+            font-family: monospace;
+            font-size: 0.85em;
+            margin-left: 0.5em;
         }
-        
-        .usage-section {
-            margin-bottom: 3rem;
-        }
-        
-        .usage-section h3 {
-            color: #333;
-            margin-bottom: 1.5rem;
-            font-size: 1.3rem;
-        }
-        
-        .faq {
-            padding: 4rem 0;
-            background: #f8f9fa;
-        }
-        
-        .faq h2 {
-            text-align: center;
-            margin-bottom: 3rem;
-            font-size: 2.5rem;
-        }
-        
-        .faq-item {
-            background: white;
-            padding: 1.5rem;
-            border-radius: 8px;
-            margin-bottom: 1rem;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-        }
-        
-        .faq-item h3 {
-            color: #667eea;
-            margin-bottom: 1rem;
-        }
-        
-        .faq-item p {
+
+        footer {
+            margin-top: 4em;
+            padding-top: 2em;
+            border-top: 1px solid #ddd;
+            font-size: 0.9em;
             color: #666;
         }
         
-        .cta {
-            padding: 4rem 0;
-            text-align: center;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
+        ul, ol {
+            margin: 0.5em 0;
+            padding-left: 2em;
+        }
+
+        li {
+            margin: 0.3em 0;
+        }
+
+        .highlight {
+            background: #fffacd;
+            padding: 0.1em 0.3em;
+            border-radius: 3px;
         }
         
-        .cta h2 {
-            margin-bottom: 1rem;
-            font-size: 2rem;
-        }
-        
-        .cta p {
-            margin-bottom: 2rem;
-            font-size: 1.1rem;
-            opacity: 0.9;
-        }
-        
-        .cta .btn {
-            background: white;
-            color: #667eea;
-        }
-        
-        .cta .btn:hover {
-            background: #f8f9fa;
-        }
-        
-        footer {
-            background: #333;
-            color: white;
-            padding: 2rem 0;
-            text-align: center;
-        }
-        
-        .footer-content {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 10px;
-            margin-bottom: 1rem;
-        }
-        
-        .footer-content img {
-            width: 30px;
-            height: 30px;
-            border-radius: 5px;
-        }
-        
-        .footer-links {
-            display: flex;
-            justify-content: center;
-            gap: 2rem;
-            margin-bottom: 1rem;
-        }
-        
-        .footer-links a {
-            color: #ccc;
-            text-decoration: none;
-        }
-        
-        .footer-links a:hover {
-            color: white;
-        }
-        
-        @media (max-width: 768px) {
-            .nav-links {
-                gap: 1rem;
+        @media (prefers-color-scheme: dark) {
+            body {
+                background: #1a1a1a;
+                color: #e0e0e0;
             }
             
-            .project-hero h1 {
-                font-size: 2rem;
+            h2 {
+                border-bottom-color: #444;
             }
             
-            .features-grid {
-                grid-template-columns: 1fr;
+            a {
+                color: #4d9fff;
             }
             
-            .requirements-grid {
-                grid-template-columns: 1fr;
+            code, pre {
+                background: #2a2a2a;
+            }
+
+            .version-badge {
+                background: #2a2a2a;
+            }
+            
+            .download {
+                background: #2a2a2a;
+                border-color: #444;
+            }
+            
+            .download:hover {
+                background: #333;
+                border-color: #555;
+            }
+            
+            footer {
+                border-top-color: #444;
+            }
+            
+            .meta {
+                color: #999;
+            }
+
+            .highlight {
+                background: #4a4a2a;
             }
         }
     </style>
 </head>
 <body>
+    <div class="back-link">
+        <a href="file:///D:/web/index.html">← página principal</a>
+    </div>
+
     <header>
-        <nav class="container">
-            <a href="index.html" class="logo">
-                <img src="e.png" alt="Eucarigo Logo">
-                Eucarigo
-            </a>
-            <ul class="nav-links">
-                <li><a href="index.html">Inicio</a></li>
-                <li><a href="projects.html">Proyectos</a></li>
-                <li><a href="blog.html">Blog</a></li>
-                <li><a href="contact.html">Contacto</a></li>
-            </ul>
-        </nav>
+        <h1 class="brand">
+            <img src="file:///D:/web/i/precita.png" alt="PreCita Logo" width="48" height="48">
+            PreCita
+            <span class="version-badge">v0.36.8</span>
+        </h1>
+
+        <p class="meta">Gestión de citas y recordatorios automáticos</p>
+
+        <p>
+            Aplicación de escritorio para Windows desarrollada en Python 
+            que permite gestionar citas y contactos, sincronizar eventos 
+            con Google Calendar y enviar recordatorios por correo electrónico 
+            a través de Gmail.
+        </p>
+
+        <div style="margin-top: 1.5em;">
+            <a href="file:///D:/web/d/precita-latest.zip" class="download">descargar (v0.36.8)</a>
+            <a href="https://github.com/eucarigo/precita">código fuente</a>
+        </div>
     </header>
 
     <main>
-        <section class="project-hero">
-            <div class="container">
-                <img src="precita.png" alt="PreCita Logo" class="project-logo">
-                <h1>PreCita</h1>
-                <p>Gestor de Citas y Contactos Inteligente</p>
-                <p>Aplicación de escritorio en Python para gestionar tus citas y contactos, con sincronización automática de Google Calendar y recordatorios por correo electrónico.</p>
-                <a href="https://github.com/eucarigo/precita" class="btn">Ver en GitHub</a>
-                <a href="https://github.com/eucarigo/precita/releases/download/portable/precita-x86_64-0.36.8.zip" class="btn btn-primary" download>Descargar v0.36.8</a>
-            </div>
-        </section>
+        <h2>¿Para quién es PreCita?</h2>
+        <p>
+            Está pensada para profesionales que trabajan con 
+            citas programadas (clientes o pacientes), como:
+        </p>
+        <ul>
+            <li>Psicólogos</li>
+            <li>Médicos</li>
+            <li>Fisioterapeutas</li>
+            <li>Esteticistas</li>
+            <li>Masajistas</li>
+            <li>Entrenadores personales</li>
+        </ul>
+        <p>
+            En definitiva, para cualquier profesional con una agenda 
+            ocupada que requiera automatizar el envío de recordatorios.
+        </p>
 
-        <section class="features">
-            <div class="container">
-                <h2>Características Principales</h2>
-                <div class="features-grid">
-                    <div class="feature-card">
-                        <h3>Sincronización con Google Calendar</h3>
-                        <p>Sincroniza automáticamente tus citas con tu Google Calendar para tener todo organizado en un solo lugar.</p>
-                    </div>
-                    <div class="feature-card">
-                        <h3>Recordatorios por Email</h3>
-                        <p>Recibe recordatorios automáticos por correo electrónico antes de tus citas importantes.</p>
-                    </div>
-                    <div class="feature-card">
-                        <h3>Gestión de Contactos</h3>
-                        <p>Almacena y organiza información detallada de tus contactos para un acceso rápido.</p>
-                    </div>
-                    <div class="feature-card">
-                        <h3>Notificaciones Inteligentes</h3>
-                        <p>Sistema de notificaciones configurable para nunca olvidar una cita importante.</p>
-                    </div>
-                    <div class="feature-card">
-                        <h3>Estadísticas y Reportes</h3>
-                        <p>Visualiza estadísticas sobre tus citas y genera reportes para un mejor seguimiento.</p>
-                    </div>
-                    <div class="feature-card">
-                        <h3>Base de Datos Local</h3>
-                        <p>Almacenamiento seguro de tus datos localmente con opción de backup automático.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
+        <h2>Características principales</h2>
+        <ul>
+            <li><strong>Sincronización directa con Google Calendar</strong> en ventana configurable de 7 a 49 días (15 por defecto)</li>
+            <li><strong>Recordatorios automatizados y personalizables por email</strong> mediante Gmail</li>
+            <li><strong>Vistas de agenda</strong>: diaria, semanal y mensual, con navegación por períodos y acceso rápido a "Hoy"</li>
+            <li><strong>Gestión de contactos</strong>: alta, edición, eliminación y vinculación con citas</li>
+            <li><strong>Plantilla de correo editable</strong> con asunto y cuerpo en HTML, formato básico (negrita/cursiva/subrayado/listas) y variables dinámicas</li>
+            <li><strong>Adjuntos reutilizables</strong> en plantilla con controles de seguridad y límite de tamaño total (16 MB)</li>
+            <li><strong>Completamente local y privado</strong>, sin telemetrías</li>
+            <li><strong>Encriptación opcional</strong> de base de datos mediante contraseña</li>
+            <li><strong>Software libre</strong> distribuido bajo GNU GPL v3</li>
+        </ul>
 
-        <section class="installation">
-            <div class="container">
-                <h2>Instalación</h2>
-                
-                <div class="install-section">
-                    <h3>Requisitos del Sistema</h3>
-                    <div class="requirements-grid">
-                        <div class="req-card">
-                            <h4>Mínimos:</h4>
-                            <ul>
-                                <li>Python 3.8 o superior</li>
-                                <li>4 GB de RAM</li>
-                                <li>500 MB de espacio en disco</li>
-                                <li>Conexión a internet para sincronización</li>
-                            </ul>
-                        </div>
-                        <div class="req-card">
-                            <h4>Recomendados:</h4>
-                            <ul>
-                                <li>Python 3.12</li>
-                                <li>8 GB de RAM</li>
-                                <li>1 GB de espacio en disco</li>
-                                <li>Conexión estable a internet</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
+        <h2>Tecnologías</h2>
+        <ul>
+            <li>Python 3.10+ (3.12 recomendado)</li>
+            <li>PyQt6</li>
+            <li>SQLite</li>
+            <li>cryptography</li>
+            <li>Google Calendar API</li>
+            <li>Gmail API</li>
+        </ul>
 
-                <div class="install-section">
-                    <h3>Pasos de Instalación</h3>
-                    <ol class="step-list">
-                        <li>
-                            <h4>Clonar el repositorio</h4>
-                            <div class="code-block">git clone https://github.com/eucarigo/precita.git<br>cd precita</div>
-                        </li>
-                        <li>
-                            <h4>Crear entorno virtual</h4>
-                            <div class="code-block">python -m venv venv<br>source venv/bin/activate # Linux/Mac<br>venv\Scripts\activate # Windows</div>
-                        </li>
-                        <li>
-                            <h4>Instalar dependencias</h4>
-                            <div class="code-block">pip install -r requirements.txt</div>
-                        </li>
-                        <li>
-                            <h4>Configurar credenciales</h4>
-                            <p>Crea un archivo .env con tus credenciales de Google:</p>
-                            <div class="code-block">.env</div>
-                            <div class="code-block">GOOGLE_CALENDAR_ID=tu_calendar_id@gmail.com<br>GMAIL_USER=tu_email@gmail.com<br>GMAIL_PASSWORD=tu_password_app</div>
-                        </li>
-                        <li>
-                            <h4>Ejecutar la aplicación</h4>
-                            <div class="code-block">python main.py</div>
-                        </li>
-                    </ol>
-                </div>
-            </div>
-        </section>
+        <h2>Instalación y ejecución</h2>
+        <p>
+            <strong>Requisitos previos:</strong> 
+            <ul>
+                <li>
+                    Python 3.10 o superior instalado. Se recomienda Python 3.12.
+                </li>
+                <li>
+                    Sistema Operativo Windows 10 o superior. Se recomienda Windows 11.
+                </li>
+            </ul>
+        </p>
 
-        <section class="usage">
-            <div class="container">
-                <h2>Guía de Uso</h2>
-                
-                <div class="usage-section">
-                    <h3>Crear una Cita</h3>
-                    <ol class="step-list">
-                        <li>Haz clic en "Nueva Cita"</li>
-                        <li>Completa los detalles (título, fecha, hora)</li>
-                        <li>Selecciona los contactos involucrados</li>
-                        <li>Configura recordatorios si es necesario</li>
-                        <li>Guarda y sincroniza con Google Calendar</li>
-                    </ol>
-                </div>
+        <h3>1. Clonar o descargar el repositorio</h3>
+        <pre><code>git clone https://github.com/eucarigo/precita.git
+cd precita</code></pre>
 
-                <div class="usage-section">
-                    <h3>Gestionar Contactos</h3>
-                    <ol class="step-list">
-                        <li>Ve a la sección "Contactos"</li>
-                        <li>Haz clic en "Agregar Contacto"</li>
-                        <li>Ingresa información personal y de contacto</li>
-                        <li>Asocia etiquetas para mejor organización</li>
-                        <li>Guarda para usar en futuras citas</li>
-                    </ol>
-                </div>
+        <h3>2. Crear y activar entorno virtual</h3>
+        <pre><code>python -m venv venv
+venv\Scripts\activate
+</code></pre>
 
-                <div class="usage-section">
-                    <h3>Sincronización</h3>
-                    <ol class="step-list">
-                        <li>Configura tu cuenta de Google</li>
-                        <li>Autoriza el acceso a Calendar y Gmail</li>
-                        <li>Selecciona el calendario a sincronizar</li>
-                        <li>Activa la sincronización automática</li>
-                        <li>Revisa el estado de sincronización</li>
-                    </ol>
-                </div>
+        <h3>3. Instalar dependencias</h3>
+        <pre><code>pip install PyQt6 PyQt6-WebEngine google-auth google-auth-oauthlib google-api-python-client pytz cryptography</code></pre>
 
-                <div class="usage-section">
-                    <h3>Configurar Recordatorios</h3>
-                    <ol class="step-list">
-                        <li>Accede a "Configuración"</li>
-                        <li>Ve a "Recordatorios"</li>
-                        <li>Configura tiempos por defecto</li>
-                        <li>Personaliza mensajes de email</li>
-                        <li>Activa notificaciones del sistema</li>
-                    </ol>
-                </div>
-            </div>
-        </section>
+        <h3>4. Ejecutar la aplicación</h3>
+        <pre><code>python main.py</code></pre>
 
-        <section class="faq">
-            <div class="container">
-                <h2>Preguntas Frecuentes</h2>
-                <div class="faq-item">
-                    <h3>¿PreCita es gratuito?</h3>
-                    <p>Sí, PreCita es completamente gratuito y de código abierto. Puedes usarlo sin coste alguno y el código está disponible en GitHub para que puedas revisarlo y contribuir.</p>
-                </div>
-                <div class="faq-item">
-                    <h3>¿Necesito una cuenta de Google?</h3>
-                    <p>Para las funciones de sincronización con Google Calendar y envío de recordatorios por Gmail, sí necesitas una cuenta de Google. Sin embargo, puedes usar PreCita sin estas funciones si solo necesitas gestión local de citas y contactos.</p>
-                </div>
-                <div class="faq-item">
-                    <h3>¿Son seguros mis datos?</h3>
-                    <p>Sí, tus datos se almacenan localmente en tu computadora y no se comparten con terceros. La sincronización con Google solo ocurre cuando tú lo autorizas y necesitas tus propias credenciales de Google para ello.</p>
-                </div>
-                <div class="faq-item">
-                    <h3>¿Puedo exportar mis datos?</h3>
-                    <p>Sí, PreCita permite exportar tus citas y contactos en formatos como CSV, JSON y iCalendar. También puedes hacer backup de toda la base de datos con un solo clic.</p>
-                </div>
-                <div class="faq-item">
-                    <h3>¿Dónde puedo obtener soporte?</h3>
-                    <p>Puedes obtener soporte a través de los issues en GitHub, donde reportar bugs y solicitar nuevas funcionalidades. También puedes contactarme directamente por email para consultas más específicas.</p>
-                </div>
-            </div>
-        </section>
+        <h2>Configuración y almacenamiento local</h2>
+        <p>
+            PreCita guarda su información en la carpeta local del usuario <code>~/.precita/</code>:
+        </p>
+        <ul>
+            <li><code>precita.db</code>: base de datos SQLite</li>
+            <li><code>db_encryption_config.json</code>: estado local de encriptación de la base de datos</li>
+            <li><code>token.json</code>: token OAuth local para Google</li>
+            <li><code>client_secret.json</code>: opcional, para flujo OAuth alternativo</li>
+            <li><code>template_attachments/</code>: copia local segura de adjuntos de plantilla</li>
+        </ul>
 
-        <section class="cta">
-            <div class="container">
-                <h2>¿Listo para organizar tus citas?</h2>
-                <p>Descarga PreCita hoy mismo y empieza a gestionar tus citas y contactos de manera inteligente.</p>
-                <a href="https://github.com/eucarigo/precita/releases/download/portable/precita-x86_64-0.36.8.zip" class="btn" download>Descargar Gratis</a>
-                <a href="https://github.com/eucarigo/precita" class="btn">Ver en GitHub</a>
-            </div>
-        </section>
+        <p>
+            Desde el menú principal puede abrir <strong>Datos locales</strong> para consultar esta carpeta y, cuando lo necesite, 
+            ejecutar <strong>Optimizar</strong> (comando SQLite <code>VACUUM</code>) para compactar <code>precita.db</code>.
+        </p>
+
+        <h3>Encriptación de base de datos</h3>
+        <p>
+            En <strong>Datos locales</strong> puede abrir <strong>Encriptar base de datos</strong> para:
+        </p>
+        <ul>
+            <li>Elegir entre "Deshabilitar encriptación (predeterminado)" y "Habilitar encriptación (recomendable)"</li>
+            <li>Definir una contraseña alfanumérica obligatoria para proteger <code>precita.db</code></li>
+            <li>Introducir la contraseña al arrancar PreCita cuando la base de datos está cifrada</li>
+        </ul>
+
+        <p class="meta">
+            <strong>Nota de seguridad:</strong> Se usa la variable de entorno <code>PRECITA_MASTER_KEY</code> 
+            para desencriptar el fichero <code>config.bin</code> que contiene las claves de la API de Google.
+        </p>
+
+        <h2>Flujo de uso recomendado</h2>
+        <ol>
+            <li>Abra PreCita</li>
+            <li>Use <strong>Sincronizar</strong> para iniciar sesión con Google (si aplica) y traer citas del calendario seleccionado</li>
+            <li>Revise o cree contactos en <strong>Gestión de contactos</strong> o <strong>Añadir contacto</strong></li>
+            <li>Ajuste asunto/cuerpo/adjuntos desde <strong>Personalizar plantilla</strong></li>
+            <li>Revise <strong>Datos locales</strong> para verificar el estado de <code>~/.precita/</code>, usar <strong>Optimizar</strong> 
+                y configurar <strong>Encriptar base de datos</strong> si desea proteger <code>precita.db</code> con clave</li>
+            <li>Ejecute <strong>Lanzar pendientes</strong> para envío manual o deje activo el envío automático</li>
+        </ol>
+
+        <h2>Variables disponibles en la plantilla</h2>
+        <p>
+            Puede usar estas variables en el asunto y cuerpo de los correos de recordatorio:
+        </p>
+        <ul>
+            <li><code>{nombre_citado}</code></li>
+            <li><code>{apellidos_citado}</code></li>
+            <li><code>{correo_citado}</code></li>
+            <li><code>{tlf_citado}</code></li>
+            <li><code>{hora_cita}</code></li>
+            <li><code>{fecha_cita}</code></li>
+            <li><code>{dia_semana}</code></li>
+        </ul>
+
+        <h2>Reglas de seguridad para adjuntos</h2>
+        <ul>
+            <li>Se bloquean extensiones ejecutables o de riesgo según política de Gmail</li>
+            <li>Se permite <code>*.zip</code> solo si su contenido no incluye archivos bloqueados</li>
+            <li>Se bloquean otros formatos comprimidos (<code>.rar</code>, <code>.7z</code>, <code>.tar</code>, <code>.gz</code>, <code>.bz2</code>, <code>.xz</code>)</li>
+            <li>El tamaño combinado de cuerpo + adjuntos está limitado a <strong>16 MB</strong></li>
+        </ul>
+
+        <h2>Configuración funcional</h2>
+        <p>
+            Desde <strong>Configuración</strong> (también con <code>Ctrl+,</code>):
+        </p>
+        <ul>
+            <li>Tema visual (Claro / Oscuro)</li>
+            <li>Intervalo de revisión automática de recordatorios</li>
+            <li>Días de sincronización de calendario (rango 7-49)</li>
+            <li>Calendario de Google seleccionado</li>
+            <li>Activación/desactivación de notificaciones de Windows</li>
+            <li>Inicio con Windows</li>
+            <li>Desvincular cuenta de Google en este equipo</li>
+            <li>Restablecer valores predeterminados</li>
+        </ul>
+
+        <p>
+            Desde la ventan <strong>Ayuda</strong> (también con <code>Ctrl+H</code>) puede abrir enlaces directos a funciones internas 
+            como sincronización, contactos, plantilla, configuración y almacenamiento.
+        </p>
+
+        <h3>Otros atajos de teclado</h3>
+        <ul>
+            <li><code>Ctrl+H</code>: Abrir la ventana Ayuda</li>
+            <li><code>Ctrl+,</code>: Abrir la ventan Configuración</li>
+            <li><code>Ctrl++</code>: Aumentar tamaño de la app (máximo 150%)</li>
+            <li><code>Ctrl+-</code>: Disminuir tamaño de la app (mínimo 80%)</li>
+        </ul>
+
+        <h2>Política de privacidad</h2>
+        <p>
+            PreCita es una herramienta de ejecución local y prioriza el control del usuario sobre sus datos:
+        </p>
+        <ol>
+            <li><strong>Datos locales:</strong> contactos, citas y configuración se guardan en el equipo del usuario</li>
+            <li><strong>Uso de APIs de Google:</strong> se usa Google Calendar para lectura de eventos y Gmail para envío de recordatorios</li>
+            <li><strong>Transferencia de datos:</strong> no hay telemetría ni envío a terceros fuera de las APIs necesarias de Google</li>
+            <li><strong>Control y eliminación:</strong> para borrar datos, cierre la app y elimine <code>~/.precita/</code>; 
+                opcionalmente revoque el acceso en su cuenta de Google</li>
+            <li><strong>Licencia:</strong> software distribuido bajo GNU GPL v3, sin garantías. 
+                Puede ver el fichero LICENSE al descargar la aplicación o entrar en el 
+                <a href="https://www.gnu.org/licenses/gpl-3.0.html">enlace oficial</a>
+            </li>
+        </ol>
+
+        <h2>Estructura del proyecto</h2>
+        <ul>
+            <li><code>main.py</code>: interfaz, lógica de negocio, persistencia, sincronización y envío</li>
+            <li><code>VERSION</code>: versión de aplicación</li>
+            <li><code>precita.ico</code>: icono principal</li>
+            <li><code>LICENSE</code>: licencia GNU GPL v3</li>
+            <li><code>config.bin</code>: binario cifrado con las claves de la API de Google</li>
+        </ul>
+
+        <h2>Descargas</h2>
+        <p>
+            <a href="file:///D:/web/d/precita-latest.zip" class="download">descargar (v0.36.8)</a>
+        </p>
+        <p>
+            Código fuente en GitHub: <a href="https://github.com/eucarigo/precita">https://github.com/eucarigo/precita</a>
+        </p>
+
+        <h2>Soporte y contacto</h2>
+        <p>
+            Para reportar errores, sugerencias o preguntas:
+        </p>
+        <ul>
+            <li>GitHub Issues: <a href="https://github.com/eucarigo/precita/issues">https://github.com/eucarigo/precita/issues</a></li>
+            <li>Correo electrónico: <a href="mailto:contact@eucarigo.com">contact@eucarigo.com</a></li>
+        </ul>
     </main>
 
     <footer>
-        <div class="container">
-            <div class="footer-content">
-                <img src="e.png" alt="Eucarigo Logo">
-                <span>© 2026 eucarigo. Todos los derechos reservados.</span>
-            </div>
-            <div class="footer-links">
-                <a href="index.html">Inicio</a>
-                <a href="projects.html">Proyectos</a>
-                <a href="blog.html">Blog</a>
-                <a href="contact.html">Contacto</a>
-            </div>
-            <p>PreCita - Gestor de Citas y Contactos</p>
-        </div>
+        <p>
+            PreCita es software libre distribuido bajo licencia GNU GPL v3.
+        </p>
+        <p>
+            Esta página no usa cookies, ni analytics. Es únicamente impulsada 
+            por GitHub Pages con HTML, haciendo que la página esté perfectamente 
+            equilibrada, como debería estar todo.
+        </p>
+        <p>© 2026 eucarigo. Todos los derechos reservados.</p>
     </footer>
 </body>
 </html>
