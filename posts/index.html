@@ -175,6 +175,9 @@
         <p class="meta">artículos propios</p>
     </header>
 
+    <main id="blog-list">
+    </main>
+
     <footer>
         <p>
             Esta página no usa cookies, ni analytics. Es únicamente impulsada 
@@ -183,5 +186,61 @@
         </p>
         <p>© 2026 eucarigo. Todos los derechos reservados.</p>
     </footer>
+
+    <script>
+        async function loadBlog() {
+            const container = document.getElementById('blog-list');
+            try {
+                const res = await fetch('../posts.json');
+                if (!res.ok) {
+                    if (res.status === 404) {
+                        container.innerHTML = '<p>No hay artículos todavía.</p>';
+                        return;
+                    }
+                    throw new Error('Error al cargar el blog');
+                }
+                const posts = await res.json();
+                if (!posts.length) {
+                    container.innerHTML = '<p>No hay artículos todavía.</p>';
+                    return;
+                }
+
+                // Ordenar por fecha descendente (más nuevo primero)
+                posts.sort((a, b) => new Date(b.date) - new Date(a.date));
+
+                let html = '';
+                for (const post of posts) {
+                    html += `
+                        <div class="project">
+                            <h3><a href="posts/${post.slug}.html">${escapeHtml(post.title)}</a></h3>
+                            <p class="meta">${formatDate(post.date)}</p>
+                            <p>${escapeHtml(post.summary)}</p>
+                        </div>
+                    `;
+                }
+                container.innerHTML = html;
+            } catch (e) {
+                console.error(e);
+                container.innerHTML = '<p>No se pudieron cargar los artículos.</p>';
+            }
+        }
+
+        function escapeHtml(str) {
+            if (!str) return '';
+            return str.replace(/[&<>]/g, function(m) {
+                if (m === '&') return '&amp;';
+                if (m === '<') return '&lt;';
+                if (m === '>') return '&gt;';
+                return m;
+            });
+        }
+
+        function formatDate(dateStr) {
+            const date = new Date(dateStr);
+            return date.toLocaleDateString('es-ES', { year: 'numeric', month: 'long', day: 'numeric' });
+        }
+
+        loadBlog();
+    </script>
 </body>
 </html>
