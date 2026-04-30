@@ -212,7 +212,7 @@
                 for (const post of posts) {
                     html += `
                         <div class="project">
-                            <h3><a href="posts/${post.slug}.html">${escapeHtml(post.title)}</a></h3>
+                            <h3><a href="${post.slug}.html">${escapeHtml(post.title)}</a></h3>
                             <p class="meta">${formatDate(post.date)}</p>
                             <p>${escapeHtml(post.summary)}</p>
                         </div>
