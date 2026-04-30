@@ -333,7 +333,7 @@
                         <div class="project">
                             <h3><a href="posts/${post.slug}.html">${escapeHtml(post.title)}</a></h3>
                             <p class="meta">${formatDate(post.date)}</p>
-                            <p>${marked.parse(post.summary)}</p>
+                            <p>${escapeHtml(post.summary)}</p>
                         </div>
                     `;
                 }
