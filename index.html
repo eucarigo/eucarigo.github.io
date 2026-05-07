@@ -325,7 +325,7 @@
                                 <a href="projects/${escapeHtml(p.slug)}/">${escapeHtml(p.name)}</a>
                             </h3>
                             <p class="meta">${escapeHtml(p.year)}${p.tech ? ' · ' + escapeHtml(p.tech) : ''}</p>
-                            <p>${escapeHtml(marked.parse(p.summary))}</p>
+                            <p>${marked.parse(p.summary)}</p>
                             ${downloadBtn || sourceLink ? `<p>${downloadBtn}${sourceLink}</p>` : ''}
                             <p><a href="projects/${escapeHtml(p.slug)}/">Saber más de este proyecto</a></p>
                         </div>
@@ -362,7 +362,7 @@
                         <div class="project">
                             <h3><a href="posts/${escapeHtml(post.slug)}.html">${escapeHtml(post.title)}</a></h3>
                             <p class="meta">${formatDate(post.date)}</p>
-                            <p>${escapeHtml(marked.parse(post.summary))}</p>
+                            <p>${marked.parse(post.summary)}</p>
                         </div>
                     `;
                 }
