@@ -333,7 +333,7 @@
                 container.innerHTML = html;
             } catch(e) {
                 console.error(e);
-                container.innerHTML = '<p>No se pudieron cargar los proyectos.<br>El error capturado fue:<br><code>${escapeHtml(e.message)}</code></p>';
+                container.innerHTML = `<p>No se pudieron cargar los proyectos. El error capturado fue:<br><code>${escapeHtml(e.message)}</code></p>`;
             }
         }
 
