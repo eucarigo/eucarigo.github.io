@@ -1,0 +1,20 @@
+[
+  {
+    "slug": "precita",
+    "name": "PreCita",
+    "year": "2026",
+    "tech": "Python, SQLite",
+    "description": "Aplicación de escritorio para Windows, desarrollada en Python, que permite gestionar citas y contactos, sincronizar eventos con Google Calendar y enviar recordatorios por correo electrónico a través de Gmail.",
+    "description2": "Está pensada para profesionales que trabajan con citas programadas (clientes o pacientes), como psicólogos, médicos, fisioterapeutas, esteticistas, masajistas, entrenadores personales, así como cualquier otro profesional con una agenda ocupada que requiera automatizar el envío de recordatorios.",
+    "downloadUrl": "/d/precita-latest.zip",
+    "version": "0.36.8",
+    "sourceUrl": "https://github.com/eucarigo/precita",
+    "logo": "i/precita.png",
+    "features": [
+      "Sincronización directa con Google Calendar",
+      "Recordatorios automatizados y personalizables por email",
+      "Completamente local y privado, sin telemetrías",
+      "Software libre (distribuido bajo GNU GPL v3)"
+    ]
+  }
+]
