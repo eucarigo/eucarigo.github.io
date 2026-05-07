@@ -4,25 +4,18 @@
     "name": "PreCita",
     "year": "2026",
     "tech": "Python, SQLite",
-    "description": "Aplicación de escritorio para Windows, desarrollada en Python, que permite gestionar citas y contactos, sincronizar eventos con Google Calendar y enviar recordatorios por correo electrónico a través de Gmail.",
-    "description2": "Está pensada para profesionales que trabajan con citas programadas (clientes o pacientes), como psicólogos, médicos, fisioterapeutas, esteticistas, masajistas, entrenadores personales, así como cualquier otro profesional con una agenda ocupada que requiera automatizar el envío de recordatorios.",
+    "summary": "Aplicación de escritorio para Windows, desarrollada en Python, que permite gestionar citas y contactos, sincronizar eventos con Google Calendar y enviar recordatorios por correo electrónico a través de Gmail.\n\nEstá pensada para profesionales que trabajan con citas programadas (clientes o pacientes), como psicólogos, médicos, fisioterapeutas, esteticistas, masajistas, entrenadores personales, así como cualquier otro profesional con una agenda ocupada que requiera automatizar el envío de recordatorios.",
     "downloadUrl": "/d/precita-latest.zip",
     "version": "0.36.8",
     "sourceUrl": "https://github.com/eucarigo/precita",
     "logo": "i/precita.png",
-    "features": [
-      "Sincronización directa con Google Calendar",
-      "Recordatorios automatizados y personalizables por email",
-      "Completamente local y privado, sin telemetrías",
-      "Software libre (distribuido bajo GNU GPL v3)"
-    ]
   },
   {
     "slug": "samp",
     "name": "SAMP",
     "year": "2026",
     "tech": "Python",
-    "description": "**SAMP** (acrónimo en inglés de *Spotify Ad Muter Panel*, en español *Panel para silenciar anuncios de Spotify*) es una aplicación para Windows que controla automáticamente el volumen de Spotify en función de si está reproduciendo una canción o un anuncio. \n\nPermite ajustar por separado el nivel de volumen para canciones y para anuncios, además de integrarse con el volumen del sistema.",
+    "summary": "**SAMP** (acrónimo en inglés de *Spotify Ad Muter Panel*, en español *Panel para silenciar anuncios de Spotify*) es una aplicación para Windows que controla automáticamente el volumen de Spotify en función de si está reproduciendo una canción o un anuncio. \n\nPermite ajustar por separado el nivel de volumen para canciones y para anuncios, además de integrarse con el volumen del sistema.",
     "downloadUrl": "https://github.com/eucarigo/SAMP/releases/download/v1.0-portable/SAMP-v1.0-portable.zip",
     "version": "1.0.0",
     "sourceUrl": "https://github.com/eucarigo/SAMP",
