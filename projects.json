@@ -22,7 +22,7 @@
     "name": "SAMP",
     "year": "2026",
     "tech": "Python",
-    "summary": "**SAMP** (acrónimo en inglés de *Spotify Ad Muter Panel*, en español *Panel para silenciar anuncios de Spotify*) es una aplicación para Windows que controla automáticamente el volumen de Spotify en función de si está reproduciendo una canción o un anuncio. \n\nPermite ajustar por separado el nivel de volumen para canciones y para anuncios, además de integrarse con el volumen del sistema.",
+    "description": "**SAMP** (acrónimo en inglés de *Spotify Ad Muter Panel*, en español *Panel para silenciar anuncios de Spotify*) es una aplicación para Windows que controla automáticamente el volumen de Spotify en función de si está reproduciendo una canción o un anuncio. \n\nPermite ajustar por separado el nivel de volumen para canciones y para anuncios, además de integrarse con el volumen del sistema.",
     "downloadUrl": "https://github.com/eucarigo/SAMP/releases/download/v1.0-portable/SAMP-v1.0-portable.zip",
     "version": "1.0.0",
     "sourceUrl": "https://github.com/eucarigo/SAMP",
