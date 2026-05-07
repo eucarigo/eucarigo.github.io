@@ -57,6 +57,13 @@
             margin-top: 1.2em;
             margin-bottom: 0.3em;
         }
+
+        label .optional {
+            font-weight: normal;
+            font-style: italic;
+            font-size: 0.85em;
+            color: #888;
+        }
         
         input, textarea {
             font-family: inherit;
@@ -81,6 +88,15 @@
         #postSummary {
             font-family: Georgia, serif;
             height: 80px;
+        }
+
+        #projectDescription, #projectDescription2 {
+            font-family: Georgia, serif;
+            height: 80px;
+        }
+
+        #projectFeatures {
+            height: 100px;
         }
         
         .preview {
@@ -169,6 +185,13 @@
             font-size: 0.9em;
             color: #666;
         }
+
+        .hint {
+            font-size: 0.85em;
+            color: #888;
+            margin-top: 0.2em;
+            font-style: italic;
+        }
         
         @media (prefers-color-scheme: dark) {
             body {
@@ -238,6 +261,14 @@
             hr {
                 border-top-color: #444;
             }
+
+            .hint {
+                color: #666;
+            }
+
+            label .optional {
+                color: #666;
+            }
         }
     </style>
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
@@ -259,15 +290,65 @@
         <hr>
 
         <div id="editorArea" style="display: none;">
+
+            <!-- ===================== NUEVO PROYECTO ===================== -->
+            <h2>Nuevo proyecto</h2>
+
+            <label>Nombre del proyecto</label>
+            <input type="text" id="projectName" placeholder="Ej: PreCita">
+
+            <label>Slug (URL amigable) <span class="optional">— déjalo vacío para autogenerar</span></label>
+            <input type="text" id="projectSlug" placeholder="ej: precita">
+
+            <label>Año</label>
+            <input type="text" id="projectYear" placeholder="Ej: 2026">
+
+            <label>Tecnologías <span class="optional">— opcional</span></label>
+            <input type="text" id="projectTech" placeholder="Ej: Python, SQLite">
+
+            <label>Descripción principal</label>
+            <textarea id="projectDescription" placeholder="Descripción del proyecto que aparecerá en la portada..."></textarea>
+
+            <label>Segunda descripción <span class="optional">— opcional</span></label>
+            <textarea id="projectDescription2" placeholder="Párrafo adicional (como el 'pensada para profesionales...' de PreCita)"></textarea>
+
+            <label>URL de descarga <span class="optional">— opcional</span></label>
+            <input type="text" id="projectDownloadUrl" placeholder="Ej: /d/miproyecto-latest.zip">
+
+            <label>Versión <span class="optional">— opcional, se muestra junto al botón de descarga</span></label>
+            <input type="text" id="projectVersion" placeholder="Ej: 0.36.8">
+
+            <label>URL del código fuente <span class="optional">— opcional</span></label>
+            <input type="text" id="projectSourceUrl" placeholder="Ej: https://github.com/eucarigo/miproyecto">
+
+            <label>URL del logo <span class="optional">— opcional</span></label>
+            <input type="text" id="projectLogo" placeholder="Ej: i/miproyecto.png">
+
+            <label>Características principales <span class="optional">— opcional, una por línea</span></label>
+            <textarea id="projectFeatures" placeholder="Sincronización con Google Calendar&#10;Recordatorios por email&#10;Software libre"></textarea>
+            <p class="hint">Escribe cada característica en una línea separada.</p>
+
+            <label>Contenido adicional de la página individual (Markdown) <span class="optional">— opcional</span></label>
+            <textarea id="projectContent" placeholder="Contenido extra que aparecerá solo en la página del proyecto (capturas, instrucciones, FAQ...). Puedes dejarlo vacío."></textarea>
+
+            <button id="projectPreviewBtn">👁️ Previsualizar página</button>
+            <div id="projectPreviewArea" class="preview" style="display:none;"></div>
+
+            <button id="projectPublishBtn">🚀 Publicar proyecto</button>
+            <div id="projectStatus" class="status" style="display:none;"></div>
+
+            <hr>
+
+            <!-- ===================== NUEVO ARTÍCULO ===================== -->
             <h2>Nuevo artículo</h2>
             
             <label>Título del artículo</label>
             <input type="text" id="postTitle" placeholder="Ej: Adiós a las dependencias innecesarias">
 
-            <label>Slug (URL amigable) — déjalo vacío para autogenerar</label>
+            <label>Slug (URL amigable) <span class="optional">— déjalo vacío para autogenerar</span></label>
             <input type="text" id="postSlug" placeholder="ej: adios-dependencias">
 
-            <label>Resumen (máx. 400 caracteres) *</label>
+            <label>Resumen (máx. 400 caracteres)</label>
             <textarea id="postSummary" maxlength="400" placeholder="Breve descripción que aparecerá en la portada..."></textarea>
 
             <label>Contenido (Markdown)</label>
@@ -307,6 +388,11 @@
         const previewArea = document.getElementById('previewArea');
         const statusDiv = document.getElementById('publishStatus');
 
+        const projectPublishBtn = document.getElementById('projectPublishBtn');
+        const projectPreviewBtn = document.getElementById('projectPreviewBtn');
+        const projectPreviewArea = document.getElementById('projectPreviewArea');
+        const projectStatusDiv = document.getElementById('projectStatus');
+
         // ---------- Funciones auxiliares ----------
         function setToken(token) {
             githubToken = token;
@@ -321,7 +407,6 @@
             }
         }
 
-        // Base64 UTF-8 correcto
         function utf8ToBase64(str) {
             const bytes = new TextEncoder().encode(str);
             const binString = Array.from(bytes, (byte) => String.fromCodePoint(byte)).join('');
@@ -376,6 +461,18 @@
             }
         }
 
+        async function getProjectsJson() {
+            const url = `https://raw.githubusercontent.com/${REPO_OWNER}/${REPO_NAME}/${BRANCH}/projects.json`;
+            try {
+                const res = await fetch(url);
+                if (res.status === 404) return [];
+                if (!res.ok) throw new Error('No se pudo leer projects.json');
+                return await res.json();
+            } catch(e) {
+                return [];
+            }
+        }
+
         function slugify(title) {
             return title
                 .toLowerCase()
@@ -386,10 +483,12 @@
 
         function escapeHtml(str) {
             if (!str) return '';
-            return str.replace(/[&<>]/g, function(m) {
+            return str.replace(/[&<>"']/g, function(m) {
                 if (m === '&') return '&amp;';
                 if (m === '<') return '&lt;';
                 if (m === '>') return '&gt;';
+                if (m === '"') return '&quot;';
+                if (m === "'") return '&#39;';
                 return m;
             });
         }
@@ -399,9 +498,123 @@
             return d.toLocaleDateString('es-ES', { year: 'numeric', month: 'long', day: 'numeric' });
         }
 
+        // ---------- Generadores de HTML ----------
+
+        function buildProjectHtml(project) {
+            const year = new Date().getFullYear();
+            const {
+                name, slug, tech, year: projYear,
+                description, description2,
+                downloadUrl, version, sourceUrl,
+                logo, features, extraContent
+            } = project;
+
+            const logoTag = logo
+                ? `<img src="../../${escapeHtml(logo)}" alt="Logo" width="36" height="36">`
+                : '';
+            const logoStyle = logo ? 'display:flex; align-items:center; gap:4px' : '';
+
+            const downloadBtn = downloadUrl
+                ? `<a href="${escapeHtml(downloadUrl)}" class="download">descargar${version ? ' (v' + escapeHtml(version) + ')' : ''}</a>`
+                : '';
+
+            const sourceLink = sourceUrl
+                ? `<a href="${escapeHtml(sourceUrl)}">código fuente</a>`
+                : '';
+
+            const featuresHtml = (features && features.length)
+                ? `<p>Algunas de sus características principales:</p><ul>${features.map(f => `<li>${escapeHtml(f)}</li>`).join('\n')}</ul>`
+                : '';
+
+            const extraHtml = extraContent
+                ? marked.parse(extraContent)
+                : '';
+
+            return `<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>${escapeHtml(name)} · eucarigo</title>
+    <link rel="icon" type="image/png" sizes="2048x2048" href="../../i/favicon-2048x2048.png">
+    <style>
+        body {
+            max-width: 650px;
+            margin: 40px auto;
+            padding: 0 20px;
+            font: 18px/1.6 Georgia, serif;
+            color: #333;
+            background: #fff;
+        }
+        h1 { font-size: 2em; margin-bottom: 0.2em; line-height: 1.2; }
+        h2 { font-size: 1.5em; margin-top: 2em; margin-bottom: 0.5em; border-bottom: 1px solid #ddd; padding-bottom: 0.3em; }
+        h3 { font-size: 1.2em; margin-top: 1.5em; margin-bottom: 0.3em; }
+        a { color: #0066cc; text-decoration: none; }
+        a:hover { text-decoration: underline; }
+        code { background: #f4f4f4; padding: 2px 6px; font-family: 'Courier New', monospace; font-size: 0.9em; }
+        .meta { color: #666; font-size: 0.9em; font-style: italic; }
+        .download {
+            display: inline-block;
+            padding: .25em .6em;
+            border: 2px solid #333;
+            background: #333;
+            font-family: monospace;
+            font-size: .9em;
+            font-weight: bold;
+            text-decoration: none;
+            color: #fff;
+            margin-right: 12px;
+            border-radius: 8px;
+        }
+        .download:hover { background: #333; color: #fff; }
+        .back-link { margin-bottom: 2em; font-family: monospace; font-size: 0.9em; }
+        footer { margin-top: 4em; padding-top: 2em; border-top: 1px solid #ddd; font-size: 0.9em; color: #666; }
+        ul { margin: 0.5em 0; }
+        @media (prefers-color-scheme: dark) {
+            body { background: #1a1a1a; color: #e0e0e0; }
+            h2 { border-bottom-color: #444; }
+            a { color: #4d9fff; }
+            code { background: #2a2a2a; }
+            .download { background: #2a2a2a; border-color: #444; }
+            .download:hover { background: #333; }
+            footer { border-top-color: #444; }
+            .meta { color: #999; }
+        }
+    </style>
+</head>
+<body>
+    <div class="back-link">
+        <a href="../../">← página principal</a>
+    </div>
+    <header>
+        <h1 style="${logoStyle}">
+            ${logoTag}
+            ${escapeHtml(name)}
+        </h1>
+        <p class="meta">${escapeHtml(projYear)}${tech ? ' · ' + escapeHtml(tech) : ''}</p>
+    </header>
+    <main>
+        <p>${escapeHtml(description)}</p>
+        ${description2 ? `<p>${escapeHtml(description2)}</p>` : ''}
+        ${downloadBtn || sourceLink ? `<p>${downloadBtn}${sourceLink}</p>` : ''}
+        ${featuresHtml}
+        ${extraHtml}
+    </main>
+    <footer>
+        <p>
+            Esta página no usa cookies, ni analytics. Es únicamente impulsada
+            por GitHub Pages con HTML, haciendo que la página esté perfectamente
+            equilibrada, como debería estar todo.
+        </p>
+        <p>© ${year} eucarigo. Todos los derechos reservados.</p>
+    </footer>
+</body>
+</html>`;
+        }
+
         function buildArticleHtml(title, date, markdownContent) {
             const htmlContent = marked.parse(markdownContent);
-            const year = new Date().getFullYear(); // dinámico
+            const year = new Date().getFullYear();
             return `<!DOCTYPE html>
 <html lang="es">
 <head>
@@ -468,7 +681,7 @@
 </html>`;
         }
 
-        // ---------- Eventos ----------
+        // ---------- Eventos: token ----------
         if (githubToken) {
             tokenInput.value = githubToken;
             setToken(githubToken);
@@ -480,7 +693,9 @@
             const newToken = tokenInput.value.trim();
             if (!newToken) return;
             setToken(newToken);
-            statusDiv.innerHTML = '<span class="success">✅ Token guardado (solo en este navegador).</span>';
+            // Mostramos feedback en el status de artículos (el primero visible)
+            statusDiv.innerHTML = '✅ Token guardado (solo en este navegador).';
+            statusDiv.className = 'status success';
             statusDiv.style.display = 'block';
             setTimeout(() => {
                 statusDiv.innerHTML = '';
@@ -488,6 +703,126 @@
             }, 3000);
         });
 
+        // ---------- Eventos: proyectos ----------
+        projectPreviewBtn.addEventListener('click', () => {
+            const name = document.getElementById('projectName').value.trim() || 'Proyecto';
+            const year = document.getElementById('projectYear').value.trim() || String(new Date().getFullYear());
+            const tech = document.getElementById('projectTech').value.trim();
+            const desc = document.getElementById('projectDescription').value.trim();
+            const desc2 = document.getElementById('projectDescription2').value.trim();
+            const downloadUrl = document.getElementById('projectDownloadUrl').value.trim();
+            const version = document.getElementById('projectVersion').value.trim();
+            const sourceUrl = document.getElementById('projectSourceUrl').value.trim();
+            const logo = document.getElementById('projectLogo').value.trim();
+            const featuresRaw = document.getElementById('projectFeatures').value.trim();
+            const features = featuresRaw ? featuresRaw.split('\n').map(f => f.trim()).filter(Boolean) : [];
+            const extraContent = document.getElementById('projectContent').value;
+
+            const project = { name, slug: 'preview', year, tech, description: desc, description2: desc2,
+                downloadUrl, version, sourceUrl, logo, features, extraContent };
+
+            projectPreviewArea.innerHTML = `<em style="font-size:0.85em;color:#888;">Vista previa (los enlaces de imagen pueden no funcionar aquí)</em><hr>${buildProjectHtml(project)}`;
+            projectPreviewArea.style.display = 'block';
+        });
+
+        projectPublishBtn.addEventListener('click', async () => {
+            projectStatusDiv.innerHTML = '⏳ Publicando proyecto...';
+            projectStatusDiv.className = 'status';
+            projectStatusDiv.style.display = 'block';
+
+            const name = document.getElementById('projectName').value.trim();
+            let slug = document.getElementById('projectSlug').value.trim();
+            const year = document.getElementById('projectYear').value.trim();
+            const tech = document.getElementById('projectTech').value.trim();
+            const description = document.getElementById('projectDescription').value.trim();
+            const description2 = document.getElementById('projectDescription2').value.trim();
+            const downloadUrl = document.getElementById('projectDownloadUrl').value.trim();
+            const version = document.getElementById('projectVersion').value.trim();
+            const sourceUrl = document.getElementById('projectSourceUrl').value.trim();
+            const logo = document.getElementById('projectLogo').value.trim();
+            const featuresRaw = document.getElementById('projectFeatures').value.trim();
+            const features = featuresRaw ? featuresRaw.split('\n').map(f => f.trim()).filter(Boolean) : [];
+            const extraContent = document.getElementById('projectContent').value;
+
+            if (!name) {
+                projectStatusDiv.innerHTML = '❌ El nombre del proyecto es obligatorio.';
+                projectStatusDiv.className = 'status error';
+                return;
+            }
+            if (!description) {
+                projectStatusDiv.innerHTML = '❌ La descripción principal es obligatoria.';
+                projectStatusDiv.className = 'status error';
+                return;
+            }
+            if (!year) {
+                projectStatusDiv.innerHTML = '❌ El año es obligatorio.';
+                projectStatusDiv.className = 'status error';
+                return;
+            }
+            if (!githubToken) {
+                projectStatusDiv.innerHTML = '❌ Configura tu token de GitHub primero.';
+                projectStatusDiv.className = 'status error';
+                return;
+            }
+
+            if (!slug) slug = slugify(name);
+            if (!slug) slug = 'project-' + Date.now();
+
+            const project = { name, slug, year, tech, description, description2,
+                downloadUrl, version, sourceUrl, logo, features, extraContent };
+
+            const projectHtml = buildProjectHtml(project);
+
+            try {
+                // 1. Subir {slug}/index.html
+                await uploadFile(
+                    `${slug}/index.html`,
+                    projectHtml,
+                    `Proyecto: nueva página "${name}"`
+                );
+
+                // 2. Actualizar projects.json
+                let projects = await getProjectsJson();
+                const existingIndex = projects.findIndex(p => p.slug === slug);
+
+                // En projects.json guardamos solo los datos del índice (sin extraContent)
+                const indexEntry = { slug, name, year, tech, description, description2,
+                    downloadUrl, version, sourceUrl, logo, features };
+
+                if (existingIndex >= 0) projects[existingIndex] = indexEntry;
+                else projects.push(indexEntry);
+
+                await uploadFile(
+                    'projects.json',
+                    JSON.stringify(projects, null, 2),
+                    `Actualizar índice de proyectos: "${name}"`
+                );
+
+                projectStatusDiv.innerHTML = `✅ Proyecto publicado correctamente.\n🔗 Ver: https://eucarigo.com/${slug}/\n📄 La portada ya muestra el nuevo proyecto.`;
+                projectStatusDiv.className = 'status success';
+
+                projectPreviewArea.style.display = 'none';
+                document.getElementById('projectName').value = '';
+                document.getElementById('projectSlug').value = '';
+                document.getElementById('projectYear').value = '';
+                document.getElementById('projectTech').value = '';
+                document.getElementById('projectDescription').value = '';
+                document.getElementById('projectDescription2').value = '';
+                document.getElementById('projectDownloadUrl').value = '';
+                document.getElementById('projectVersion').value = '';
+                document.getElementById('projectSourceUrl').value = '';
+                document.getElementById('projectLogo').value = '';
+                document.getElementById('projectFeatures').value = '';
+                document.getElementById('projectContent').value = '';
+
+            } catch (err) {
+                console.error(err);
+                projectStatusDiv.innerHTML = `❌ Error: ${err.message}`;
+                projectStatusDiv.className = 'status error';
+            }
+        });
+
+        // ---------- Eventos: artículos ----------
         publishBtn.addEventListener('click', async () => {
             statusDiv.innerHTML = '⏳ Publicando...';
             statusDiv.className = 'status';
@@ -499,22 +834,22 @@
             const markdown = document.getElementById('postContent').value;
 
             if (!title || !markdown) {
-                statusDiv.innerHTML = '<span class="error">❌ Título y contenido son obligatorios.</span>';
+                statusDiv.innerHTML = '❌ Título y contenido son obligatorios.';
                 statusDiv.className = 'status error';
                 return;
             }
             if (!summary) {
-                statusDiv.innerHTML = '<span class="error">❌ El resumen es obligatorio (máx. 400 caracteres).</span>';
+                statusDiv.innerHTML = '❌ El resumen es obligatorio (máx. 400 caracteres).';
                 statusDiv.className = 'status error';
                 return;
             }
             if (summary.length > 400) {
-                statusDiv.innerHTML = '<span class="error">❌ El resumen no puede exceder los 400 caracteres.</span>';
+                statusDiv.innerHTML = '❌ El resumen no puede exceder los 400 caracteres.';
                 statusDiv.className = 'status error';
                 return;
             }
             if (!githubToken) {
-                statusDiv.innerHTML = '<span class="error">❌ Configura tu token de GitHub primero.</span>';
+                statusDiv.innerHTML = '❌ Configura tu token de GitHub primero.';
                 statusDiv.className = 'status error';
                 return;
             }
