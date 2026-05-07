@@ -321,14 +321,14 @@
                         <div class="project">
                             <h3 style="${logoStyle}">
                                 ${logoTag}
-                                <a href="${escapeHtml(p.slug)}/">${escapeHtml(p.name)}</a>
+                                <a href="projects/${escapeHtml(p.slug)}/">${escapeHtml(p.name)}</a>
                             </h3>
                             <p class="meta">${escapeHtml(p.year)}${p.tech ? ' · ' + escapeHtml(p.tech) : ''}</p>
                             <p>${escapeHtml(p.description)}</p>
                             ${p.description2 ? `<p>${escapeHtml(p.description2)}</p>` : ''}
                             ${downloadBtn || sourceLink ? `<p>${downloadBtn}${sourceLink}</p>` : ''}
                             ${featuresHtml ? `<p>Algunas de sus características principales:</p>${featuresHtml}` : ''}
-                            <p><a href="${escapeHtml(p.slug)}/">Saber más de este proyecto</a></p>
+                            <p><a href="projects/${escapeHtml(p.slug)}/">Saber más de este proyecto</a></p>
                         </div>
                     `;
                 }
