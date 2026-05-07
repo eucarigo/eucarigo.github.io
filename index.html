@@ -217,38 +217,7 @@
     <main>
         <h2>Proyectos</h2>
 
-        <div class="project">
-            <h3 style="display:flex; align-items:center; gap:4px">
-                <img src="i/precita.png" alt="Logo" width="36" height="36">
-                <a href="precita/">PreCita</a>
-            </h3>
-            <p class="meta">2026 · Python, SQLite</p>
-            <p>
-                Aplicación de escritorio para Windows, desarrollada en Python, que permite gestionar citas y contactos, 
-                sincronizar eventos con Google Calendar y enviar recordatorios por correo electrónico a través de Gmail. 
-            </p>
-            <p>
-                Está pensada para profesionales que trabajan con citas programadas (clientes o pacientes), como psicólogos, 
-                médicos, fisioterapeutas, esteticistas, masajistas, entrenadores personales, así como cualquier otro profesional 
-                con una agenda ocupada que requiera automatizar el envío de recordatorios.
-            </p>
-            <a href="/d/precita-latest.zip" class="download">descargar (v0.36.8)</a>
-            <a href="https://github.com/eucarigo/precita">código fuente</a>
-            <p>
-                Algunas de sus característas principales:
-            </p>
-            <ul>
-                <li>Sincronización directa con Google Calendar</li>
-                <li>Recordatorios automatizados y personalizables por email</li>
-                <li>Completamente local y privado, sin telemetrías</li>
-                <li>Software libre (distribuido bajo GNU GPL v3)</li>
-            </ul>
-            <p>
-                <a href="precita/">Saber más de este proyecto</a>
-            </p>
-        </div>
-
-        <!-- para añadir más proyectos, simplemente copiar estrucutra de PreCita y modificar -->
+        <div id="projects-list"></div>
 
         <h2>Artículos destacados</h2>
         
@@ -260,8 +229,6 @@
                 Lorem ipsum dolor sit amet, etc.
             </p>
         </div>
-
-        <!-- para añadir más artículos, simplemente copiar estrucutra de Primera Entrada y modificar -->
 
         <h2>Sobre mí</h2>
         <p>
@@ -308,7 +275,71 @@
     </footer>
 
     <script>
-        // Cargar posts.json y mostrar enlace a cada artículo
+        // ---------- Proyectos ----------
+        async function loadProjects() {
+            const container = document.getElementById('projects-list');
+            try {
+                const res = await fetch('projects.json');
+                if (!res.ok) {
+                    if (res.status === 404) {
+                        container.innerHTML = '<p>No hay proyectos aún.</p>';
+                        return;
+                    }
+                    throw new Error('Error al cargar proyectos');
+                }
+                const projects = await res.json();
+                if (!projects.length) {
+                    container.innerHTML = '<p>No hay proyectos aún.</p>';
+                    return;
+                }
+                let html = '';
+                for (const p of projects) {
+                    // Cabecera: logo opcional + nombre enlazado
+                    const logoTag = p.logo
+                        ? `<img src="${escapeHtml(p.logo)}" alt="Logo" width="36" height="36">`
+                        : '';
+                    const logoStyle = p.logo
+                        ? 'display:flex; align-items:center; gap:4px'
+                        : '';
+
+                    // Botón de descarga opcional
+                    const downloadBtn = p.downloadUrl
+                        ? `<a href="${escapeHtml(p.downloadUrl)}" class="download">descargar${p.version ? ' (v' + escapeHtml(p.version) + ')' : ''}</a>`
+                        : '';
+
+                    // Enlace a código fuente opcional
+                    const sourceLink = p.sourceUrl
+                        ? `<a href="${escapeHtml(p.sourceUrl)}">código fuente</a>`
+                        : '';
+
+                    // Lista de características opcional
+                    const featuresHtml = (p.features && p.features.length)
+                        ? `<ul>${p.features.map(f => `<li>${escapeHtml(f)}</li>`).join('')}</ul>`
+                        : '';
+
+                    html += `
+                        <div class="project">
+                            <h3 style="${logoStyle}">
+                                ${logoTag}
+                                <a href="${escapeHtml(p.slug)}/">${escapeHtml(p.name)}</a>
+                            </h3>
+                            <p class="meta">${escapeHtml(p.year)}${p.tech ? ' · ' + escapeHtml(p.tech) : ''}</p>
+                            <p>${escapeHtml(p.description)}</p>
+                            ${p.description2 ? `<p>${escapeHtml(p.description2)}</p>` : ''}
+                            ${downloadBtn || sourceLink ? `<p>${downloadBtn}${sourceLink}</p>` : ''}
+                            ${featuresHtml ? `<p>Algunas de sus características principales:</p>${featuresHtml}` : ''}
+                            <p><a href="${escapeHtml(p.slug)}/">Saber más de este proyecto</a></p>
+                        </div>
+                    `;
+                }
+                container.innerHTML = html;
+            } catch(e) {
+                console.error(e);
+                container.innerHTML = '<p>No se pudieron cargar los proyectos.</p>';
+            }
+        }
+
+        // ---------- Blog ----------
         async function loadBlog() {
             const container = document.getElementById('blog-list');
             try {
@@ -325,13 +356,12 @@
                     container.innerHTML = '<p>No hay artículos aún. Pronto escribiré algo.</p>';
                     return;
                 }
-                // Ordenar por fecha descendente (más nuevo primero)
                 posts.sort((a,b) => new Date(b.date) - new Date(a.date));
                 let html = '';
                 for (const post of posts) {
                     html += `
                         <div class="project">
-                            <h3><a href="posts/${post.slug}.html">${escapeHtml(post.title)}</a></h3>
+                            <h3><a href="posts/${escapeHtml(post.slug)}.html">${escapeHtml(post.title)}</a></h3>
                             <p class="meta">${formatDate(post.date)}</p>
                             <p>${escapeHtml(post.summary)}</p>
                         </div>
@@ -359,6 +389,7 @@
             return date.toLocaleDateString('es-ES', { year: 'numeric', month: 'long', day: 'numeric' });
         }
 
+        loadProjects();
         loadBlog();
     </script>
 </body>
