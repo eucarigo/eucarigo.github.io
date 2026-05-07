@@ -90,13 +90,9 @@
             height: 80px;
         }
 
-        #projectDescription, #projectDescription2 {
+        #projectSummary {
             font-family: Georgia, serif;
             height: 80px;
-        }
-
-        #projectFeatures {
-            height: 100px;
         }
         
         .preview {
@@ -306,11 +302,8 @@
             <label>Tecnologías <span class="optional">— opcional</span></label>
             <input type="text" id="projectTech" placeholder="Ej: Python, SQLite">
 
-            <label>Descripción principal</label>
-            <textarea id="projectDescription" placeholder="Descripción del proyecto que aparecerá en la portada..."></textarea>
-
-            <label>Segunda descripción <span class="optional">— opcional</span></label>
-            <textarea id="projectDescription2" placeholder="Párrafo adicional (como el 'pensada para profesionales...' de PreCita)"></textarea>
+            <label>Resumen (máx. 400 caracteres, Markdown)</label>
+            <textarea id="projectSummary" maxlength="400" placeholder="Breve descripción que aparecerá en la portada... Puedes usar **negrita**, *cursiva*, > citas, etc."></textarea>
 
             <label>URL de descarga <span class="optional">— opcional</span></label>
             <input type="text" id="projectDownloadUrl" placeholder="Ej: /d/miproyecto-latest.zip">
@@ -324,12 +317,8 @@
             <label>URL del logo <span class="optional">— opcional</span></label>
             <input type="text" id="projectLogo" placeholder="Ej: i/miproyecto.png">
 
-            <label>Características principales <span class="optional">— opcional, una por línea</span></label>
-            <textarea id="projectFeatures" placeholder="Sincronización con Google Calendar&#10;Recordatorios por email&#10;Software libre"></textarea>
-            <p class="hint">Escribe cada característica en una línea separada.</p>
-
-            <label>Contenido adicional de la página individual (Markdown) <span class="optional">— opcional</span></label>
-            <textarea id="projectContent" placeholder="Contenido extra que aparecerá solo en la página del proyecto (capturas, instrucciones, FAQ...). Puedes dejarlo vacío."></textarea>
+            <label>Contenido (Markdown)</label>
+            <textarea id="projectContent" style="height: 200px;" placeholder="Contenido completo de la página del proyecto. Puedes usar **negrita**, *cursiva*, ## encabezados, > citas, listas, etc."></textarea>
 
             <button id="projectPreviewBtn">👁️ Previsualizar página</button>
             <div id="projectPreviewArea" class="preview" style="display:none;"></div>
@@ -504,9 +493,8 @@
             const year = new Date().getFullYear();
             const {
                 name, slug, tech, year: projYear,
-                description, description2,
-                downloadUrl, version, sourceUrl,
-                logo, features, extraContent
+                summary, downloadUrl, version, sourceUrl,
+                logo, content
             } = project;
 
             const logoTag = logo
@@ -522,13 +510,8 @@
                 ? `<a href="${escapeHtml(sourceUrl)}">código fuente</a>`
                 : '';
 
-            const featuresHtml = (features && features.length)
-                ? `<p>Algunas de sus características principales:</p><ul>${features.map(f => `<li>${escapeHtml(f)}</li>`).join('\n')}</ul>`
-                : '';
-
-            const extraHtml = extraContent
-                ? marked.parse(extraContent)
-                : '';
+            const summaryHtml = summary ? marked.parse(summary) : '';
+            const contentHtml = content ? marked.parse(content) : '';
 
             return `<!DOCTYPE html>
 <html lang="es">
@@ -552,6 +535,7 @@
         a { color: #0066cc; text-decoration: none; }
         a:hover { text-decoration: underline; }
         code { background: #f4f4f4; padding: 2px 6px; font-family: 'Courier New', monospace; font-size: 0.9em; }
+        blockquote { border-left: 3px solid #ddd; margin: 1em 0; padding: 0.2em 1em; color: #666; }
         .meta { color: #666; font-size: 0.9em; font-style: italic; }
         .download {
             display: inline-block;
@@ -575,6 +559,7 @@
             h2 { border-bottom-color: #444; }
             a { color: #4d9fff; }
             code { background: #2a2a2a; }
+            blockquote { border-left-color: #444; color: #999; }
             .download { background: #2a2a2a; border-color: #444; }
             .download:hover { background: #333; }
             footer { border-top-color: #444; }
@@ -594,11 +579,9 @@
         <p class="meta">${escapeHtml(projYear)}${tech ? ' · ' + escapeHtml(tech) : ''}</p>
     </header>
     <main>
-        <p>${escapeHtml(description)}</p>
-        ${description2 ? `<p>${escapeHtml(description2)}</p>` : ''}
+        ${summaryHtml}
         ${downloadBtn || sourceLink ? `<p>${downloadBtn}${sourceLink}</p>` : ''}
-        ${featuresHtml}
-        ${extraHtml}
+        ${contentHtml}
     </main>
     <footer>
         <p>
@@ -693,7 +676,6 @@
             const newToken = tokenInput.value.trim();
             if (!newToken) return;
             setToken(newToken);
-            // Mostramos feedback en el status de artículos (el primero visible)
             statusDiv.innerHTML = '✅ Token guardado (solo en este navegador).';
             statusDiv.className = 'status success';
             statusDiv.style.display = 'block';
@@ -708,18 +690,15 @@
             const name = document.getElementById('projectName').value.trim() || 'Proyecto';
             const year = document.getElementById('projectYear').value.trim() || String(new Date().getFullYear());
             const tech = document.getElementById('projectTech').value.trim();
-            const desc = document.getElementById('projectDescription').value.trim();
-            const desc2 = document.getElementById('projectDescription2').value.trim();
+            const summary = document.getElementById('projectSummary').value.trim();
             const downloadUrl = document.getElementById('projectDownloadUrl').value.trim();
             const version = document.getElementById('projectVersion').value.trim();
             const sourceUrl = document.getElementById('projectSourceUrl').value.trim();
             const logo = document.getElementById('projectLogo').value.trim();
-            const featuresRaw = document.getElementById('projectFeatures').value.trim();
-            const features = featuresRaw ? featuresRaw.split('\n').map(f => f.trim()).filter(Boolean) : [];
-            const extraContent = document.getElementById('projectContent').value;
+            const content = document.getElementById('projectContent').value;
 
-            const project = { name, slug: 'preview', year, tech, description: desc, description2: desc2,
-                downloadUrl, version, sourceUrl, logo, features, extraContent };
+            const project = { name, slug: 'preview', year, tech, summary,
+                downloadUrl, version, sourceUrl, logo, content };
 
             projectPreviewArea.innerHTML = `<em style="font-size:0.85em;color:#888;">Vista previa (los enlaces de imagen pueden no funcionar aquí)</em><hr>${buildProjectHtml(project)}`;
             projectPreviewArea.style.display = 'block';
@@ -734,23 +713,25 @@
             let slug = document.getElementById('projectSlug').value.trim();
             const year = document.getElementById('projectYear').value.trim();
             const tech = document.getElementById('projectTech').value.trim();
-            const description = document.getElementById('projectDescription').value.trim();
-            const description2 = document.getElementById('projectDescription2').value.trim();
+            const summary = document.getElementById('projectSummary').value.trim();
             const downloadUrl = document.getElementById('projectDownloadUrl').value.trim();
             const version = document.getElementById('projectVersion').value.trim();
             const sourceUrl = document.getElementById('projectSourceUrl').value.trim();
             const logo = document.getElementById('projectLogo').value.trim();
-            const featuresRaw = document.getElementById('projectFeatures').value.trim();
-            const features = featuresRaw ? featuresRaw.split('\n').map(f => f.trim()).filter(Boolean) : [];
-            const extraContent = document.getElementById('projectContent').value;
+            const content = document.getElementById('projectContent').value;
 
             if (!name) {
                 projectStatusDiv.innerHTML = '❌ El nombre del proyecto es obligatorio.';
                 projectStatusDiv.className = 'status error';
                 return;
             }
-            if (!description) {
-                projectStatusDiv.innerHTML = '❌ La descripción principal es obligatoria.';
+            if (!summary) {
+                projectStatusDiv.innerHTML = '❌ El resumen es obligatorio (máx. 400 caracteres).';
+                projectStatusDiv.className = 'status error';
+                return;
+            }
+            if (summary.length > 400) {
+                projectStatusDiv.innerHTML = '❌ El resumen no puede exceder los 400 caracteres.';
                 projectStatusDiv.className = 'status error';
                 return;
             }
@@ -768,8 +749,8 @@
             if (!slug) slug = slugify(name);
             if (!slug) slug = 'project-' + Date.now();
 
-            const project = { name, slug, year, tech, description, description2,
-                downloadUrl, version, sourceUrl, logo, features, extraContent };
+            const project = { name, slug, year, tech, summary,
+                downloadUrl, version, sourceUrl, logo, content };
 
             const projectHtml = buildProjectHtml(project);
 
@@ -785,9 +766,9 @@
                 let projects = await getProjectsJson();
                 const existingIndex = projects.findIndex(p => p.slug === slug);
 
-                // En projects.json guardamos solo los datos del índice (sin extraContent)
-                const indexEntry = { slug, name, year, tech, description, description2,
-                    downloadUrl, version, sourceUrl, logo, features };
+                // En projects.json guardamos solo los datos del índice (sin content)
+                const indexEntry = { slug, name, year, tech, summary,
+                    downloadUrl, version, sourceUrl, logo };
 
                 if (existingIndex >= 0) projects[existingIndex] = indexEntry;
                 else projects.push(indexEntry);
@@ -806,13 +787,11 @@
                 document.getElementById('projectSlug').value = '';
                 document.getElementById('projectYear').value = '';
                 document.getElementById('projectTech').value = '';
-                document.getElementById('projectDescription').value = '';
-                document.getElementById('projectDescription2').value = '';
+                document.getElementById('projectSummary').value = '';
                 document.getElementById('projectDownloadUrl').value = '';
                 document.getElementById('projectVersion').value = '';
                 document.getElementById('projectSourceUrl').value = '';
                 document.getElementById('projectLogo').value = '';
-                document.getElementById('projectFeatures').value = '';
                 document.getElementById('projectContent').value = '';
 
             } catch (err) {
