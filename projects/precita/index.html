@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PreCita · eucarigo</title>
+    <link rel="icon" type="image/png" sizes="2048x2048" href="../../i/precita.png">
+    <style>
+        body {
+            max-width: 650px;
+            margin: 40px auto;
+            padding: 0 20px;
+            font: 18px/1.6 Georgia, serif;
+            color: #333;
+            background: #fff;
+        }
+        
+        h1 {
+            font-size: 2em;
+            margin-bottom: 0.2em;
+            line-height: 1.2;
+        }
+        
+        h2 {
+            font-size: 1.5em;
+            margin-top: 2em;
+            margin-bottom: 0.5em;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 0.3em;
+        }
+        
+        h3 {
+            font-size: 1.2em;
+            margin-top: 1.5em;
+            margin-bottom: 0.3em;
+        }
+        
+        a {
+            color: #0066cc;
+            text-decoration: none;
+        }
+        
+        a:hover {
+            text-decoration: underline;
+        }
+        
+        code {
+            background: #f4f4f4;
+            padding: 2px 6px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+        }
+        
+        pre {
+            background: #f4f4f4;
+            padding: 1em;
+            overflow-x: auto;
+            border-radius: 4px;
+        }
+        
+        pre code {
+            background: none;
+            padding: 0;
+        }
+        
+        .meta {
+            color: #666;
+            font-size: 0.9em;
+            font-style: italic;
+        }
+        
+        .download {
+            display: inline-block;
+            padding: .25em .6em;
+            border: 2px solid #333;
+            background: #333;
+            font-family: monospace;
+            font-size: .9em;
+            font-weight: bold;
+            text-decoration: none;
+            color: #fff;
+            margin-right: 12px;
+            border-radius: 8px;
+        }
+
+        .download:hover {
+            background: #333;
+            color: #fff;
+        }
+        
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .back-link {
+            margin-bottom: 2em;
+            font-family: monospace;
+            font-size: 0.9em;
+        }
+
+        .version-badge {
+            display: inline-block;
+            background: #f4f4f4;
+            padding: 0.16em 0.4em;
+            border-radius: 6px;
+            font-family: monospace;
+            font-size: 0.85em;
+            margin-left: 0.5em;
+        }
+
+        footer {
+            margin-top: 4em;
+            padding-top: 2em;
+            border-top: 1px solid #ddd;
+            font-size: 0.9em;
+            color: #666;
+        }
+        
+        ul, ol {
+            margin: 0.5em 0;
+            padding-left: 2em;
+        }
+
+        li {
+            margin: 0.3em 0;
+        }
+
+        .highlight {
+            background: #fffacd;
+            padding: 0.1em 0.3em;
+            border-radius: 3px;
+        }
+        
+        @media (prefers-color-scheme: dark) {
+            body {
+                background: #1a1a1a;
+                color: #e0e0e0;
+            }
+            
+            h2 {
+                border-bottom-color: #444;
+            }
+            
+            a {
+                color: #4d9fff;
+            }
+            
+            code, pre {
+                background: #2a2a2a;
+            }
+
+            .version-badge {
+                background: #2a2a2a;
+            }
+            
+            .download {
+                background: #2a2a2a;
+                border-color: #444;
+            }
+            
+            .download:hover {
+                background: #333;
+                border-color: #555;
+            }
+            
+            footer {
+                border-top-color: #444;
+            }
+            
+            .meta {
+                color: #999;
+            }
+
+            .highlight {
+                background: #4a4a2a;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="back-link">
+        <a href="../../">← página principal</a>
+    </div>
+
+    <header>
+        <h1 class="brand">
+            <img src="../../i/precita.png" alt="PreCita Logo" width="48" height="48">
+            PreCita
+            <span class="version-badge">v0.36.8</span>
+        </h1>
+
+        <p class="meta">Gestión de citas y recordatorios automáticos</p>
+
+        <p>
+            Aplicación de escritorio para Windows desarrollada en Python 
+            que permite gestionar citas y contactos, sincronizar eventos 
+            con Google Calendar y enviar recordatorios por correo electrónico 
+            a través de Gmail.
+        </p>
+
+        <div style="margin-top: 1.5em;">
+            <a href="https://github.com/eucarigo/precita/releases/download/portable/precita-x86_64-0.36.8.zip" class="download">descargar (v0.36.8)</a>
+            <a href="https://github.com/eucarigo/precita">código fuente</a>
+        </div>
+    </header>
+
+    <main>
+        <h2>¿Para quién es PreCita?</h2>
+        <p>
+            Está pensada para profesionales que trabajan con 
+            citas programadas (clientes o pacientes), como:
+        </p>
+        <ul>
+            <li>Psicólogos</li>
+            <li>Médicos</li>
+            <li>Fisioterapeutas</li>
+            <li>Esteticistas</li>
+            <li>Masajistas</li>
+            <li>Entrenadores personales</li>
+        </ul>
+        <p>
+            En definitiva, para cualquier profesional con una agenda 
+            ocupada que requiera automatizar el envío de recordatorios.
+        </p>
+
+        <h2>Características principales</h2>
+        <ul>
+            <li><strong>Sincronización directa con Google Calendar</strong> en ventana configurable de 7 a 49 días (15 por defecto)</li>
+            <li><strong>Recordatorios automatizados y personalizables por email</strong> mediante Gmail</li>
+            <li><strong>Vistas de agenda</strong>: diaria, semanal y mensual, con navegación por períodos y acceso rápido a "Hoy"</li>
+            <li><strong>Gestión de contactos</strong>: alta, edición, eliminación y vinculación con citas</li>
+            <li><strong>Plantilla de correo editable</strong> con asunto y cuerpo en HTML, formato básico (negrita/cursiva/subrayado/listas) y variables dinámicas</li>
+            <li><strong>Adjuntos reutilizables</strong> en plantilla con controles de seguridad y límite de tamaño total (16 MB)</li>
+            <li><strong>Completamente local y privado</strong>, sin telemetrías</li>
+            <li><strong>Encriptación opcional</strong> de base de datos mediante contraseña</li>
+            <li><strong>Software libre</strong> distribuido bajo GNU GPL v3</li>
+        </ul>
+
+        <h2>Tecnologías</h2>
+        <ul>
+            <li>Python 3.10+ (3.12 recomendado)</li>
+            <li>PyQt6</li>
+            <li>SQLite</li>
+            <li>cryptography</li>
+            <li>Google Calendar API</li>
+            <li>Gmail API</li>
+        </ul>
+
+        <h2>Instalación y ejecución</h2>
+        <p>
+            <strong>Requisitos previos:</strong> 
+            <ul>
+                <li>
+                    Python 3.10 o superior instalado. Se recomienda Python 3.12.
+                </li>
+                <li>
+                    Sistema Operativo Windows 10 o superior. Se recomienda Windows 11.
+                </li>
+            </ul>
+        </p>
+
+        <h3>1. Clonar o descargar el repositorio</h3>
+        <pre><code>git clone https://github.com/eucarigo/precita.git
+cd precita</code></pre>
+
+        <h3>2. Crear y activar entorno virtual</h3>
+        <pre><code>python -m venv venv
+venv\Scripts\activate
+</code></pre>
+
+        <h3>3. Instalar dependencias</h3>
+        <pre><code>pip install PyQt6 PyQt6-WebEngine google-auth google-auth-oauthlib google-api-python-client pytz cryptography</code></pre>
+
+        <h3>4. Ejecutar la aplicación</h3>
+        <pre><code>python main.py</code></pre>
+
+        <h2>Configuración y almacenamiento local</h2>
+        <p>
+            PreCita guarda su información en la carpeta local del usuario <code>~/.precita/</code>:
+        </p>
+        <ul>
+            <li><code>precita.db</code>: base de datos SQLite</li>
+            <li><code>db_encryption_config.json</code>: estado local de encriptación de la base de datos</li>
+            <li><code>token.json</code>: token OAuth local para Google</li>
+            <li><code>client_secret.json</code>: opcional, para flujo OAuth alternativo</li>
+            <li><code>template_attachments/</code>: copia local segura de adjuntos de plantilla</li>
+        </ul>
+
+        <p>
+            Desde el menú principal puede abrir <strong>Datos locales</strong> para consultar esta carpeta y, cuando lo necesite, 
+            ejecutar <strong>Optimizar</strong> (comando SQLite <code>VACUUM</code>) para compactar <code>precita.db</code>.
+        </p>
+
+        <h3>Encriptación de base de datos</h3>
+        <p>
+            En <strong>Datos locales</strong> puede abrir <strong>Encriptar base de datos</strong> para:
+        </p>
+        <ul>
+            <li>Elegir entre "Deshabilitar encriptación (predeterminado)" y "Habilitar encriptación (recomendable)"</li>
+            <li>Definir una contraseña alfanumérica obligatoria para proteger <code>precita.db</code></li>
+            <li>Introducir la contraseña al arrancar PreCita cuando la base de datos está cifrada</li>
+        </ul>
+
+        <p class="meta">
+            <strong>Nota de seguridad:</strong> Se usa la variable de entorno <code>PRECITA_MASTER_KEY</code> 
+            para desencriptar el fichero <code>config.bin</code> que contiene las claves de la API de Google.
+        </p>
+
+        <h2>Flujo de uso recomendado</h2>
+        <ol>
+            <li>Abra PreCita</li>
+            <li>Use <strong>Sincronizar</strong> para iniciar sesión con Google (si aplica) y traer citas del calendario seleccionado</li>
+            <li>Revise o cree contactos en <strong>Gestión de contactos</strong> o <strong>Añadir contacto</strong></li>
+            <li>Ajuste asunto/cuerpo/adjuntos desde <strong>Personalizar plantilla</strong></li>
+            <li>Revise <strong>Datos locales</strong> para verificar el estado de <code>~/.precita/</code>, usar <strong>Optimizar</strong> 
+                y configurar <strong>Encriptar base de datos</strong> si desea proteger <code>precita.db</code> con clave</li>
+            <li>Ejecute <strong>Lanzar pendientes</strong> para envío manual o deje activo el envío automático</li>
+        </ol>
+
+        <h2>Variables disponibles en la plantilla</h2>
+        <p>
+            Puede usar estas variables en el asunto y cuerpo de los correos de recordatorio:
+        </p>
+        <ul>
+            <li><code>{nombre_citado}</code></li>
+            <li><code>{apellidos_citado}</code></li>
+            <li><code>{correo_citado}</code></li>
+            <li><code>{tlf_citado}</code></li>
+            <li><code>{hora_cita}</code></li>
+            <li><code>{fecha_cita}</code></li>
+            <li><code>{dia_semana}</code></li>
+        </ul>
+
+        <h2>Reglas de seguridad para adjuntos</h2>
+        <ul>
+            <li>Se bloquean extensiones ejecutables o de riesgo según política de Gmail</li>
+            <li>Se permite <code>*.zip</code> solo si su contenido no incluye archivos bloqueados</li>
+            <li>Se bloquean otros formatos comprimidos (<code>.rar</code>, <code>.7z</code>, <code>.tar</code>, <code>.gz</code>, <code>.bz2</code>, <code>.xz</code>)</li>
+            <li>El tamaño combinado de cuerpo + adjuntos está limitado a <strong>16 MB</strong></li>
+        </ul>
+
+        <h2>Configuración funcional</h2>
+        <p>
+            Desde <strong>Configuración</strong> (también con <code>Ctrl+,</code>):
+        </p>
+        <ul>
+            <li>Tema visual (Claro / Oscuro)</li>
+            <li>Intervalo de revisión automática de recordatorios</li>
+            <li>Días de sincronización de calendario (rango 7-49)</li>
+            <li>Calendario de Google seleccionado</li>
+            <li>Activación/desactivación de notificaciones de Windows</li>
+            <li>Inicio con Windows</li>
+            <li>Desvincular cuenta de Google en este equipo</li>
+            <li>Restablecer valores predeterminados</li>
+        </ul>
+
+        <p>
+            Desde la ventan <strong>Ayuda</strong> (también con <code>Ctrl+H</code>) puede abrir enlaces directos a funciones internas 
+            como sincronización, contactos, plantilla, configuración y almacenamiento.
+        </p>
+
+        <h3>Otros atajos de teclado</h3>
+        <ul>
+            <li><code>Ctrl+H</code>: Abrir la ventana Ayuda</li>
+            <li><code>Ctrl+,</code>: Abrir la ventan Configuración</li>
+            <li><code>Ctrl++</code>: Aumentar tamaño de la app (máximo 150%)</li>
+            <li><code>Ctrl+-</code>: Disminuir tamaño de la app (mínimo 80%)</li>
+        </ul>
+
+        <h2>Política de privacidad</h2>
+        <p>
+            PreCita es una herramienta de ejecución local y prioriza el control del usuario sobre sus datos:
+        </p>
+        <ol>
+            <li><strong>Datos locales:</strong> contactos, citas y configuración se guardan en el equipo del usuario</li>
+            <li><strong>Uso de APIs de Google:</strong> se usa Google Calendar para lectura de eventos y Gmail para envío de recordatorios</li>
+            <li><strong>Transferencia de datos:</strong> no hay telemetría ni envío a terceros fuera de las APIs necesarias de Google</li>
+            <li><strong>Control y eliminación:</strong> para borrar datos, cierre la app y elimine <code>~/.precita/</code>; 
+                opcionalmente revoque el acceso en su cuenta de Google</li>
+            <li><strong>Licencia:</strong> software distribuido bajo GNU GPL v3, sin garantías. 
+                Puede ver el fichero LICENSE al descargar la aplicación o entrar en el 
+                <a href="https://www.gnu.org/licenses/gpl-3.0.html">enlace oficial</a>
+            </li>
+        </ol>
+
+        <h2>Estructura del proyecto</h2>
+        <ul>
+            <li><code>main.py</code>: interfaz, lógica de negocio, persistencia, sincronización y envío</li>
+            <li><code>VERSION</code>: versión de aplicación</li>
+            <li><code>precita.ico</code>: icono principal</li>
+            <li><code>LICENSE</code>: licencia GNU GPL v3</li>
+            <li><code>config.bin</code>: binario cifrado con las claves de la API de Google</li>
+        </ul>
+
+        <h2>Descargas</h2>
+        <p>
+            <a href="https://github.com/eucarigo/precita/releases/download/portable/precita-x86_64-0.36.8.zip" class="download">descargar (v0.36.8)</a>
+        </p>
+        <p>
+            Código fuente en GitHub: <a href="https://github.com/eucarigo/precita">https://github.com/eucarigo/precita</a>
+        </p>
+
+        <h2>Soporte y contacto</h2>
+        <p>
+            Para reportar errores, sugerencias o preguntas:
+        </p>
+        <ul>
+            <li>GitHub Issues: <a href="https://github.com/eucarigo/precita/issues">https://github.com/eucarigo/precita/issues</a></li>
+            <li>Correo electrónico: <a href="mailto:contact@eucarigo.com">contact@eucarigo.com</a></li>
+        </ul>
+    </main>
+
+    <footer>
+        <p>
+            PreCita es software libre distribuido bajo licencia GNU GPL v3.
+        </p>
+        <p>
+            Esta página no usa cookies, ni analytics. Es únicamente impulsada 
+            por GitHub Pages con HTML, haciendo que la página esté perfectamente 
+            equilibrada, como debería estar todo.
+        </p>
+        <p>© 2026 eucarigo. Todos los derechos reservados.</p>
+    </footer>
+</body>
+</html>
