@@ -38,7 +38,7 @@
         async function loadProjects() {
             const container = document.getElementById('projects-list');
             try {
-                const res = await fetch('projects.json');
+                const res = await fetch('../projects.json');
                 if (!res.ok) {
                     if (res.status === 404) {
                         container.innerHTML = '<p>No hay proyectos aún.</p>';
