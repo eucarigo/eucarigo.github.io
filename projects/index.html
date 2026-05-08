@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Proyectos · eucarigo</title>
+    <link rel="icon" type="image/png" sizes="2048x2048" href="../i/favicon-2048x2048.png">
+    <link rel="stylesheet" href="../CSS/main.css">
+</head>
+<body>
+    <div class="back-link">
+        <a href="../">← página principal</a>
+    </div>
+    
+    <header>
+        <h1 class="brand">
+            <img src="../i/favicon-2048x2048.png" alt="Logo" width="48" height="48">
+            Proyectos
+        </h1>
+
+        <p class="meta">todos mis proyectos</p>
+    </header>
+
+    <main id="proj-list">
+    </main>
+
+    <footer>
+        <p>
+            Esta página no usa cookies, ni analytics. Es únicamente impulsada 
+            por GitHub Pages con HTML, haciendo que la página esté perfectamente 
+            equilibrada, como debería estar todo.
+        </p>
+        <p>© 2026 eucarigo. Todos los derechos reservados.</p>
+    </footer>
+    
+    <script src="../js/marked.min.js"></script>
+    <script>
+        async function loadProjects() {
+            const container = document.getElementById('proj-list');
+            try {
+                const res = await fetch('../projects.json');
+                if (!res.ok) {
+                    if (res.status === 404) {
+                        container.innerHTML = '<p>No hay proyectos todavía.</p>';
+                        return;
+                    }
+                    throw new Error('Error al cargar el repositorio de proyectos');
+                }
+                const projects = await res.json();
+                if (!projects.length) {
+                    container.innerHTML = '<p>No hay proyectos todavía.</p>';
+                    return;
+                }
+                projects.sort((a, b) => parseInt(b.year) - parseInt(a.year));
+                let html = '';
+                for (const proj of projects) {
+                    html += `
+                        <div class="project">
+                            <h3><a href="${proj.slug}.html">${escapeHtml(proj.name)}</a></h3>
+                            <p class="meta">${escapeHtml(proj.year)} · ${escapeHtml(proj.tech)}</p>
+                            <div>${marked.parse(proj.summary)}</div>
+                        </div>
+                    `;
+                }
+                container.innerHTML = html;
+            } catch (e) {
+                console.error(e);
+                container.innerHTML = '<p>No se pudieron cargar los proyectos.</p>';
+            }
+        }
+        function escapeHtml(str) {
+            if (!str) return '';
+            return str.replace(/[&<>]/g, function(m) {
+                if (m === '&') return '&amp;';
+                if (m === '<') return '&lt;';
+                if (m === '>') return '&gt;';
+                return m;
+            });
+        }
+        loadProjects();
+    </script>
+</body>
+</html>
