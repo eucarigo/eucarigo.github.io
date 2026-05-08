@@ -36,38 +36,66 @@
     <script src="../js/marked.min.js"></script>
     <script>
         async function loadProjects() {
-            const container = document.getElementById('proj-list');
+            const container = document.getElementById('projects-list');
             try {
-                const res = await fetch('../projects.json');
+                const res = await fetch('projects.json');
                 if (!res.ok) {
                     if (res.status === 404) {
-                        container.innerHTML = '<p>No hay proyectos todavía.</p>';
+                        container.innerHTML = '<p>No hay proyectos aún.</p>';
                         return;
                     }
-                    throw new Error('Error al cargar el repositorio de proyectos');
+                    throw new Error('Error al cargar proyectos');
                 }
                 const projects = await res.json();
                 if (!projects.length) {
-                    container.innerHTML = '<p>No hay proyectos todavía.</p>';
+                    container.innerHTML = '<p>No hay proyectos aún.</p>';
                     return;
                 }
-                projects.sort((a, b) => parseInt(b.year) - parseInt(a.year));
                 let html = '';
-                for (const proj of projects) {
+                for (const p of projects) {
+                    // Cabecera: logo opcional + nombre enlazado
+                    const logoTag = p.logo
+                        ? `<img src="${escapeHtml(p.logo)}" alt="Logo" width="36" height="36">`
+                        : '';
+                    const logoStyle = p.logo
+                        ? 'display:flex; align-items:center; gap:4px'
+                        : '';
+
+                    // Botón de descarga opcional
+                    const downloadBtn = p.downloadUrl
+                        ? `<a href="${escapeHtml(p.downloadUrl)}" class="download">descargar${p.version ? ' (v' + escapeHtml(p.version) + ')' : ''}</a>`
+                        : '';
+
+                    // Enlace a código fuente opcional
+                    const sourceLink = p.sourceUrl
+                        ? `<a href="${escapeHtml(p.sourceUrl)}">código fuente</a>`
+                        : '';
+
+                    // Lista de características opcional
+                    const featuresHtml = (p.features && p.features.length)
+                        ? `<ul>${p.features.map(f => `<li>${escapeHtml(f)}</li>`).join('')}</ul>`
+                        : '';
+
                     html += `
                         <div class="project">
-                            <h3><a href="${proj.slug}.html">${escapeHtml(proj.name)}</a></h3>
-                            <p class="meta">${escapeHtml(proj.year)} · ${escapeHtml(proj.tech)}</p>
-                            <div>${marked.parse(proj.summary)}</div>
+                            <h3 style="${logoStyle}">
+                                ${logoTag}
+                                <a href="${escapeHtml(p.slug)}/">${escapeHtml(p.name)}</a>
+                            </h3>
+                            <p class="meta">${escapeHtml(p.year)}${p.tech ? ' · ' + escapeHtml(p.tech) : ''}</p>
+                            <p>${marked.parse(p.summary)}</p>
+                            ${downloadBtn || sourceLink ? `<p>${downloadBtn}${sourceLink}</p>` : ''}
+                            <p><a href="${escapeHtml(p.slug)}/">Saber más de este proyecto</a></p>
                         </div>
                     `;
                 }
                 container.innerHTML = html;
-            } catch (e) {
+            } catch(e) {
                 console.error(e);
-                container.innerHTML = '<p>No se pudieron cargar los proyectos.</p>';
+                container.innerHTML = `<p>No se pudieron cargar los proyectos. El error capturado fue:<br><code>${escapeHtml(e.message)}</code></p>`;
             }
         }
+        
         function escapeHtml(str) {
             if (!str) return '';
             return str.replace(/[&<>]/g, function(m) {
