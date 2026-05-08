@@ -38,5 +38,21 @@
         </p>
         <p>© 2026 eucarigo. Todos los derechos reservados.</p>
     </footer>
+
+    <script>
+        (function() {
+            const currentPath = window.location.pathname;
+            const normalizedPath = currentPath.endsWith('/') ? currentPath : currentPath + '/';
+            fetch('/phantom.json')
+                .then(res => res.json())
+                .then(phantomPages => {
+                    if (phantomPages[normalizedPath]) {
+                        window.location.href = '/427.html?old=' + encodeURIComponent(normalizedPath);
+                    }
+                })
+                .catch(() => {
+                });
+        })();
+    </script>
 </body>
 </html>
