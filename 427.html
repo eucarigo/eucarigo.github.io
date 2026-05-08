@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>427 · eucarigo</title>
+    <base href="/">
+    <link rel="icon" type="image/png" sizes="2048x2048" href="i/favicon-2048x2048.png">
+    <link rel="stylesheet" href="CSS/main.css">
+</head>
+<body>
+    <div class="back-link">
+        <a href="/">← página principal</a>
+    </div>
+
+    <header>
+        <h1 class="brand">
+            <img src="i/favicon-2048x2048.png" alt="Logo" width="48" height="48">
+            error 427
+        </h1>
+        <p class="meta">
+            página movida de sitio
+        </p>
+    </header>
+
+    <main>
+        <p id="messageText"></p>
+        <p id="linkContainer" style="display: none;">
+            Nueva ubicación: <a id="newLink" href=""></a>
+        </p>
+        <p>
+            Pido disculpas por las posibles molestias.
+        </p>
+    </main>
+
+    <footer>
+        <p>
+            Esta página no usa cookies, ni analytics. Es únicamente impulsada 
+            por GitHub Pages con HTML, haciendo que la página esté perfectamente 
+            equilibrada, como debería estar todo.
+        </p>
+        <p>© 2026 eucarigo. Todos los derechos reservados.</p>
+    </footer>
+
+    <script>
+        (function() {
+            const params = new URLSearchParams(window.location.search);
+            const oldPath = params.get('old');
+
+            if (!oldPath) {
+                document.getElementById('messageText').textContent =
+                    'No se especificó la página original. Es posible que hayas llegado aquí por error.';
+                return;
+            }
+
+            fetch('/phantom.json')
+                .then(response => {
+                    if (!response.ok) throw new Error('No se pudo cargar el listado de páginas movidas');
+                    return response.json();
+                })
+                .then(phantomPages => {
+                    const entry = phantomPages[oldPath];
+
+                    if (entry) {
+                        document.getElementById('messageText').textContent =
+                            entry.message || 'Esta página ha sido movida.';
+
+                        if (entry.new) {
+                            const link = document.getElementById('newLink');
+                            link.href = entry.new;
+                            link.textContent = entry.new;
+                            document.getElementById('linkContainer').style.display = '';
+                        }
+                    } else {
+                        document.getElementById('messageText').textContent =
+                            'La página solicitada no se encuentra en nuestro registro de movimientos.';
+                    }
+                })
+                .catch(error => {
+                    console.error('Error al cargar phantom.json:', error);
+                    document.getElementById('messageText').textContent =
+                        'Lo siento, ha ocurrido un error al recuperar la información de la página movida.';
+                });
+        })();
+    </script>
+</body>
+</html>
