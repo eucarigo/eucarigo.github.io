@@ -12,19 +12,22 @@
     <header>
         <h1 class="brand">
             <img src="i/favicon-2048x2048.png" alt="Logo" width="48" height="48">
-            error 404
+            <span id="errorCode">error 404</span>
         </h1>
-        <p class="meta">
-            página no encontrada
-        </p>
+        <p class="meta" id="errorMeta">página no encontrada</p>
     </header>
     <main>
-        <p>
+        <p id="messageText">
             Lo siento, pero esta página no existe. Probablemente desapareció, o quizás nunca estuvo aquí.
         </p>
-        <p>
+        <p id="extraMessage" style="display: none;">
             Si crees que debería estar, puedes culpar al universo. Aunque, ante la duda, Luis Cernuda.
-            De todas formas, puedes volver a un lugar que sí existe:
+        </p>
+        <p id="linkContainer" style="display: none;">
+            Nueva ubicación: <a id="newLink" href=""></a>
+        </p>
+        <p id="apologyText" style="display: none;">
+            Pido disculpas por las posibles molestias.
         </p>
         <div class="back-link">
             <a href="/">← página principal</a>
@@ -40,18 +43,32 @@
     </footer>
 
     <script>
-        (function() {
+        (async function() {
             const currentPath = window.location.pathname;
             const normalizedPath = currentPath.endsWith('/') ? currentPath : currentPath + '/';
-            fetch('/phantom.json')
-                .then(res => res.json())
-                .then(phantomPages => {
-                    if (phantomPages[normalizedPath]) {
-                        window.location.href = '/427.html?old=' + encodeURIComponent(normalizedPath);
+            try {
+                const response = await fetch('/phantom.json');
+                if (!response.ok) throw new Error('No se pudo cargar el registro');
+                const phantomPages = await response.json();
+                if (phantomPages[normalizedPath]) {
+                    const entry = phantomPages[normalizedPath];
+                    document.getElementById('errorCode').textContent = 'error 427';
+                    document.getElementById('errorMeta').textContent = 'página movida de sitio';
+                    document.getElementById('messageText').textContent = 
+                        entry.message || 'Esta página ha sido movida.';
+                    document.getElementById('extraMessage').style.display = 'none';
+                    if (entry.new) {
+                        const link = document.getElementById('newLink');
+                        link.href = entry.new;
+                        link.textContent = entry.new;
+                        document.getElementById('linkContainer').style.display = '';
+                        document.getElementById('apologyText').style.display = '';
                     }
-                })
-                .catch(() => {
-                });
+                    document.title = '427 · eucarigo';
+                }
+            } catch (error) {
+                console.error('Error al cargar phantom.json:', error);
+            }
         })();
     </script>
 </body>
